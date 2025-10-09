@@ -1,6 +1,8 @@
+mod draw;
 mod ffi;
-mod timing;
+mod time;
 mod window;
 
-pub use timing::*;
+pub use draw::*;
+pub use time::*;
 pub use window::*;
