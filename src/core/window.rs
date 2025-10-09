@@ -1,5 +1,7 @@
 use std::ffi::CString;
 
+use crate::core::ffi::WindowShouldClose;
+
 use super::ffi::InitWindow;
 
 #[inline]
@@ -9,4 +11,9 @@ pub fn init_window(width: i32, height: i32, title: &str) {
   unsafe {
     InitWindow(width, height, title.as_ptr());
   }
+}
+
+#[inline]
+pub fn window_should_close() -> bool {
+  return unsafe { WindowShouldClose() };
 }
