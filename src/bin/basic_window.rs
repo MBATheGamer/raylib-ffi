@@ -1,3 +1,5 @@
+use raylib_ffi::{consts::colors, core::*, text::draw_text};
+
 fn main() {
   let screen_width = 800;
   let screen_height = 450;
@@ -12,13 +14,13 @@ fn main() {
 
   while !window_should_close() {
     begin_drawing();
-    clear_background(Colors::RAYWHITE);
+    clear_background(colors::RAYWHITE);
     draw_text(
       "Congrats! You created your first window!",
       190,
       200,
       20,
-      Colors::LIGHTGRAY,
+      colors::LIGHTGRAY,
     );
     end_drawing();
   }
