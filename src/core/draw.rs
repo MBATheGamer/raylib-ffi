@@ -1,5 +1,5 @@
 use crate::{
-  core::ffi::{BeginDrawing, ClearBackground},
+  core::ffi::{BeginDrawing, ClearBackground, EndDrawing},
   structs::Color,
 };
 
@@ -14,5 +14,12 @@ pub fn clear_background(color: Color) {
 pub fn begin_drawing() {
   unsafe {
     BeginDrawing();
+  }
+}
+
+#[inline]
+pub fn end_drawing() {
+  unsafe {
+    EndDrawing();
   }
 }
