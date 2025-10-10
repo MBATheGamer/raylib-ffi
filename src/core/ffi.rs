@@ -13,6 +13,7 @@ unsafe extern "C" {
 
   // Timing-related functions
   pub unsafe fn SetTargetFPS(fps: i32);
+  pub unsafe fn GetFrameTime() -> f32;
 
   // Input-related functions: Mouse
   pub unsafe fn GetMouseWheelMove() -> f32;
