@@ -15,6 +15,9 @@ unsafe extern "C" {
   pub unsafe fn SetTargetFPS(fps: i32);
   pub unsafe fn GetFrameTime() -> f32;
 
+  // Input-related functions: Keyboard
+  pub unsafe fn IsKeyPressed(key: i32) -> bool;
+
   // Input-related functions: Mouse
   pub unsafe fn GetMouseWheelMove() -> f32;
 }
