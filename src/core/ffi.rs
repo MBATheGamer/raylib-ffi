@@ -18,6 +18,7 @@ unsafe extern "C" {
 
   // Input-related functions: Keyboard
   pub unsafe fn IsKeyPressed(key: i32) -> bool;
+  pub unsafe fn IsKeyDown(key: i32) -> bool;
 
   // Input-related functions: Mouse
   pub unsafe fn GetMouseWheelMove() -> f32;
