@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window, keyboard::is_key_down,
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shapes::draw_circle_v,
+  structs::Vector2,
+  text::draw_text,
+};
+
 fn main() {
   let screen_width = 800;
   let screen_height = 450;
@@ -8,7 +20,7 @@ fn main() {
     "raylib [core] example - input keys",
   );
 
-  let ball_position = Vector2 {
+  let mut ball_position = Vector2 {
     x: screen_width as f32 / 2.0,
     y: screen_height as f32 / 2.0,
   };
