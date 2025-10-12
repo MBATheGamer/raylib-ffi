@@ -7,6 +7,7 @@ unsafe extern "C" {
   pub unsafe fn WindowShouldClose() -> bool;
 
   // Cursor-related functions
+  pub unsafe fn ShowCursor();
   pub unsafe fn IsCursorHidden() -> bool;
 
   // Drawing-related funtions
