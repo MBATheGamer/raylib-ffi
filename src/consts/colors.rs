@@ -28,6 +28,13 @@ pub const MAROON: Color = Color {
   alpha: 255,
 };
 
+pub const LIME: Color = Color {
+  red: 0,
+  green: 158,
+  blue: 47,
+  alpha: 255,
+};
+
 pub const BLUE: Color = Color {
   red: 0,
   green: 121,
