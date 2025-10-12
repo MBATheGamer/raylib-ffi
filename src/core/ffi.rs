@@ -6,6 +6,9 @@ unsafe extern "C" {
   pub unsafe fn CloseWindow();
   pub unsafe fn WindowShouldClose() -> bool;
 
+  // Cursor-related functions
+  pub unsafe fn IsCursorHidden() -> bool;
+
   // Drawing-related funtions
   pub unsafe fn ClearBackground(color: Color);
   pub unsafe fn BeginDrawing();
