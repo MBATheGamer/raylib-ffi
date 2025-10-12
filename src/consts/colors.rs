@@ -21,6 +21,13 @@ pub const YELLOW: Color = Color {
   alpha: 255,
 };
 
+pub const ORANGE: Color = Color {
+  red: 255,
+  green: 161,
+  blue: 0,
+  alpha: 255,
+};
+
 pub const RED: Color = Color {
   red: 230,
   green: 41,
