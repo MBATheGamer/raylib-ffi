@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, hide_cursor, init_window,
+    is_cursor_hidden,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_position, is_mouse_button_pressed},
+    set_target_fps, show_cursor, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton},
+  shapes::draw_circle_v,
+  structs::Color,
+  text::draw_text,
+};
+
 fn main() {
   let screen_width = 800;
   let screen_height = 450;
@@ -8,11 +23,7 @@ fn main() {
     "raylib [core] example - input mouse",
   );
 
-  let mut ball_position = Vector2 {
-    x: -100.0,
-    y: -100.0,
-  };
-  let ball_color: Color = colors::DARKBLUE;
+  let mut ball_color: Color = colors::DARKBLUE;
 
   set_target_fps(60);
 
@@ -25,7 +36,7 @@ fn main() {
       }
     }
 
-    ball_position = get_mouse_position();
+    let ball_position = get_mouse_position();
 
     if is_mouse_button_pressed(MouseButton::Left) {
       ball_color = colors::MAROON;
