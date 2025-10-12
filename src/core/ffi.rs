@@ -1,4 +1,4 @@
-use crate::structs::Color;
+use crate::structs::{Color, Vector2};
 
 unsafe extern "C" {
   // Window-related functions
@@ -26,5 +26,6 @@ unsafe extern "C" {
   pub unsafe fn IsKeyDown(key: i32) -> bool;
 
   // Input-related functions: Mouse
+  pub unsafe fn GetMousePosition() -> Vector2;
   pub unsafe fn GetMouseWheelMove() -> f32;
 }
