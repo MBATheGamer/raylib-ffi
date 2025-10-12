@@ -8,6 +8,7 @@ unsafe extern "C" {
 
   // Cursor-related functions
   pub unsafe fn ShowCursor();
+  pub unsafe fn HideCursor();
   pub unsafe fn IsCursorHidden() -> bool;
 
   // Drawing-related funtions

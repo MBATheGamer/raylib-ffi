@@ -1,8 +1,13 @@
-use crate::core::ffi::{IsCursorHidden, ShowCursor};
+use crate::core::ffi::{HideCursor, IsCursorHidden, ShowCursor};
 
 #[inline]
 pub fn show_cursor() {
   unsafe { ShowCursor() };
+}
+
+#[inline]
+pub fn hide_cursor() {
+  unsafe { HideCursor() };
 }
 
 #[inline]
