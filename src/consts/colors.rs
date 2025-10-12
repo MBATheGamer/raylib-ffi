@@ -49,6 +49,13 @@ pub const DARKBLUE: Color = Color {
   alpha: 255,
 };
 
+pub const PURPLE: Color = Color {
+  red: 200,
+  green: 122,
+  blue: 255,
+  alpha: 255,
+};
+
 pub const RAYWHITE: Color = Color {
   red: 245,
   green: 245,
