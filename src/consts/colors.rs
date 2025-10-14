@@ -84,6 +84,13 @@ pub const PURPLE: Color = Color {
   alpha: 255,
 };
 
+pub const VIOLET: Color = Color {
+  red: 135,
+  green: 60,
+  blue: 190,
+  alpha: 255,
+};
+
 pub const BEIGE: Color = Color {
   red: 211,
   green: 176,
