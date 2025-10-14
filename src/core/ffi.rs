@@ -28,6 +28,9 @@ unsafe extern "C" {
   pub unsafe fn IsKeyPressed(key: i32) -> bool;
   pub unsafe fn IsKeyDown(key: i32) -> bool;
 
+  // Input-related functions: Gamepads
+  pub unsafe fn IsGamepadAvailable(gamepad: i32) -> bool;
+
   // Input-related functions: Mouse
   pub unsafe fn IsMouseButtonPressed(button: i32) -> bool;
   pub unsafe fn GetMousePosition() -> Vector2;
