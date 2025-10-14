@@ -21,6 +21,9 @@ unsafe extern "C" {
   pub unsafe fn GetFrameTime() -> f32;
   pub unsafe fn GetFPS() -> i32;
 
+  // Misc. functions
+  pub unsafe fn SetConfigFlags(flags: u32);
+
   // Input-related functions: Keyboard
   pub unsafe fn IsKeyPressed(key: i32) -> bool;
   pub unsafe fn IsKeyDown(key: i32) -> bool;
