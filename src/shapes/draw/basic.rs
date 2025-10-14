@@ -1,6 +1,6 @@
 use crate::{
-  shapes::ffi::{DrawCircle, DrawCircleV, DrawRectangle, DrawTriangle},
-  structs::{Color, Vector2},
+  shapes::ffi::{DrawCircle, DrawCircleV, DrawRectangle, DrawRectangleRounded, DrawTriangle},
+  structs::{Color, Rectangle, Vector2},
 };
 
 #[inline]
@@ -20,6 +20,11 @@ pub fn draw_rectangle(pos_x: i32, pos_y: i32, width: i32, height: i32, color: Co
   unsafe {
     DrawRectangle(pos_x, pos_y, width, height, color);
   }
+}
+
+#[inline]
+pub fn draw_rectangle_rounded(rectangle: Rectangle, roundness: f32, segments: i32, color: Color) {
+  unsafe { DrawRectangleRounded(rectangle, roundness, segments, color) };
 }
 
 #[inline]
