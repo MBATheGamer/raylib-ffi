@@ -4,3 +4,4 @@ pub mod enums;
 pub mod shapes;
 pub mod structs;
 pub mod text;
+pub mod texture;
