@@ -1,5 +1,12 @@
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
+pub struct Vector2 {
+  pub x: f32,
+  pub y: f32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
 pub struct Color {
   pub red: u8,
   pub green: u8,
@@ -9,9 +16,11 @@ pub struct Color {
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
-pub struct Vector2 {
-  pub x: f32,
-  pub y: f32,
+pub struct Rectangle {
+  pub x: f32,      // Rectangle top-left corner position x
+  pub y: f32,      // Rectangle top-left corner position y
+  pub width: f32,  // Rectangle width
+  pub height: f32, // Rectangle height
 }
 
 #[repr(C)]
