@@ -8,16 +8,12 @@ use super::ffi::InitWindow;
 pub fn init_window(width: i32, height: i32, title: &str) {
   let title = CString::new(title).expect("You must add title to your application");
 
-  unsafe {
-    InitWindow(width, height, title.as_ptr());
-  }
+  unsafe { InitWindow(width, height, title.as_ptr()) };
 }
 
 #[inline]
 pub fn close_window() {
-  unsafe {
-    CloseWindow();
-  }
+  unsafe { CloseWindow() };
 }
 
 #[inline]

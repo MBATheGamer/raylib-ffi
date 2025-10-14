@@ -2,9 +2,7 @@ use crate::core::ffi::{GetFPS, GetFrameTime, SetTargetFPS};
 
 #[inline]
 pub fn set_target_fps(fps: i32) {
-  unsafe {
-    SetTargetFPS(fps);
-  }
+  unsafe { SetTargetFPS(fps) };
 }
 
 #[inline]
