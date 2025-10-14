@@ -1,7 +1,12 @@
 use crate::{
-  shapes::ffi::{DrawCircleV, DrawRectangle},
+  shapes::ffi::{DrawCircle, DrawCircleV, DrawRectangle},
   structs::{Color, Vector2},
 };
+
+#[inline]
+pub fn draw_circle(center_x: i32, center_y: i32, radius: f32, color: Color) {
+  unsafe { DrawCircle(center_x, center_y, radius, color) };
+}
 
 #[inline]
 pub fn draw_circle_v(center: Vector2, radius: f32, color: Color) {
