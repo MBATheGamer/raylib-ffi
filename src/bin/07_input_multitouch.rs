@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window, set_target_fps,
+    touch::{get_touch_point_count, get_touch_position},
+    window_should_close,
+  },
+  shapes::draw_circle_v,
+  structs::Vector2,
+  text::draw_text,
+};
+
 fn main() {
   const MAX_TOUCH_POINTS: usize = 10;
   const SCREEN_WIDTH: i32 = 800;
@@ -9,17 +21,17 @@ fn main() {
     "raylib [core] example - input multitouch",
   );
 
-  let touch_positions: [Vector2; MAX_TOUCH_POINTS];
+  let mut touch_positions: [Vector2; MAX_TOUCH_POINTS] = [Default::default(); 10];
 
   set_target_fps(60);
 
   while !window_should_close() {
-    let touch_count = get_touch_point_count();
+    let mut touch_count = get_touch_point_count() as usize;
     if touch_count > MAX_TOUCH_POINTS {
       touch_count = MAX_TOUCH_POINTS;
     }
     for i in 0..touch_count {
-      touch_positions[i] = get_touch_position(i);
+      touch_positions[i] = get_touch_position(i as i32);
     }
     begin_drawing();
 
