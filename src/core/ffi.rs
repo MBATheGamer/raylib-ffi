@@ -42,5 +42,6 @@ unsafe extern "C" {
   pub unsafe fn GetMouseWheelMove() -> f32;
 
   // Input-related functions: Touch
+  pub unsafe fn GetTouchPosition(index: i32) -> Vector2;
   pub unsafe fn GetTouchPointCount() -> i32;
 }
