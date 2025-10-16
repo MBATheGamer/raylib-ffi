@@ -12,4 +12,7 @@ unsafe extern "C" {
     color: Color,
   );
   pub unsafe fn DrawTriangle(v1: Vector2, v2: Vector2, v3: Vector2, color: Color);
+
+  // Basic shapes collision detection functions
+  pub unsafe fn CheckCollisionPointRec(point: Vector2, rectangle: Rectangle) -> bool;
 }
