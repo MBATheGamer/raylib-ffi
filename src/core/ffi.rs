@@ -44,4 +44,7 @@ unsafe extern "C" {
   // Input-related functions: Touch
   pub unsafe fn GetTouchPosition(index: i32) -> Vector2;
   pub unsafe fn GetTouchPointCount() -> i32;
+
+  // Gestures and touch handling functions
+  pub unsafe fn GetGestureDetected() -> i32;
 }
