@@ -7,4 +7,7 @@ unsafe extern "C" {
 
   // Texture drawing functions
   pub unsafe fn DrawTexture(texture: Texture2D, pos_x: i32, pos_y: i32, tint: Color);
+
+  // Color/pixel related functions
+  pub unsafe fn Fade(color: Color, alpha: f32) -> Color;
 }
