@@ -5,6 +5,7 @@ unsafe extern "C" {
   pub unsafe fn DrawCircle(center_x: i32, center_y: i32, radius: f32, color: Color);
   pub unsafe fn DrawCircleV(center: Vector2, radius: f32, color: Color);
   pub unsafe fn DrawRectangle(pos_x: i32, pos_y: i32, width: i32, height: i32, color: Color);
+  pub unsafe fn DrawRectangleRec(rectangle: Rectangle, color: Color);
   pub unsafe fn DrawRectangleRounded(
     rectangle: Rectangle,
     roundness: f32,
