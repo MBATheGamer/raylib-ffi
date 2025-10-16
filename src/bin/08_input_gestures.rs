@@ -1,3 +1,19 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, gesture::get_gesture_detected,
+    init_window, set_target_fps, touch::get_touch_position, window_should_close,
+  },
+  enums::Gesture,
+  shapes::{
+    check_collision_point_rec, draw_circle_v, draw_rectangle, draw_rectangle_lines,
+    draw_rectangle_rec,
+  },
+  structs::Rectangle,
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
   const MAX_GESTURE_STRINGS: usize = 20;
   const SCREEN_WIDTH: i32 = 800;
@@ -9,7 +25,6 @@ fn main() {
     "raylib [core] example - input gestures",
   );
 
-  let touch_position: Vector2 = Vector2 { x: 0.0, y: 0.0 };
   let touch_area: Rectangle = Rectangle {
     x: 220.0,
     y: 10.0,
@@ -17,41 +32,38 @@ fn main() {
     height: SCREEN_HEIGHT as f32 - 20.0,
   };
 
-  let gestures_count = 0;
-  let gesture_strings: Vec<&str> = vec![];
+  let mut gestures_count = 0;
+  let mut gesture_strings: Vec<&str> = vec![];
 
-  let current_gesture = Gesture::None;
-  let last_gesture = Gesture::None;
+  let mut current_gesture = Gesture::None;
 
   set_target_fps(60);
 
   while !window_should_close() {
-    last_gesture = current_gesture;
+    let last_gesture = current_gesture;
     current_gesture = get_gesture_detected();
-    touch_position = get_touch_position(0);
+    let touch_position = get_touch_position(0);
 
     if check_collision_point_rec(touch_position, touch_area) && (current_gesture != Gesture::None) {
       if current_gesture != last_gesture {
         match current_gesture {
-          Gesture::Tap => gesture_strings[gestures_count] = "GESTURE TAP",
-          Gesture::DoubleTap => gesture_strings[gestures_count] = "GESTURE DOUBLETAP",
-          Gesture::Hold => gesture_strings[gestures_count] = "GESTURE HOLD",
-          Gesture::Drag => gesture_strings[gestures_count] = "GESTURE DRAG",
-          Gesture::SwipeRight => gesture_strings[gestures_count] = "GESTURE SWIPE RIGHT",
-          Gesture::SwipeLeft => gesture_strings[gestures_count] = "GESTURE SWIPE LEFT",
-          Gesture::SwipeUp => gesture_strings[gestures_count] = "GESTURE SWIPE UP",
-          Gesture::SwipeDown => gesture_strings[gestures_count] = "GESTURE SWIPE DOWN",
-          Gesture::PinchIn => gesture_strings[gestures_count] = "GESTURE PINCH IN",
-          Gesture::PinchOut => gesture_strings[gestures_count] = "GESTURE PINCH OUT",
+          Gesture::Tap => gesture_strings.push("GESTURE TAP"),
+          Gesture::DoubleTap => gesture_strings.push("GESTURE DOUBLETAP"),
+          Gesture::Hold => gesture_strings.push("GESTURE HOLD"),
+          Gesture::Drag => gesture_strings.push("GESTURE DRAG"),
+          Gesture::SwipeRight => gesture_strings.push("GESTURE SWIPE RIGHT"),
+          Gesture::SwipeLeft => gesture_strings.push("GESTURE SWIPE LEFT"),
+          Gesture::SwipeUp => gesture_strings.push("GESTURE SWIPE UP"),
+          Gesture::SwipeDown => gesture_strings.push("GESTURE SWIPE DOWN"),
+          Gesture::PinchIn => gesture_strings.push("GESTURE PINCH IN"),
+          Gesture::PinchOut => gesture_strings.push("GESTURE PINCH OUT"),
           _ => {}
-        }
+        };
 
         gestures_count += 1;
 
         if gestures_count >= MAX_GESTURE_STRINGS {
-          for i in 0..MAX_GESTURE_STRINGS {
-            gesture_strings = vec![];
-          }
+          gesture_strings = vec![];
 
           gestures_count = 0;
         }
