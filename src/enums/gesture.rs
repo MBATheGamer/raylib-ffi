@@ -1,4 +1,4 @@
-#[derive(PartialEq)]
+#[derive(PartialEq, PartialOrd)]
 pub enum Gesture {
   None = 0,        // No gesture
   Tap = 1,         // Tap gesture
