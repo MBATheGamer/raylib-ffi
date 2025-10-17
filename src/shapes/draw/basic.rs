@@ -1,10 +1,15 @@
 use crate::{
   shapes::ffi::{
-    DrawCircle, DrawCircleV, DrawRectangle, DrawRectangleLines, DrawRectangleRec,
+    DrawCircle, DrawCircleV, DrawLineEx, DrawRectangle, DrawRectangleLines, DrawRectangleRec,
     DrawRectangleRounded, DrawRing, DrawTriangle,
   },
   structs::{Color, Rectangle, Vector2},
 };
+
+#[inline]
+pub fn draw_line_ex(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Color) {
+  unsafe { DrawLineEx(start_pos, end_pos, thick, color) };
+}
 
 #[inline]
 pub fn draw_circle(center_x: i32, center_y: i32, radius: f32, color: Color) {
