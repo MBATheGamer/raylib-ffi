@@ -1,6 +1,28 @@
+use std::f32::consts::PI;
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing,
+    gesture::{get_gesture_detected, get_gesture_drag_angle, get_gesture_pinch_angle},
+    init_window,
+    mouse::{get_mouse_position, is_mouse_button_released},
+    set_target_fps,
+    touch::{get_touch_point_count, get_touch_position},
+    window_should_close,
+  },
+  enums::{Gesture, MouseButton},
+  shapes::{
+    check_collision_point_rec, draw_circle, draw_circle_v, draw_line_ex, draw_rectangle,
+    draw_rectangle_rec, draw_ring, draw_triangle,
+  },
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
   const GESTURE_LOG_SIZE: i32 = 20;
-  const MAX_TOUCH_COUNT: i32 = 32;
 
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -13,18 +35,19 @@ fn main() {
 
   let message_position = Vector2 { x: 160.0, y: 7.0 };
 
-  let last_gesture = Gesture::None;
+  let mut last_gesture = Gesture::None;
   let last_gesture_position = Vector2 { x: 165.0, y: 130.0 };
 
-  // let gestureLog[GESTURE_LOG_SIZE][12] = { "" };
-  let gesture_log: Vec<&str> = vec![];
+  let mut gesture_log: Vec<&str> = vec![
+    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+  ];
 
-  let gesture_log_index = GESTURE_LOG_SIZE;
-  let previous_gesture = Gesture::None;
+  let mut gesture_log_index = GESTURE_LOG_SIZE - 1;
+  let mut previous_gesture = Gesture::None;
 
-  let log_mode = 1;
+  let mut log_mode = 1;
 
-  let gesture_color = Color {
+  let mut gesture_color = Color {
     red: 0,
     green: 0,
     blue: 0,
@@ -45,9 +68,7 @@ fn main() {
   let gesture_log_position = Vector2 { x: 10.0, y: 10.0 };
 
   let angle_length = 90.0;
-  let current_angle_degrees = 0.0;
-  let final_vector = Vector2 { x: 0.0, y: 0.0 };
-  let current_angle_str: &str = "";
+  let mut current_angle_degrees = 0.0;
   let protractor_position = Vector2 { x: 266.0, y: 315.0 };
 
   set_target_fps(60);
@@ -83,7 +104,7 @@ fn main() {
       }
     }
 
-    let fill_log = 0;
+    let mut fill_log = 0;
     if current_gesture != Gesture::None {
       if log_mode == 3 {
         if current_gesture != Gesture::Hold && current_gesture != previous_gesture
@@ -112,7 +133,7 @@ fn main() {
       }
       gesture_log_index -= 1;
 
-      gesture_log.push(get_gesture_name(current_gesture));
+      gesture_log[gesture_log_index as usize] = get_gesture_name(current_gesture);
     }
 
     if current_gesture > Gesture::SwipeDown {
@@ -125,13 +146,13 @@ fn main() {
 
     let current_angle_radians: f32 = (current_angle_degrees + 90.0) * PI / 180.0;
 
-    final_vector = Vector2 {
+    let final_vector = Vector2 {
       x: (angle_length * current_angle_radians.sin()) + protractor_position.x,
       y: (angle_length * current_angle_radians.cos()) + protractor_position.y,
     };
 
-    let touch_position: Vec<Vector2> = vec![];
-    let mouse_position: Vector2;
+    let mut touch_position: Vec<Vector2> = vec![];
+    let mut mouse_position: Vector2 = Vector2::default();
 
     if current_gesture != Gesture::None {
       if touch_count != 0 {
@@ -376,9 +397,8 @@ fn main() {
       colors::BLACK,
     );
 
-    let ii = gesture_log_index;
+    let mut ii = gesture_log_index;
     for i in 0..GESTURE_LOG_SIZE {
-      ii = (ii + 1) % GESTURE_LOG_SIZE;
       draw_text(
         gesture_log[ii as usize],
         gesture_log_position.x as i32,
@@ -390,6 +410,8 @@ fn main() {
           colors::LIGHTGRAY
         },
       );
+
+      ii = (ii + 1) % GESTURE_LOG_SIZE;
     }
     let log_button1_color: Color;
     let log_button2_color: Color;
@@ -450,15 +472,20 @@ fn main() {
       colors::BLACK,
     );
     let angle_string: &str = &format!("{}", current_angle_degrees);
-    let angle_string_dot = angle_string.find(".").unwrap();
-    let angle_string_trim: &str = &angle_string[0..angle_string_dot + 3];
-    draw_text(
-      angle_string_trim,
-      protractor_position.x as i32 + 55,
-      protractor_position.y as i32 + 92,
-      20,
-      gesture_color,
-    );
+    let angle_string_dot = angle_string.find(".");
+    match angle_string_dot {
+      Some(index) => {
+        let angle_string_trim: &str = &angle_string[0..index + 3];
+        draw_text(
+          angle_string_trim,
+          protractor_position.x as i32 + 55,
+          protractor_position.y as i32 + 92,
+          20,
+          gesture_color,
+        );
+      }
+      None => {}
+    }
     draw_circle_v(protractor_position, 80.0, colors::WHITE);
     draw_line_ex(
       Vector2 {
@@ -572,8 +599,8 @@ fn main() {
     if current_gesture != Gesture::None {
       if touch_count != 0 {
         for i in 0..touch_count {
-          draw_circle_v(touch_position[i], 50.0, fade(gesture_color, 0.5));
-          draw_circle_v(touch_position[i], 5.0, gesture_color);
+          draw_circle_v(touch_position[i as usize], 50.0, fade(gesture_color, 0.5));
+          draw_circle_v(touch_position[i as usize], 5.0, gesture_color);
         }
 
         if touch_count == 2 {
@@ -629,6 +656,5 @@ fn get_gesture_color(gesture: Gesture) -> Color {
     Gesture::SwipeDown => colors::RED,
     Gesture::PinchIn => colors::VIOLET,
     Gesture::PinchOut => colors::ORANGE,
-    _ => colors::BLACK,
   };
 }
