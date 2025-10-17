@@ -47,4 +47,5 @@ unsafe extern "C" {
 
   // Gestures and touch handling functions
   pub unsafe fn GetGestureDetected() -> i32;
+  pub unsafe fn GetGestureDragAngle() -> f32;
 }
