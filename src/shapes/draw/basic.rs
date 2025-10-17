@@ -1,7 +1,7 @@
 use crate::{
   shapes::ffi::{
     DrawCircle, DrawCircleV, DrawRectangle, DrawRectangleLines, DrawRectangleRec,
-    DrawRectangleRounded, DrawTriangle,
+    DrawRectangleRounded, DrawRing, DrawTriangle,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -16,6 +16,29 @@ pub fn draw_circle_v(center: Vector2, radius: f32, color: Color) {
   unsafe {
     DrawCircleV(center, radius, color);
   }
+}
+
+#[inline]
+pub fn draw_ring(
+  center: Vector2,
+  inner_radius: f32,
+  outer_radius: f32,
+  start_angle: f32,
+  end_angle: f32,
+  segments: i32,
+  color: Color,
+) {
+  unsafe {
+    DrawRing(
+      center,
+      inner_radius,
+      outer_radius,
+      start_angle,
+      end_angle,
+      segments,
+      color,
+    );
+  };
 }
 
 #[inline]
