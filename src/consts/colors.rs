@@ -119,6 +119,13 @@ pub const BEIGE: Color = Color {
   alpha: 255,
 };
 
+pub const WHITE: Color = Color {
+  red: 255,
+  green: 255,
+  blue: 255,
+  alpha: 255,
+};
+
 pub const BLACK: Color = Color {
   red: 0,
   green: 0,
