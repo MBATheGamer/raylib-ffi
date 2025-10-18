@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_frame_time, init_window,
+    mouse::{get_mouse_position, is_mouse_button_down},
+    set_target_fps,
+    touch::{get_touch_point_count, get_touch_position},
+    window_should_close,
+  },
+  enums::MouseButton,
+  shapes::draw_circle_v,
+  structs::{Color, Vector2},
+  text::draw_text,
+};
+
 #[derive(Clone, Copy)]
 enum PadButton {
   None = -1,
@@ -46,7 +61,7 @@ fn main() {
   let button_label_colors: Vec<Color> =
     vec![colors::YELLOW, colors::BLUE, colors::RED, colors::GREEN];
 
-  let player_position = Vector2 {
+  let mut player_position = Vector2 {
     x: SCREEN_WIDTH as f32 / 2.0,
     y: SCREEN_HEIGHT as f32 / 2.0,
   };
@@ -63,7 +78,7 @@ fn main() {
       input_position = get_mouse_position();
     }
 
-    let pressed_button: PadButton = PadButton::None;
+    let mut pressed_button: PadButton = PadButton::None;
 
     if (get_touch_point_count() > 0)
       || ((get_touch_point_count() == 0) && is_mouse_button_down(MouseButton::Left))
