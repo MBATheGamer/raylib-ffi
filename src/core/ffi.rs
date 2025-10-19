@@ -21,6 +21,9 @@ unsafe extern "C" {
   pub unsafe fn GetFrameTime() -> f32;
   pub unsafe fn GetFPS() -> i32;
 
+  // Random values generation functions
+  pub unsafe fn GetRandomValue(min: i32, max: i32) -> i32;
+
   // Misc. functions
   pub unsafe fn SetConfigFlags(flags: u32);
 
