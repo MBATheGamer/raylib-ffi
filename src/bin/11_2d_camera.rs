@@ -1,5 +1,21 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_2d, clear_background, close_window, end_drawing, end_mode_2d,
+    get_random_value, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    mouse::get_mouse_wheel_move,
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shapes::{draw_line, draw_rectangle, draw_rectangle_lines, draw_rectangle_rec},
+  structs::{Camera2D, Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
-  const MAX_BUILDINGS: i32 = 100;
+  const MAX_BUILDINGS: usize = 100;
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
 
@@ -9,47 +25,48 @@ fn main() {
     "raylib [core] example - 2d camera",
   );
 
-  let player = Rectangle {
+  let mut player = Rectangle {
     x: 400.0,
     y: 280.0,
     width: 40.0,
     height: 40.0,
   };
-  let buildings: Vec<Rectangle> = vec![];
-  let build_colors: Vec<Color> = vec![];
+  let mut buildings: Vec<Rectangle> = vec![];
+  let mut build_colors: Vec<Color> = vec![];
 
-  let spacing = 0.0;
+  let mut spacing = 0.0;
 
   for i in 0..MAX_BUILDINGS {
     let height = get_random_value(100, 800);
     buildings.push(Rectangle {
       x: -6000.0 + spacing,
-      y: SCREEN_HEIGHT - 130.0 - height,
-      width: get_random_value(50, 200),
-      height: height,
+      y: (SCREEN_HEIGHT - 130 - height) as f32,
+      width: get_random_value(50, 200) as f32,
+      height: height as f32,
     });
 
     spacing += buildings[i as usize].width;
 
     build_colors.push(Color {
-      red: get_random_value(200, 240),
-      green: get_random_value(200, 240),
-      blue: get_random_value(200, 250),
+      red: get_random_value(200, 240) as u8,
+      green: get_random_value(200, 240) as u8,
+      blue: get_random_value(200, 250) as u8,
       alpha: 255,
     });
   }
 
-  let camera: Camera2D = { 0 };
-  camera.target = Vector2 {
-    x: player.x + 20.0,
-    y: player.y + 20.0,
+  let mut camera: Camera2D = Camera2D {
+    target: Vector2 {
+      x: player.x + 20.0,
+      y: player.y + 20.0,
+    },
+    offset: Vector2 {
+      x: SCREEN_WIDTH as f32 / 2.0,
+      y: SCREEN_HEIGHT as f32 / 2.0,
+    },
+    rotation: 0.0,
+    zoom: 1.0,
   };
-  camera.offset = Vector2 {
-    x: SCREEN_WIDTH / 2.0,
-    y: SCREEN_HEIGHT / 2.0,
-  };
-  camera.rotation = 0.0;
-  camera.zoom = 1.0;
 
   set_target_fps(60);
 
@@ -66,15 +83,15 @@ fn main() {
     };
 
     if is_key_down(KeyboardKey::KeyA) {
-      camera.rotation -= 1;
+      camera.rotation -= 1.0;
     } else if is_key_down(KeyboardKey::KeyS) {
-      camera.rotation += 1;
+      camera.rotation += 1.0;
     }
 
-    if camera.rotation > 40 {
-      camera.rotation = 40;
-    } else if camera.rotation < -40 {
-      camera.rotation = -40;
+    if camera.rotation > 40.0 {
+      camera.rotation = 40.0;
+    } else if camera.rotation < -40.0 {
+      camera.rotation = -40.0;
     }
 
     camera.zoom = (camera.zoom.ln() + get_mouse_wheel_move() * 0.1).exp();
@@ -105,21 +122,21 @@ fn main() {
     draw_rectangle_rec(player, colors::RED);
 
     draw_line(
-      camera.target.x,
+      camera.target.x as i32,
       -SCREEN_HEIGHT * 10,
-      camera.target.x,
+      camera.target.x as i32,
       SCREEN_HEIGHT * 10,
       colors::GREEN,
     );
     draw_line(
       -SCREEN_WIDTH * 10,
-      camera.target.y,
+      camera.target.y as i32,
       SCREEN_WIDTH * 10,
-      camera.target.y,
+      camera.target.y as i32,
       colors::GREEN,
     );
 
-    end_mod_2d();
+    end_mode_2d();
 
     draw_text("SCREEN AREA", 640, 10, 20, colors::RED);
 
