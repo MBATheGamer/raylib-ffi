@@ -2,6 +2,13 @@ use crate::structs::{Color, Rectangle, Vector2};
 
 unsafe extern "C" {
   // Basic shapes drawing functions
+  pub unsafe fn DrawLine(
+    start_pos_x: i32,
+    start_pos_y: i32,
+    end_pos_x: i32,
+    end_pos_y: i32,
+    color: Color,
+  );
   pub unsafe fn DrawLineEx(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Color);
   pub unsafe fn DrawCircle(center_x: i32, center_y: i32, radius: f32, color: Color);
   pub unsafe fn DrawCircleV(center: Vector2, radius: f32, color: Color);
