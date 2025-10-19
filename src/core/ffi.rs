@@ -1,4 +1,4 @@
-use crate::structs::{Color, Vector2};
+use crate::structs::{Camera2D, Color, Vector2};
 
 unsafe extern "C" {
   // Window-related functions
@@ -15,6 +15,7 @@ unsafe extern "C" {
   pub unsafe fn ClearBackground(color: Color);
   pub unsafe fn BeginDrawing();
   pub unsafe fn EndDrawing();
+  pub unsafe fn BeginMode2D(camera: Camera2D);
 
   // Timing-related functions
   pub unsafe fn SetTargetFPS(fps: i32);
