@@ -1,5 +1,5 @@
 use crate::{
-  core::ffi::{BeginDrawing, BeginMode2D, ClearBackground, EndDrawing},
+  core::ffi::{BeginDrawing, BeginMode2D, ClearBackground, EndDrawing, EndMode2D},
   structs::{Camera2D, Color},
 };
 
@@ -21,4 +21,9 @@ pub fn end_drawing() {
 #[inline]
 pub fn begin_mode_2d(camera: Camera2D) {
   unsafe { BeginMode2D(camera) };
+}
+
+#[inline]
+pub fn end_mode_2d() {
+  unsafe { EndMode2D() };
 }
