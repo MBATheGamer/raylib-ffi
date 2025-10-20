@@ -19,6 +19,7 @@ unsafe extern "C" {
   pub unsafe fn BeginMode2D(camera: Camera2D);
   pub unsafe fn EndMode2D();
   pub unsafe fn BeginTextureMode(target: RenderTexture2D);
+  pub unsafe fn EndTextureMode();
 
   // Timing-related functions
   pub unsafe fn SetTargetFPS(fps: i32);

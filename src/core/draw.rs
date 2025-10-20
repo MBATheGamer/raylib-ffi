@@ -1,6 +1,7 @@
 use crate::{
   core::ffi::{
     BeginDrawing, BeginMode2D, BeginTextureMode, ClearBackground, EndDrawing, EndMode2D,
+    EndTextureMode,
   },
   structs::{Camera2D, Color, RenderTexture2D},
 };
@@ -31,7 +32,11 @@ pub fn end_mode_2d() {
 }
 
 #[inline]
-
 pub fn begin_texture_mode(target: RenderTexture2D) {
   unsafe { BeginTextureMode(target) };
+}
+
+#[inline]
+pub fn end_texture_mode() {
+  unsafe { EndTextureMode() };
 }
