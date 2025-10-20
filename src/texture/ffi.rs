@@ -1,4 +1,4 @@
-use crate::structs::{Color, RenderTexture2D, Texture2D};
+use crate::structs::{Color, Rectangle, RenderTexture2D, Texture2D, Vector2};
 
 unsafe extern "C" {
   // Texture loading functions
@@ -8,6 +8,12 @@ unsafe extern "C" {
 
   // Texture drawing functions
   pub unsafe fn DrawTexture(texture: Texture2D, pos_x: i32, pos_y: i32, tint: Color);
+  pub unsafe fn DrawTextureRec(
+    texture: Texture2D,
+    source: Rectangle,
+    position: Vector2,
+    tint: Color,
+  );
 
   // Color/pixel related functions
   pub unsafe fn Fade(color: Color, alpha: f32) -> Color;
