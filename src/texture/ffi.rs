@@ -1,8 +1,9 @@
-use crate::structs::{Color, Texture2D};
+use crate::structs::{Color, RenderTexture2D, Texture2D};
 
 unsafe extern "C" {
   // Texture loading functions
   pub unsafe fn LoadTexture(filename: *const i8) -> Texture2D;
+  pub unsafe fn LoadRenderTexture(width: i32, height: i32) -> RenderTexture2D;
   pub unsafe fn UnloadTexture(texture: Texture2D);
 
   // Texture drawing functions
