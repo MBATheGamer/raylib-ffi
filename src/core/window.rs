@@ -1,6 +1,6 @@
 use std::ffi::CString;
 
-use crate::core::ffi::{CloseWindow, GetScreenWidth, WindowShouldClose};
+use crate::core::ffi::{CloseWindow, GetScreenHeight, GetScreenWidth, WindowShouldClose};
 
 use super::ffi::InitWindow;
 
@@ -24,4 +24,9 @@ pub fn window_should_close() -> bool {
 #[inline]
 pub fn get_screen_width() -> i32 {
   return unsafe { GetScreenWidth() };
+}
+
+#[inline]
+pub fn get_screen_height() -> i32 {
+  return unsafe { GetScreenHeight() };
 }

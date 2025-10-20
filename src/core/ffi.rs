@@ -6,6 +6,7 @@ unsafe extern "C" {
   pub unsafe fn CloseWindow();
   pub unsafe fn WindowShouldClose() -> bool;
   pub unsafe fn GetScreenWidth() -> i32;
+  pub unsafe fn GetScreenHeight() -> i32;
 
   // Cursor-related functions
   pub unsafe fn ShowCursor();
