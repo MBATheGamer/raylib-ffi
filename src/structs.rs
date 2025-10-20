@@ -36,7 +36,7 @@ pub struct Texture {
 pub type Texture2D = Texture;
 
 #[repr(C)]
-#[derive(Default)]
+#[derive(Clone, Copy, Default)]
 pub struct RenderTexture {
   pub id: u32,          // OpenGL framebuffer object id
   pub texture: Texture, // Color buffer attachment texture

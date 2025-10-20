@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_2d, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_mode_2d, end_texture_mode, get_screen_height, get_screen_width, init_window,
+    keyboard::is_key_down, set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shapes::{draw_line_v, draw_rectangle, draw_rectangle_rec},
+  structs::{Camera2D, Rectangle, Vector2},
+  text::draw_text,
+  texture::{draw_texture_rec, fade, load_render_texture, unload_render_texture},
+};
+
 fn main() {
   const PLAYER_SIZE: i32 = 40;
 
@@ -10,20 +24,20 @@ fn main() {
     "raylib [core] example - 2d camera split screen",
   );
 
-  let player1 = Rectangle {
+  let mut player1 = Rectangle {
     x: 200.0,
     y: 200.0,
     width: PLAYER_SIZE as f32,
     height: PLAYER_SIZE as f32,
   };
-  let player2 = Rectangle {
+  let mut player2 = Rectangle {
     x: 250.0,
     y: 200.0,
     width: PLAYER_SIZE as f32,
     height: PLAYER_SIZE as f32,
   };
 
-  let camera1 = Camera2D {
+  let mut camera1 = Camera2D {
     target: Vector2 {
       x: player1.x,
       y: player1.y,
@@ -33,7 +47,7 @@ fn main() {
     zoom: 1.0,
   };
 
-  let camera2 = Camera2D {
+  let mut camera2 = Camera2D {
     target: Vector2 {
       x: player2.x,
       y: player2.y,
