@@ -36,6 +36,16 @@ pub struct Texture {
 pub type Texture2D = Texture;
 
 #[repr(C)]
+#[derive(Default)]
+pub struct RenderTexture {
+  pub id: u32,          // OpenGL framebuffer object id
+  pub texture: Texture, // Color buffer attachment texture
+  pub depth: Texture,   // Depth buffer attachment texture
+}
+
+pub type RenderTexture2D = RenderTexture;
+
+#[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Camera2D {
   pub offset: Vector2, // Camera offset (displacement from target)
