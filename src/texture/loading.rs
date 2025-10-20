@@ -2,7 +2,7 @@ use std::ffi::CString;
 
 use crate::{
   structs::{RenderTexture2D, Texture2D},
-  texture::ffi::{LoadRenderTexture, LoadTexture, UnloadTexture},
+  texture::ffi::{LoadRenderTexture, LoadTexture, UnloadRenderTexture, UnloadTexture},
 };
 
 #[inline]
@@ -20,4 +20,9 @@ pub fn load_render_texture(width: i32, height: i32) -> RenderTexture2D {
 #[inline]
 pub fn unload_texture(texture: Texture2D) {
   unsafe { UnloadTexture(texture) };
+}
+
+#[inline]
+pub fn unload_render_texture(target: RenderTexture2D) {
+  unsafe { UnloadRenderTexture(target) };
 }
