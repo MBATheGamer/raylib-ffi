@@ -10,4 +10,5 @@ unsafe extern "C" {
     length: f32,
     color: Color,
   );
+  pub unsafe fn DrawGrid(slices: i32, spacing: f32);
 }
