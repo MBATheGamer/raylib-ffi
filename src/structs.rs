@@ -7,6 +7,14 @@ pub struct Vector2 {
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
+pub struct Vector3 {
+  pub x: f32,
+  pub y: f32,
+  pub z: f32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
 pub struct Color {
   pub red: u8,
   pub green: u8,
