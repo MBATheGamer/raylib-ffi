@@ -20,6 +20,7 @@ unsafe extern "C" {
   pub unsafe fn BeginMode2D(camera: Camera2D);
   pub unsafe fn EndMode2D();
   pub unsafe fn BeginMode3D(camera: Camera3D);
+  pub unsafe fn EndMode3D();
   pub unsafe fn BeginTextureMode(target: RenderTexture2D);
   pub unsafe fn EndTextureMode();
 
