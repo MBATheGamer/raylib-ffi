@@ -1,3 +1,5 @@
+use crate::enums::CameraProjection;
+
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Vector2 {
@@ -65,9 +67,9 @@ pub struct Camera2D {
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Camera3D {
-  pub position: Vector3, // Camera position
-  pub target: Vector3,   // Camera target it looks-at
-  pub up: Vector3,       // Camera up vector (rotation over its axis)
+  pub position: Vector3,            // Camera position
+  pub target: Vector3,              // Camera target it looks-at
+  pub up: Vector3,                  // Camera up vector (rotation over its axis)
   pub fovy: f32, // Camera field-of-view aperture in Y (degrees) in perspective, used as near plane height in world units in orthographic
-  pub projection: i32, // Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC
+  pub projection: CameraProjection, // Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC
 }
