@@ -1,6 +1,14 @@
 use std::ffi::CString;
 
-use crate::{structs::Color, text::ffi::DrawText};
+use crate::{
+  structs::Color,
+  text::ffi::{DrawFPS, DrawText},
+};
+
+#[inline]
+pub fn draw_fps(pos_x: i32, pos_y: i32) {
+  unsafe { DrawFPS(pos_x, pos_y) };
+}
 
 #[inline]
 pub fn draw_text(text: &str, pos_x: i32, pos_y: i32, font_size: i32, color: Color) {
