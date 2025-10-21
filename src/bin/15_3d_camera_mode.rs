@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, clear_background, close_window, end_drawing, end_mode_3d,
+    init_window, set_target_fps, window_should_close,
+  },
+  enums::CameraProjection,
+  model::{draw_cube, draw_cube_wires, draw_grid},
+  structs::{Camera3D, Vector3},
+  text::{draw_fps, draw_text},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -25,7 +37,7 @@ fn main() {
       z: 0.0,
     },
     fovy: 45.0,
-    projection: CAMERA_PERSPECTIVE,
+    projection: CameraProjection::Perspective,
   };
   let cube_position = Vector3 {
     x: 0.0,
