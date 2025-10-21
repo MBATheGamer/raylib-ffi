@@ -5,3 +5,4 @@ pub mod shapes;
 pub mod structs;
 pub mod text;
 pub mod texture;
+pub mod model;

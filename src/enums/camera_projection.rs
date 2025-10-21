@@ -1,3 +1,4 @@
+#[repr(i32)]
 #[derive(Clone, Copy)]
 pub enum CameraProjection {
   Perspective = 0, // Perspective projection
