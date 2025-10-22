@@ -1,4 +1,4 @@
-use crate::core::ffi::{HideCursor, IsCursorHidden, ShowCursor};
+use crate::core::ffi::{DisableCursor, HideCursor, IsCursorHidden, ShowCursor};
 
 #[inline]
 pub fn show_cursor() {
@@ -13,4 +13,9 @@ pub fn hide_cursor() {
 #[inline]
 pub fn is_cursor_hidden() -> bool {
   return unsafe { IsCursorHidden() };
+}
+
+#[inline]
+pub fn disable_cursor() {
+  unsafe { DisableCursor() };
 }
