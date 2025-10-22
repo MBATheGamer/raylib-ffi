@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, clear_background, close_window, disable_cursor, end_drawing,
+    end_mode_3d, init_window, keyboard::is_key_pressed, set_target_fps, update_camera,
+    window_should_close,
+  },
+  enums::{CameraMode, CameraProjection, KeyboardKey},
+  model::{draw_cube, draw_cube_wires, draw_grid},
+  shapes::{draw_rectangle, draw_rectangle_lines},
+  structs::{Camera3D, Vector3},
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,7 +23,7 @@ fn main() {
     "raylib [core] example - 3d camera free",
   );
 
-  let camera = Camera3D {
+  let mut camera = Camera3D {
     position: Vector3 {
       x: 10.0,
       y: 10.0,
@@ -24,7 +39,7 @@ fn main() {
       y: 1.0,
       z: 0.0,
     },
-    fovy: 5.0,
+    fovy: 45.0,
     projection: CameraProjection::Perspective,
   };
 
@@ -39,7 +54,7 @@ fn main() {
   set_target_fps(60);
 
   while !window_should_close() {
-    update_camera(&camera, Camera::Free);
+    update_camera(&mut camera, CameraMode::Free);
 
     if is_key_pressed(KeyboardKey::KeyZ) {
       camera.target = Vector3 {
