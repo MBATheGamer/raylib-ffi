@@ -1,3 +1,4 @@
+mod camera;
 mod cursor;
 mod draw;
 mod ffi;
@@ -7,6 +8,7 @@ mod random;
 mod time;
 mod window;
 
+pub use camera::*;
 pub use cursor::*;
 pub use draw::*;
 pub use input::*;

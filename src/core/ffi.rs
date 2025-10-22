@@ -63,4 +63,7 @@ unsafe extern "C" {
   pub unsafe fn GetGestureDetected() -> i32;
   pub unsafe fn GetGestureDragAngle() -> f32;
   pub unsafe fn GetGesturePinchAngle() -> f32;
+
+  // Camera System Functions
+  pub unsafe fn UpdateCamera(camera: *mut Camera3D, mode: i32);
 }
