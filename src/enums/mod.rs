@@ -1,3 +1,4 @@
+mod camera_mode;
 mod camera_projection;
 mod config_flags;
 mod gamepad;
@@ -6,6 +7,7 @@ mod gesture;
 mod keyboard_keys;
 mod mouse_button;
 
+pub use camera_mode::CameraMode;
 pub use camera_projection::CameraProjection;
 pub use config_flags::ConfigFlags;
 pub use gamepad::GamepadAxis;
