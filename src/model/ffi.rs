@@ -1,4 +1,4 @@
-use crate::structs::{Color, Vector3};
+use crate::structs::{Color, Vector2, Vector3};
 
 unsafe extern "C" {
   // Basic geometric 3D shapes drawing functions
@@ -10,5 +10,6 @@ unsafe extern "C" {
     length: f32,
     color: Color,
   );
+  pub unsafe fn DrawPlane(center_pos: Vector3, size: Vector2, color: Color);
   pub unsafe fn DrawGrid(slices: i32, spacing: f32);
 }
