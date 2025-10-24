@@ -73,3 +73,10 @@ pub struct Camera3D {
   pub fovy: f32, // Camera field-of-view aperture in Y (degrees) in perspective, used as near plane height in world units in orthographic
   pub projection: CameraProjection, // Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct Ray {
+  pub position: Vector3,  // Ray position (origin)
+  pub direction: Vector3, // Ray direction (normalized)
+}
