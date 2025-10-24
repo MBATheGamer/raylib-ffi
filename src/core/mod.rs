@@ -5,6 +5,7 @@ mod ffi;
 mod input;
 mod misc;
 mod random;
+mod screen_space;
 mod time;
 mod window;
 
@@ -14,5 +15,6 @@ pub use draw::*;
 pub use input::*;
 pub use misc::*;
 pub use random::*;
+pub use screen_space::*;
 pub use time::*;
 pub use window::*;
