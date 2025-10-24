@@ -12,6 +12,7 @@ unsafe extern "C" {
   pub unsafe fn ShowCursor();
   pub unsafe fn HideCursor();
   pub unsafe fn IsCursorHidden() -> bool;
+  pub unsafe fn EnableCursor();
   pub unsafe fn DisableCursor();
 
   // Drawing-related funtions
