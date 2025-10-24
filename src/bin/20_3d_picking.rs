@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, clear_background, close_window, disable_cursor, enable_cursor,
+    end_drawing, end_mode_3d, get_screen_to_world_ray, init_window, is_cursor_hidden,
+    mouse::{get_mouse_position, is_mouse_button_pressed},
+    set_target_fps, update_camera, window_should_close,
+  },
+  enums::{CameraMode, CameraProjection, MouseButton},
+  model::{draw_cube, draw_cube_wires, draw_grid, draw_ray, get_ray_collision_box},
+  structs::{BoundingBox, Camera3D, Ray, RayCollision, Vector3},
+  text::{draw_fps, draw_text, measure_text},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -9,7 +23,7 @@ fn main() {
   );
 
   // Define the camera to look into our 3d world
-  let camera = Camera3D {
+  let mut camera = Camera3D {
     position: Vector3 {
       x: 10.0,
       y: 10.0,
@@ -39,8 +53,8 @@ fn main() {
     z: 2.0,
   };
 
-  let ray = Ray::default();
-  let collision = RayCollision::default();
+  let mut ray = Ray::default();
+  let mut collision = RayCollision::default();
 
   set_target_fps(60);
 
@@ -65,14 +79,14 @@ fn main() {
           ray,
           BoundingBox {
             min: Vector3 {
-              x: cube_position.x - cube_size.x / 2,
-              y: cube_position.y - cube_size.y / 2,
-              z: cube_position.z - cube_size.z / 2,
+              x: cube_position.x - cube_size.x / 2.0,
+              y: cube_position.y - cube_size.y / 2.0,
+              z: cube_position.z - cube_size.z / 2.0,
             },
             max: Vector3 {
-              x: cube_position.x + cube_size.x / 2,
-              y: cube_position.y + cube_size.y / 2,
-              z: cube_position.z + cube_size.z / 2,
+              x: cube_position.x + cube_size.x / 2.0,
+              y: cube_position.y + cube_size.y / 2.0,
+              z: cube_position.z + cube_size.z / 2.0,
             },
           },
         );
