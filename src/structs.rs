@@ -80,3 +80,12 @@ pub struct Ray {
   pub position: Vector3,  // Ray position (origin)
   pub direction: Vector3, // Ray direction (normalized)
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct RayCollision {
+  pub hit: bool,       // Did the ray hit something?
+  pub distance: f32,   // Distance to the nearest hit
+  pub point: Vector3,  // Point of the nearest hit
+  pub normal: Vector3, // Surface normal of hit
+}
