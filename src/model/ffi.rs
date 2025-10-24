@@ -1,4 +1,4 @@
-use crate::structs::{Color, Vector2, Vector3};
+use crate::structs::{BoundingBox, Color, Ray, RayCollision, Vector2, Vector3};
 
 unsafe extern "C" {
   // Basic geometric 3D shapes drawing functions
@@ -12,4 +12,7 @@ unsafe extern "C" {
   );
   pub unsafe fn DrawPlane(center_pos: Vector3, size: Vector2, color: Color);
   pub unsafe fn DrawGrid(slices: i32, spacing: f32);
+
+  // Collision detection functions
+  pub unsafe fn GetRayCollisionBox(ray: Ray, bounding_box: BoundingBox) -> RayCollision;
 }
