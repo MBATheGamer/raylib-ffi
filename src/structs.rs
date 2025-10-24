@@ -89,3 +89,10 @@ pub struct RayCollision {
   pub point: Vector3,  // Point of the nearest hit
   pub normal: Vector3, // Surface normal of hit
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct BoundingBox {
+  pub min: Vector3, // Minimum vertex box-corner
+  pub max: Vector3, // Maximum vertex box-corner
+}
