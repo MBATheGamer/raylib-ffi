@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, clear_background, close_window, disable_cursor, end_drawing,
+    end_mode_3d, get_world_to_screen, init_window, set_target_fps, update_camera,
+    window_should_close,
+  },
+  enums::{CameraMode, CameraProjection},
+  model::{draw_cube, draw_cube_wires, draw_grid},
+  structs::{Camera3D, Vector3},
+  text::{draw_text, measure_text},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,7 +21,7 @@ fn main() {
     "raylib [core] example - world screen",
   );
 
-  let camera = Camera3D {
+  let mut camera = Camera3D {
     position: Vector3 {
       x: 10.0,
       y: 10.0,
