@@ -1,4 +1,4 @@
-use crate::structs::{Camera2D, Camera3D, Color, Ray, RenderTexture2D, Vector2};
+use crate::structs::{Camera2D, Camera3D, Color, Ray, RenderTexture2D, Vector2, Vector3};
 
 unsafe extern "C" {
   // Window-related functions
@@ -28,6 +28,7 @@ unsafe extern "C" {
 
   // Screen-space-related functions
   pub unsafe fn GetScreenToWorldRay(position: Vector2, camera: Camera3D) -> Ray;
+  pub unsafe fn GetWorldToScreen(position: Vector3, camera: Camera3D) -> Vector2;
 
   // Timing-related functions
   pub unsafe fn SetTargetFPS(fps: i32);
