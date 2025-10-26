@@ -2,8 +2,8 @@ use std::ffi::CString;
 
 use crate::{
   core::ffi::{
-    ClearWindowState, CloseWindow, GetScreenHeight, GetScreenWidth, IsWindowState, MinimizeWindow,
-    RestoreWindow, SetWindowState, ToggleFullscreen, WindowShouldClose,
+    ClearWindowState, CloseWindow, GetScreenHeight, GetScreenWidth, IsWindowState, MaximizeWindow,
+    MinimizeWindow, RestoreWindow, SetWindowState, ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
 };
@@ -45,6 +45,11 @@ pub fn clear_window_state(flags: ConfigFlags) {
 #[inline]
 pub fn toggle_fullscreen() {
   unsafe { ToggleFullscreen() };
+}
+
+#[inline]
+pub fn maximize_window() {
+  unsafe { MaximizeWindow() };
 }
 
 #[inline]

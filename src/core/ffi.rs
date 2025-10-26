@@ -9,6 +9,7 @@ unsafe extern "C" {
   pub unsafe fn SetWindowState(flags: u32);
   pub unsafe fn ClearWindowState(flags: u32);
   pub unsafe fn ToggleFullscreen();
+  pub unsafe fn MaximizeWindow();
   pub unsafe fn MinimizeWindow();
   pub unsafe fn RestoreWindow();
   pub unsafe fn GetScreenWidth() -> i32;
