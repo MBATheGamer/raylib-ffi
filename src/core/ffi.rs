@@ -6,6 +6,7 @@ unsafe extern "C" {
   pub unsafe fn CloseWindow();
   pub unsafe fn WindowShouldClose() -> bool;
   pub unsafe fn IsWindowState(flag: u32) -> bool;
+  pub unsafe fn SetWindowState(flags: u32);
   pub unsafe fn ClearWindowState(flags: u32);
   pub unsafe fn ToggleFullscreen();
   pub unsafe fn GetScreenWidth() -> i32;
