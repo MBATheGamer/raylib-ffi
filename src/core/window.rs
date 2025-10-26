@@ -1,7 +1,11 @@
 use std::ffi::CString;
 
-use crate::core::ffi::{
-  CloseWindow, GetScreenHeight, GetScreenWidth, ToggleFullscreen, WindowShouldClose,
+use crate::{
+  core::ffi::{
+    CloseWindow, GetScreenHeight, GetScreenWidth, IsWindowState, ToggleFullscreen,
+    WindowShouldClose,
+  },
+  enums::ConfigFlags,
 };
 
 use super::ffi::InitWindow;
@@ -21,6 +25,11 @@ pub fn close_window() {
 #[inline]
 pub fn window_should_close() -> bool {
   return unsafe { WindowShouldClose() };
+}
+
+#[inline]
+pub fn is_window_state(flag: ConfigFlags) -> bool {
+  return unsafe { IsWindowState(flag as u32) };
 }
 
 #[inline]
