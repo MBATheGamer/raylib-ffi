@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, clear_window_state, close_window, end_drawing,
+    get_screen_height, get_screen_width, init_window, is_window_state, keyboard::is_key_pressed,
+    maximize_window, minimize_window, mouse::get_mouse_position, restore_window, set_target_fps,
+    set_window_state, toggle_borderless_windowed, toggle_fullscreen, window_should_close,
+  },
+  enums::{ConfigFlags, KeyboardKey},
+  shapes::{draw_circle_v, draw_rectangle_lines_ex},
+  structs::{Rectangle, Vector2},
+  text::{draw_fps, draw_text},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,14 +22,14 @@ fn main() {
     "raylib [core] example - window flags",
   );
 
-  let ball_position = Vector2 {
+  let mut ball_position = Vector2 {
     x: get_screen_width() as f32 / 2.0,
     y: get_screen_height() as f32 / 2.0,
   };
-  let ball_speed = Vector2 { x: 5.0, y: 4.0 };
+  let mut ball_speed = Vector2 { x: 5.0, y: 4.0 };
   let ball_radius = 20.0;
 
-  let frames_counter = 0;
+  let mut frames_counter = 0;
 
   set_target_fps(60);
 
@@ -145,7 +159,7 @@ fn main() {
         width: get_screen_width() as f32,
         height: get_screen_height() as f32,
       },
-      4,
+      4.0,
       colors::RAYWHITE,
     );
 
