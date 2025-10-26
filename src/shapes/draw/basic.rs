@@ -1,7 +1,7 @@
 use crate::{
   shapes::ffi::{
     DrawCircle, DrawCircleV, DrawLine, DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleLines,
-    DrawRectangleRec, DrawRectangleRounded, DrawRing, DrawTriangle,
+    DrawRectangleLinesEx, DrawRectangleRec, DrawRectangleRounded, DrawRing, DrawTriangle,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -71,6 +71,11 @@ pub fn draw_rectangle_rec(rectangle: Rectangle, color: Color) {
 #[inline]
 pub fn draw_rectangle_lines(pos_x: i32, pos_y: i32, width: i32, height: i32, color: Color) {
   unsafe { DrawRectangleLines(pos_x, pos_y, width, height, color) };
+}
+
+#[inline]
+pub fn draw_rectangle_lines_ex(rec: Rectangle, line_thick: f32, color: Color) {
+  unsafe { DrawRectangleLinesEx(rec, line_thick, color) };
 }
 
 #[inline]
