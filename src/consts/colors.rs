@@ -140,6 +140,13 @@ pub const BLACK: Color = Color {
   alpha: 255,
 };
 
+pub const BLANK: Color = Color {
+  red: 0,
+  green: 0,
+  blue: 0,
+  alpha: 0,
+};
+
 pub const RAYWHITE: Color = Color {
   red: 245,
   green: 245,
