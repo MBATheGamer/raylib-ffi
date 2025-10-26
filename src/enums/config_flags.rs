@@ -10,7 +10,7 @@ pub enum ConfigFlags {
   WindowTopmost = 0x00001000,          // Set to window always on top
   WindowAlwaysRun = 0x00000100,        // Set to allow windows running while minimized
   WindowTransparent = 0x00000010,      // Set to allow transparent framebuffer
-  WindowHighdpi = 0x00002000,          // Set to support HighDPI
+  WindowHighDPI = 0x00002000,          // Set to support HighDPI
   WindowMousePassthrough = 0x00004000, // Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED
   BorderlessWindowedMode = 0x00008000, // Set to run program in borderless windowed mode
   MSAA4xHint = 0x00000020,             // Set to try enabling MSAA 4X
