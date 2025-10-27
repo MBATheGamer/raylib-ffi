@@ -52,6 +52,7 @@ unsafe extern "C" {
   // Input-related functions: Keyboard
   pub unsafe fn IsKeyPressed(key: i32) -> bool;
   pub unsafe fn IsKeyDown(key: i32) -> bool;
+  pub unsafe fn SetExitKey(key: i32);
 
   // Input-related functions: Gamepads
   pub unsafe fn IsGamepadAvailable(gamepad: i32) -> bool;

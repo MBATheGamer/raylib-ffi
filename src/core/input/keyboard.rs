@@ -1,5 +1,5 @@
 use crate::{
-  core::ffi::{IsKeyDown, IsKeyPressed},
+  core::ffi::{IsKeyDown, IsKeyPressed, SetExitKey},
   enums::KeyboardKey,
 };
 
@@ -11,4 +11,9 @@ pub fn is_key_pressed(key: KeyboardKey) -> bool {
 #[inline]
 pub fn is_key_down(key: KeyboardKey) -> bool {
   return unsafe { IsKeyDown(key as i32) };
+}
+
+#[inline]
+pub fn set_exit_key(key: KeyboardKey) {
+  unsafe { SetExitKey(key as i32) };
 }
