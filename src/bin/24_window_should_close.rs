@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    keyboard::{is_key_pressed, set_exit_key},
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shapes::draw_rectangle,
+  text::draw_text,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -10,8 +22,8 @@ fn main() {
 
   set_exit_key(KeyboardKey::KeyNull);
 
-  let exit_window_requested = false;
-  let exit_window = false;
+  let mut exit_window_requested = false;
+  let mut exit_window = false;
 
   set_target_fps(60);
 
