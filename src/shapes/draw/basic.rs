@@ -1,7 +1,8 @@
 use crate::{
   shapes::ffi::{
     DrawCircle, DrawCircleV, DrawLine, DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleLines,
-    DrawRectangleLinesEx, DrawRectangleRec, DrawRectangleRounded, DrawRing, DrawTriangle,
+    DrawRectangleLinesEx, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing,
+    DrawTriangle,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -61,6 +62,11 @@ pub fn draw_rectangle(pos_x: i32, pos_y: i32, width: i32, height: i32, color: Co
   unsafe {
     DrawRectangle(pos_x, pos_y, width, height, color);
   }
+}
+
+#[inline]
+pub fn draw_rectangle_v(position: Vector2, size: Vector2, color: Color) {
+  unsafe { DrawRectangleV(position, size, color) };
 }
 
 #[inline]
