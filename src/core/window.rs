@@ -117,6 +117,11 @@ pub fn get_monitor_physical_height(monitor: i32) -> i32 {
 }
 
 #[inline]
+pub fn get_monitor_refresh_rate(monitor: i32) -> i32 {
+  return unsafe { GetMonitorRefreshRate(monitor) };
+}
+
+#[inline]
 pub fn get_monitor_name(monitor: i32) -> &'static str {
   let name = unsafe { CStr::from_ptr(GetMonitorName(monitor)) };
 
