@@ -18,6 +18,7 @@ unsafe extern "C" {
   pub unsafe fn GetMonitorCount() -> i32;
   pub unsafe fn GetCurrentMonitor() -> i32;
   pub unsafe fn GetMonitorPosition(monitor: i32) -> Vector2;
+  pub unsafe fn GetMonitorWidth(monitor: i32) -> i32;
   pub unsafe fn GetMonitorName(monitor: i32) -> *const i8;
 
   // Cursor-related functions
