@@ -2,8 +2,8 @@ use std::ffi::CString;
 
 use crate::{
   core::ffi::{
-    ClearWindowState, CloseWindow, GetCurrentMonitor, GetScreenHeight, GetScreenWidth,
-    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowState,
+    ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetScreenHeight,
+    GetScreenWidth, IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowState,
     ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
@@ -76,6 +76,11 @@ pub fn get_screen_width() -> i32 {
 #[inline]
 pub fn get_screen_height() -> i32 {
   return unsafe { GetScreenHeight() };
+}
+
+#[inline]
+pub fn get_monitor_count() -> i32 {
+  return unsafe { GetMonitorCount() };
 }
 
 #[inline]

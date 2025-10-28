@@ -15,6 +15,7 @@ unsafe extern "C" {
   pub unsafe fn RestoreWindow();
   pub unsafe fn GetScreenWidth() -> i32;
   pub unsafe fn GetScreenHeight() -> i32;
+  pub unsafe fn GetMonitorCount() -> i32;
   pub unsafe fn GetCurrentMonitor() -> i32;
 
   // Cursor-related functions
