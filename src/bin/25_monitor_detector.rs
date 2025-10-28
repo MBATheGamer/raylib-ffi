@@ -1,3 +1,19 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_current_monitor,
+    get_monitor_count, get_monitor_height, get_monitor_name, get_monitor_physical_height,
+    get_monitor_physical_width, get_monitor_position, get_monitor_refresh_rate, get_monitor_width,
+    get_window_position, init_window, keyboard::is_key_pressed, set_target_fps, set_window_monitor,
+    window_should_close,
+  },
+  enums::KeyboardKey,
+  shapes::{draw_rectangle_lines, draw_rectangle_lines_ex, draw_rectangle_v},
+  structs::{Rectangle, Vector2},
+  text::draw_text,
+  texture::fade,
+};
+
 #[derive(Clone, Copy, Default)]
 struct MonitorInfo {
   position: Vector2,
@@ -15,7 +31,7 @@ fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
 
-  let monitors: [MonitorInfo; MAX_MONITORS] = [Default::default(); MAX_MONITORS];
+  let mut monitors: [MonitorInfo; MAX_MONITORS] = [Default::default(); MAX_MONITORS];
 
   init_window(
     SCREEN_WIDTH,
@@ -23,27 +39,26 @@ fn main() {
     "raylib [core] example - monitor detector",
   );
 
-  let current_monitor_index = get_current_monitor();
-  let monitor_count = 0;
+  let mut current_monitor_index = get_current_monitor();
 
   set_target_fps(60);
 
   while !window_should_close() {
-    let max_width = 1;
-    let max_height = 1;
+    let mut max_width = 1;
+    let mut max_height = 1;
 
-    let monitor_offset_x = 0;
+    let mut monitor_offset_x = 0;
 
-    monitor_count = get_monitor_count();
-    for i in 0..monitor_count {
+    let monitor_count = get_monitor_count();
+    for i in 0..monitor_count as usize {
       monitors[i] = MonitorInfo {
-        position: get_monitor_position(i),
-        name: get_monitor_name(i),
-        width: get_monitor_width(i),
-        height: get_monitor_height(i),
-        physical_width: get_monitor_physical_width(i),
-        physical_height: get_monitor_physical_height(i),
-        refresh_rate: get_monitor_refresh_rate(i),
+        position: get_monitor_position(i as i32),
+        name: get_monitor_name(i as i32),
+        width: get_monitor_width(i as i32),
+        height: get_monitor_height(i as i32),
+        physical_width: get_monitor_physical_width(i as i32),
+        physical_height: get_monitor_physical_height(i as i32),
+        refresh_rate: get_monitor_refresh_rate(i as i32),
       };
 
       if (monitors[i].position.x as i32) < monitor_offset_x {
@@ -73,7 +88,7 @@ fn main() {
       current_monitor_index = get_current_monitor();
     }
 
-    let monitor_scale = 0.6;
+    let mut monitor_scale = 0.6;
 
     if max_height > max_width + monitor_offset_x {
       monitor_scale *= SCREEN_HEIGHT as f32 / max_height as f32;
@@ -100,15 +115,14 @@ fn main() {
       colors::DARKGRAY,
     );
 
-    for i in 0..monitor_count {
+    for i in 0..monitor_count as usize {
       let rec = Rectangle {
         x: (monitors[i].position.x + monitor_offset_x as f32) * monitor_scale + 140.0,
         y: monitors[i].position.y * monitor_scale + 80.0,
-        width: monitors[i].width * monitor_scale as f32,
-        height: monitors[i].height * monitor_scale as f32,
+        width: monitors[i].width as f32 * monitor_scale,
+        height: monitors[i].height as f32 * monitor_scale,
       };
 
-      // Draw monitor name and information inside the rectangle
       draw_text(
         &format!("[{}] {}", i, monitors[i].name),
         rec.x as i32 + 10,
@@ -133,11 +147,11 @@ fn main() {
         colors::DARKGRAY,
       );
 
-      if i == current_monitor_index {
-        draw_rectangle_linesEx(rec, 5, colors::RED);
+      if i == current_monitor_index as usize {
+        draw_rectangle_lines_ex(rec, 5.0, colors::RED);
         let window_position = Vector2 {
-          x: (get_window_position().x + monitor_offset_x) * monitor_scale + 140,
-          y: get_window_position().y * monitor_scale + 80,
+          x: (get_window_position().x + monitor_offset_x as f32) * monitor_scale + 140.0,
+          y: get_window_position().y * monitor_scale + 80.0,
         };
 
         draw_rectangle_v(
@@ -149,7 +163,7 @@ fn main() {
           fade(colors::GREEN, 0.5),
         );
       } else {
-        draw_rectangle_linesEx(rec, 5, colors::GRAY);
+        draw_rectangle_lines_ex(rec, 5.0, colors::GRAY);
       }
     }
 
