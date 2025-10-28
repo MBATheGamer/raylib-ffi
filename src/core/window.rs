@@ -4,8 +4,8 @@ use crate::{
   core::ffi::{
     ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetMonitorHeight,
     GetMonitorName, GetMonitorPhysicalHeight, GetMonitorPhysicalWidth, GetMonitorPosition,
-    GetMonitorRefreshRate, GetMonitorWidth, GetScreenHeight, GetScreenWidth, IsWindowState,
-    MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowMonitor, SetWindowState,
+    GetMonitorRefreshRate, GetMonitorWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition,
+    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowMonitor, SetWindowState,
     ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
@@ -124,6 +124,11 @@ pub fn get_monitor_physical_height(monitor: i32) -> i32 {
 #[inline]
 pub fn get_monitor_refresh_rate(monitor: i32) -> i32 {
   return unsafe { GetMonitorRefreshRate(monitor) };
+}
+
+#[inline]
+pub fn get_window_position() -> Vector2 {
+  return unsafe { GetWindowPosition() };
 }
 
 #[inline]
