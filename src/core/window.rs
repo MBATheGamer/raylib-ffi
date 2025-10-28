@@ -2,11 +2,12 @@ use std::ffi::CString;
 
 use crate::{
   core::ffi::{
-    ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetScreenHeight,
-    GetScreenWidth, IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowState,
-    ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
+    ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetMonitorPosition,
+    GetScreenHeight, GetScreenWidth, IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow,
+    SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
+  structs::Vector2,
 };
 
 use super::ffi::InitWindow;
@@ -86,4 +87,9 @@ pub fn get_monitor_count() -> i32 {
 #[inline]
 pub fn get_current_monitor() -> i32 {
   return unsafe { GetCurrentMonitor() };
+}
+
+#[inline]
+pub fn get_monitor_position(monitor: i32) -> Vector2 {
+  return unsafe { GetMonitorPosition(monitor) };
 }
