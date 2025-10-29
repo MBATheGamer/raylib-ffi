@@ -1,3 +1,12 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_random_value, init_window,
+    set_target_fps, window_should_close,
+  },
+  text::draw_text,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,9 +17,9 @@ fn main() {
     "raylib [core] example - random values",
   );
 
-  let rand_value = get_random_value(-8, 5);
+  let mut rand_value = get_random_value(-8, 5);
 
-  let frames_counter = 0u32;
+  let mut frames_counter = 0;
 
   set_target_fps(60);
 
