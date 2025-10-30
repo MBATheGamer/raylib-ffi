@@ -1,6 +1,18 @@
+use std::ffi::CStr;
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window, is_file_dropped,
+    load_dropped_files, set_target_fps, unload_dropped_files, window_should_close,
+  },
+  shapes::draw_rectangle,
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
   const MAX_FILEPATH_RECORDED: i32 = 4096;
-  const MAX_FILEPATH_SIZE: i32 = 2048;
 
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -11,8 +23,8 @@ fn main() {
     "raylib [core] example - drop files",
   );
 
-  let file_path_counter = 0;
-  let file_paths: Vec<String> = vec![];
+  let mut file_path_counter = 0;
+  let mut file_paths: Vec<String> = vec![];
 
   for _ in 0..MAX_FILEPATH_RECORDED {
     file_paths.push(String::new());
@@ -24,10 +36,14 @@ fn main() {
     if is_file_dropped() {
       let dropped_files = load_dropped_files();
 
+      let dropped_paths =
+        unsafe { std::slice::from_raw_parts(dropped_files.paths, dropped_files.count as usize) };
+
       let offset = file_path_counter as usize;
-      for i in 0..dropped_files.count {
+      for (i, &ptr) in dropped_paths.iter().enumerate() {
         if file_path_counter < (MAX_FILEPATH_RECORDED - 1) {
-          file_paths[i + offset] = dropped_files.paths[i];
+          let path = unsafe { CStr::from_ptr(ptr).to_string_lossy().into_owned() };
+          file_paths[i + offset] = path;
           file_path_counter += 1;
         }
       }
