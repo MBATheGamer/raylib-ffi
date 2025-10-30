@@ -78,6 +78,7 @@ unsafe extern "C" {
   // File system functions
   pub unsafe fn IsFileDropped() -> bool;
   pub unsafe fn LoadDroppedFiles() -> FilePathList;
+  pub unsafe fn UnloadDroppedFiles(files: FilePathList);
 
   // Input-related functions: Mouse
   pub unsafe fn IsMouseButtonPressed(button: i32) -> bool;
