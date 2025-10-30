@@ -73,6 +73,9 @@ unsafe extern "C" {
   pub unsafe fn GetGamepadAxisCount(gamepad: i32) -> i32;
   pub unsafe fn GetGamepadAxisMovement(gamepad: i32, axis: i32) -> f32;
 
+  // File system functions
+  pub unsafe fn IsFileDropped() -> bool;
+
   // Input-related functions: Mouse
   pub unsafe fn IsMouseButtonPressed(button: i32) -> bool;
   pub unsafe fn IsMouseButtonDown(button: i32) -> bool;
