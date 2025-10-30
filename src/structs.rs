@@ -96,3 +96,11 @@ pub struct BoundingBox {
   pub min: Vector3, // Minimum vertex box-corner
   pub max: Vector3, // Maximum vertex box-corner
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Default, Debug)]
+pub struct FilePathList {
+  pub capacity: u32,
+  pub count: u32,
+  pub paths: *mut *mut i8,
+}
