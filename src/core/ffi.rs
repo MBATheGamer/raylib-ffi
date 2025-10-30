@@ -1,4 +1,6 @@
-use crate::structs::{Camera2D, Camera3D, Color, Ray, RenderTexture2D, Vector2, Vector3};
+use crate::structs::{
+  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture2D, Vector2, Vector3,
+};
 
 unsafe extern "C" {
   // Window-related functions
@@ -75,6 +77,7 @@ unsafe extern "C" {
 
   // File system functions
   pub unsafe fn IsFileDropped() -> bool;
+  pub unsafe fn LoadDroppedFiles() -> FilePathList;
 
   // Input-related functions: Mouse
   pub unsafe fn IsMouseButtonPressed(button: i32) -> bool;
