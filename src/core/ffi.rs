@@ -68,6 +68,7 @@ unsafe extern "C" {
     value: *const c_void,
     uniform_type: i32,
   );
+  pub unsafe fn UnloadShader(shader: Shader);
 
   // Screen-space-related functions
   pub unsafe fn GetScreenToWorldRay(position: Vector2, camera: Camera3D) -> Ray;

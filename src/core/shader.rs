@@ -1,7 +1,7 @@
 use std::ffi::{CString, c_void};
 
 use crate::{
-  core::ffi::{GetShaderLocation, LoadShader, SetShaderValue},
+  core::ffi::{GetShaderLocation, LoadShader, SetShaderValue, UnloadShader},
   enums::ShaderUniformType,
   structs::Shader,
 };
@@ -36,4 +36,9 @@ pub fn set_shader_value(
       uniform_type as i32,
     )
   };
+}
+
+#[inline]
+pub fn unload_shader(shader: Shader) {
+  unsafe { UnloadShader(shader) };
 }
