@@ -50,6 +50,7 @@ unsafe extern "C" {
   pub unsafe fn BeginTextureMode(target: RenderTexture2D);
   pub unsafe fn EndTextureMode();
   pub unsafe fn BeginShaderMode(shader: Shader);
+  pub unsafe fn EndShaderMode();
   pub unsafe fn BeginVrStereoMode(config: VrStereoConfig);
   pub unsafe fn EndVrStereoMode();
 
