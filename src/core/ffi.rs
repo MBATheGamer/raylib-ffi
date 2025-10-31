@@ -50,6 +50,7 @@ unsafe extern "C" {
   pub unsafe fn BeginTextureMode(target: RenderTexture2D);
   pub unsafe fn EndTextureMode();
   pub unsafe fn BeginVrStereoMode(config: VrStereoConfig);
+  pub unsafe fn EndVrStereoMode();
 
   // VR stereo config functions for VR simulator
   pub unsafe fn LoadVrStereoConfig(device: VrDeviceInfo) -> VrStereoConfig;
