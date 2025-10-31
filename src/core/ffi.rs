@@ -56,6 +56,7 @@ unsafe extern "C" {
 
   // VR stereo config functions for VR simulator
   pub unsafe fn LoadVrStereoConfig(device: VrDeviceInfo) -> VrStereoConfig;
+  pub unsafe fn UnloadVrStereoConfig(config: VrStereoConfig);
 
   // management: Shader  functions
   // NOTE: functionality: Shader  is not available on OpenGL 1.1
