@@ -6,6 +6,7 @@ mod gamepad_button;
 mod gesture;
 mod keyboard_keys;
 mod mouse_button;
+mod shader_uniform;
 
 pub use camera_mode::CameraMode;
 pub use camera_projection::CameraProjection;
@@ -15,3 +16,4 @@ pub use gamepad_button::GamepadButton;
 pub use gesture::Gesture;
 pub use keyboard_keys::KeyboardKey;
 pub use mouse_button::MouseButton;
+pub use shader_uniform::ShaderUniformType;
