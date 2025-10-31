@@ -54,6 +54,7 @@ unsafe extern "C" {
   // management: Shader  functions
   // NOTE: functionality: Shader  is not available on OpenGL 1.1
   pub unsafe fn LoadShader(vs_file_name: *const i8, fs_file_name: *const i8) -> Shader;
+  pub unsafe fn GetShaderLocation(shader: Shader, uniform_name: *const i8) -> i32;
 
   // Screen-space-related functions
   pub unsafe fn GetScreenToWorldRay(position: Vector2, camera: Camera3D) -> Ray;
