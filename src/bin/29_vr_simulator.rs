@@ -1,5 +1,26 @@
+use std::env;
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, begin_shader_mode, begin_texture_mode, begin_vr_stereo_mode,
+    clear_background, close_window, disable_cursor, end_drawing, end_mode_3d, end_shader_mode,
+    end_texture_mode, end_vr_stereo_mode, get_screen_height, get_screen_width, get_shader_location,
+    init_window, load_shader, load_vr_stereo_config, set_shader_value, set_target_fps,
+    unload_shader, unload_vr_stereo_config, update_camera, window_should_close,
+  },
+  enums::{CameraMode, CameraProjection, ShaderUniformType},
+  model::{draw_cube, draw_cube_wires, draw_grid},
+  structs::{Camera3D, Rectangle, Vector2, Vector3, VrDeviceInfo},
+  text::draw_fps,
+  texture::{draw_texture_pro, load_render_texture, unload_render_texture},
+};
+
 fn main() {
-  let platform = env::var("PLATFORM").unwrap();
+  let platform = match env::var("PLATFORM") {
+    Ok(platform) => platform,
+    _ => format!("DESKTOP"),
+  };
   let glsl_version = if platform == "DESKTOP" { 330 } else { 100 };
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -11,13 +32,13 @@ fn main() {
   );
 
   let device = VrDeviceInfo {
-    h_resolution: 2160,             // Horizontal resolution in pixels
-    v_resolution: 1200,             // Vertical resolution in pixels
-    h_screen_size: 0.133793,        // Horizontal size in meters
-    v_screen_size: 0.0669,          // Vertical size in meters
-    eye_to_screen_distance: 0.041,  // Distance between eye and display in meters
-    lens_separation_distance: 0.07, // Lens separation distance in meters
-    interpupillary_distance: 0.07,  // IPD (distance between pupils) in meters
+    h_resolution: 2160,
+    v_resolution: 1200,
+    h_screen_size: 0.133793,
+    v_screen_size: 0.0669,
+    eye_to_screen_distance: 0.041,
+    lens_separation_distance: 0.07,
+    interpupillary_distance: 0.07,
 
     lens_distortion_values: [1.0, 0.22, 0.24, 0.0],
     chroma_ab_correction: [0.996, -0.004, 1.014, 0.0],
@@ -26,58 +47,58 @@ fn main() {
   let config = load_vr_stereo_config(device);
 
   let distortion = load_shader(
-    0,
+    "",
     &format!("resources/shaders/glsl{}/distortion.fs", glsl_version),
   );
 
   set_shader_value(
     distortion,
     get_shader_location(distortion, "leftLensCenter"),
-    config.leftLensCenter,
-    SHADER_UNIFORM_VEC2,
+    &config.left_lens_center,
+    ShaderUniformType::Vec2,
   );
   set_shader_value(
     distortion,
     get_shader_location(distortion, "rightLensCenter"),
-    config.rightLensCenter,
-    SHADER_UNIFORM_VEC2,
+    &config.right_lens_center,
+    ShaderUniformType::Vec2,
   );
   set_shader_value(
     distortion,
     get_shader_location(distortion, "leftScreenCenter"),
-    config.leftScreenCenter,
-    SHADER_UNIFORM_VEC2,
+    &config.left_screen_center,
+    ShaderUniformType::Vec2,
   );
   set_shader_value(
     distortion,
     get_shader_location(distortion, "rightScreenCenter"),
-    config.rightScreenCenter,
-    SHADER_UNIFORM_VEC2,
+    &config.right_screen_center,
+    ShaderUniformType::Vec2,
   );
 
   set_shader_value(
     distortion,
     get_shader_location(distortion, "scale"),
-    config.scale,
-    SHADER_UNIFORM_VEC2,
+    &config.scale,
+    ShaderUniformType::Vec2,
   );
   set_shader_value(
     distortion,
     get_shader_location(distortion, "scaleIn"),
-    config.scaleIn,
-    SHADER_UNIFORM_VEC2,
+    &config.scale_in,
+    ShaderUniformType::Vec2,
   );
   set_shader_value(
     distortion,
     get_shader_location(distortion, "deviceWarpParam"),
-    device.lens_distortion_values,
-    SHADER_UNIFORM_VEC4,
+    &device.lens_distortion_values,
+    ShaderUniformType::Vec4,
   );
   set_shader_value(
     distortion,
     get_shader_location(distortion, "chromaAbParam"),
-    device.chroma_ab_correction,
-    SHADER_UNIFORM_VEC4,
+    &device.chroma_ab_correction,
+    ShaderUniformType::Vec4,
   );
 
   let target = load_render_texture(device.h_resolution, device.v_resolution);
@@ -95,7 +116,7 @@ fn main() {
     height: get_screen_height() as f32,
   };
 
-  let camera = Camera3D {
+  let mut camera = Camera3D {
     position: Vector3 {
       x: 5.0,
       y: 2.0,
@@ -154,7 +175,6 @@ fn main() {
     end_shader_mode();
     draw_fps(10, 10);
     end_drawing();
-    //----------------------------------------------------------------------------------
   }
 
   unload_vr_stereo_config(config);
