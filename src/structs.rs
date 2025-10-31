@@ -139,3 +139,16 @@ pub struct VrDeviceInfo {
   pub lens_distortion_values: [f32; 4], // Lens distortion constant parameters
   pub chroma_ab_correction: [f32; 4],   // Chromatic aberration correction parameters
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct VrStereoConfig {
+  pub projection: [Matrix; 2],       // VR projection matrices (per eye)
+  pub view_offset: [Matrix; 2],      // VR view offset matrices (per eye)
+  pub left_lens_center: [f32; 2],    // VR left lens center
+  pub right_lens_center: [f32; 2],   // VR right lens center
+  pub left_screen_center: [f32; 2],  // VR left screen center
+  pub right_screen_center: [f32; 2], // VR right screen center
+  pub scale: [f32; 2],               // VR distortion scale
+  pub scale_in: [f32; 2],            // VR distortion scale in
+}
