@@ -15,6 +15,14 @@ unsafe extern "C" {
     position: Vector2,
     tint: Color,
   );
+  pub unsafe fn DrawTexturePro(
+    texture: Texture2D,
+    source: Rectangle,
+    dest: Rectangle,
+    origin: Vector2,
+    rotation: f32,
+    tint: Color,
+  );
 
   // Color/pixel related functions
   pub unsafe fn Fade(color: Color, alpha: f32) -> Color;
