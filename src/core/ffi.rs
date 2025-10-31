@@ -1,6 +1,6 @@
 use crate::structs::{
-  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture2D, Vector2, Vector3, VrDeviceInfo,
-  VrStereoConfig,
+  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture2D, Shader, Vector2, Vector3,
+  VrDeviceInfo, VrStereoConfig,
 };
 
 unsafe extern "C" {
@@ -50,6 +50,10 @@ unsafe extern "C" {
 
   // VR stereo config functions for VR simulator
   pub unsafe fn LoadVrStereoConfig(device: VrDeviceInfo) -> VrStereoConfig;
+
+  // management: Shader  functions
+  // NOTE: functionality: Shader  is not available on OpenGL 1.1
+  pub unsafe fn LoadShader(vs_file_name: *const i8, fs_file_name: *const i8) -> Shader;
 
   // Screen-space-related functions
   pub unsafe fn GetScreenToWorldRay(position: Vector2, camera: Camera3D) -> Ray;
