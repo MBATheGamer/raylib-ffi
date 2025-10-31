@@ -8,6 +8,7 @@ mod misc;
 mod random;
 mod screen_space;
 mod time;
+mod vr;
 mod window;
 
 pub use camera::*;
@@ -19,4 +20,5 @@ pub use misc::*;
 pub use random::*;
 pub use screen_space::*;
 pub use time::*;
+pub use vr::*;
 pub use window::*;

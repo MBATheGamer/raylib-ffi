@@ -1,5 +1,6 @@
 use crate::structs::{
-  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture2D, Vector2, Vector3,
+  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture2D, Vector2, Vector3, VrDeviceInfo,
+  VrStereoConfig,
 };
 
 unsafe extern "C" {
@@ -47,6 +48,9 @@ unsafe extern "C" {
   pub unsafe fn BeginTextureMode(target: RenderTexture2D);
   pub unsafe fn EndTextureMode();
 
+  // VR stereo config functions for VR simulator
+  pub unsafe fn LoadVrStereoConfig(device: VrDeviceInfo) -> VrStereoConfig;
+
   // Screen-space-related functions
   pub unsafe fn GetScreenToWorldRay(position: Vector2, camera: Camera3D) -> Ray;
   pub unsafe fn GetWorldToScreen(position: Vector3, camera: Camera3D) -> Vector2;
@@ -62,6 +66,11 @@ unsafe extern "C" {
   // Misc. functions
   pub unsafe fn SetConfigFlags(flags: u32);
 
+  // File system functions
+  pub unsafe fn IsFileDropped() -> bool;
+  pub unsafe fn LoadDroppedFiles() -> FilePathList;
+  pub unsafe fn UnloadDroppedFiles(files: FilePathList);
+
   // Input-related functions: Keyboard
   pub unsafe fn IsKeyPressed(key: i32) -> bool;
   pub unsafe fn IsKeyDown(key: i32) -> bool;
@@ -74,11 +83,6 @@ unsafe extern "C" {
   pub unsafe fn GetGamepadButtonPressed() -> i32;
   pub unsafe fn GetGamepadAxisCount(gamepad: i32) -> i32;
   pub unsafe fn GetGamepadAxisMovement(gamepad: i32, axis: i32) -> f32;
-
-  // File system functions
-  pub unsafe fn IsFileDropped() -> bool;
-  pub unsafe fn LoadDroppedFiles() -> FilePathList;
-  pub unsafe fn UnloadDroppedFiles(files: FilePathList);
 
   // Input-related functions: Mouse
   pub unsafe fn IsMouseButtonPressed(button: i32) -> bool;
