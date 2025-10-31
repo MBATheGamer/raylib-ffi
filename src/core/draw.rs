@@ -1,9 +1,9 @@
 use crate::{
   core::ffi::{
-    BeginDrawing, BeginMode2D, BeginMode3D, BeginTextureMode, ClearBackground, EndDrawing,
-    EndMode2D, EndMode3D, EndTextureMode,
+    BeginDrawing, BeginMode2D, BeginMode3D, BeginTextureMode, BeginVrStereoMode, ClearBackground,
+    EndDrawing, EndMode2D, EndMode3D, EndTextureMode,
   },
-  structs::{Camera2D, Camera3D, Color, RenderTexture2D},
+  structs::{Camera2D, Camera3D, Color, RenderTexture2D, VrStereoConfig},
 };
 
 #[inline]
@@ -49,4 +49,9 @@ pub fn begin_texture_mode(target: RenderTexture2D) {
 #[inline]
 pub fn end_texture_mode() {
   unsafe { EndTextureMode() };
+}
+
+#[inline]
+pub fn begin_vr_stereo_mode(config: VrStereoConfig) {
+  unsafe { BeginVrStereoMode(config) };
 }
