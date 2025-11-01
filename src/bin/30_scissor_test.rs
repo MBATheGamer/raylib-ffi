@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_scissor_mode, clear_background, close_window, end_drawing,
+    end_scissor_mode, get_screen_height, get_screen_width, init_window,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_x, get_mouse_y},
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shapes::{draw_rectangle, draw_rectangle_lines_ex},
+  structs::Rectangle,
+  text::draw_text,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,13 +23,13 @@ fn main() {
     "raylib [core] example - scissor test",
   );
 
-  let scissor_area = Rectangle {
+  let mut scissor_area = Rectangle {
     x: 0.0,
     y: 0.0,
     width: 300.0,
     height: 300.0,
   };
-  let scissor_mode = true;
+  let mut scissor_mode = true;
 
   set_target_fps(60);
 
@@ -23,8 +38,8 @@ fn main() {
       scissor_mode = !scissor_mode;
     }
 
-    scissor_area.x = get_mouse_x() - scissor_area.width / 2;
-    scissor_area.y = get_mouse_y() - scissor_area.height / 2;
+    scissor_area.x = get_mouse_x() as f32 - scissor_area.width / 2.0;
+    scissor_area.y = get_mouse_y() as f32 - scissor_area.height / 2.0;
 
     begin_drawing();
 
