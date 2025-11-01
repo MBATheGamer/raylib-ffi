@@ -8,7 +8,7 @@ use raylib_ffi::{
     set_target_fps, window_should_close,
   },
   enums::KeyboardKey,
-  shapes::{draw_rectangle, draw_rectangle_lines_ex},
+  shape::{draw_rectangle, draw_rectangle_lines_ex},
   structs::Rectangle,
   text::draw_text,
 };

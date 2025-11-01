@@ -6,7 +6,7 @@ use raylib_ffi::{
     set_target_fps, window_should_close,
   },
   enums::KeyboardKey,
-  shapes::draw_rectangle,
+  shape::draw_rectangle,
   text::draw_text,
 };
 

@@ -7,7 +7,7 @@ use raylib_ffi::{
   },
   enums::KeyboardKey,
   model::{draw_cube, draw_plane},
-  shapes::draw_rectangle,
+  shape::draw_rectangle,
   structs::{Camera3D, Rectangle, Vector2, Vector3},
   text::draw_text,
   texture::{draw_texture_rec, fade, load_render_texture, unload_render_texture},

@@ -6,7 +6,7 @@ use raylib_ffi::{
     begin_drawing, clear_background, close_window, end_drawing, init_window, is_file_dropped,
     load_dropped_files, set_target_fps, unload_dropped_files, window_should_close,
   },
-  shapes::draw_rectangle,
+  shape::draw_rectangle,
   text::draw_text,
   texture::fade,
 };

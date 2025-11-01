@@ -5,7 +5,7 @@ use raylib_ffi::{
     set_target_fps, window_should_close,
   },
   enums::KeyboardKey,
-  shapes::draw_circle_v,
+  shape::draw_circle_v,
   structs::Vector2,
   text::draw_text,
 };

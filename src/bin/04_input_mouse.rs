@@ -8,7 +8,7 @@ use raylib_ffi::{
     set_target_fps, show_cursor, window_should_close,
   },
   enums::{KeyboardKey, MouseButton},
-  shapes::draw_circle_v,
+  shape::draw_circle_v,
   structs::Color,
   text::draw_text,
 };

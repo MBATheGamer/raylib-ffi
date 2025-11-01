@@ -13,7 +13,7 @@ use raylib_ffi::{
     set_config_flags, set_target_fps, window_should_close,
   },
   enums::{ConfigFlags, GamepadAxis, GamepadButton, KeyboardKey},
-  shapes::{draw_circle, draw_rectangle, draw_rectangle_rounded, draw_triangle},
+  shape::{draw_circle, draw_rectangle, draw_rectangle_rounded, draw_triangle},
   structs::{Rectangle, Vector2},
   text::draw_text,
   texture::{draw_texture, load_texture, unload_texture},

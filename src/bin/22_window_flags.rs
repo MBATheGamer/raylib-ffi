@@ -7,7 +7,7 @@ use raylib_ffi::{
     set_window_state, toggle_borderless_windowed, toggle_fullscreen, window_should_close,
   },
   enums::{ConfigFlags, KeyboardKey},
-  shapes::{draw_circle_v, draw_rectangle_lines_ex},
+  shape::{draw_circle_v, draw_rectangle_lines_ex},
   structs::{Rectangle, Vector2},
   text::{draw_fps, draw_text},
 };

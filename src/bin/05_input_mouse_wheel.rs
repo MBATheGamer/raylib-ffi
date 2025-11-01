@@ -4,7 +4,7 @@ use raylib_ffi::{
     begin_drawing, clear_background, close_window, end_drawing, init_window,
     mouse::get_mouse_wheel_move, set_target_fps, window_should_close,
   },
-  shapes::draw_rectangle,
+  shape::draw_rectangle,
   text::draw_text,
 };
 

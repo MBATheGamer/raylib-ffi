@@ -1,5 +1,5 @@
 use crate::{
-  shapes::ffi::{
+  shape::ffi::{
     DrawCircle, DrawCircleV, DrawLine, DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleLines,
     DrawRectangleLinesEx, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing,
     DrawTriangle,

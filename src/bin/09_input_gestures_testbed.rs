@@ -12,7 +12,7 @@ use raylib_ffi::{
     window_should_close,
   },
   enums::{Gesture, MouseButton},
-  shapes::{
+  shape::{
     check_collision_point_rec, draw_circle, draw_circle_v, draw_line_ex, draw_rectangle,
     draw_rectangle_rec, draw_ring, draw_triangle,
   },

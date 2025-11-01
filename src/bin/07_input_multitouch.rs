@@ -5,7 +5,7 @@ use raylib_ffi::{
     touch::{get_touch_point_count, get_touch_position},
     window_should_close,
   },
-  shapes::draw_circle_v,
+  shape::draw_circle_v,
   structs::Vector2,
   text::draw_text,
 };

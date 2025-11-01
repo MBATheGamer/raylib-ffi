@@ -6,7 +6,7 @@ use raylib_ffi::{
     keyboard::is_key_down, set_target_fps, window_should_close,
   },
   enums::KeyboardKey,
-  shapes::{draw_line_v, draw_rectangle, draw_rectangle_rec},
+  shape::{draw_line_v, draw_rectangle, draw_rectangle_rec},
   structs::{Camera2D, Rectangle, Vector2},
   text::draw_text,
   texture::{draw_texture_rec, fade, load_render_texture, unload_render_texture},

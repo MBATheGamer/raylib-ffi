@@ -4,7 +4,7 @@ use crate::{
     BeginVrStereoMode, ClearBackground, EndDrawing, EndMode2D, EndMode3D, EndScissorMode,
     EndShaderMode, EndTextureMode, EndVrStereoMode,
   },
-  structs::{Camera2D, Camera3D, Color, RenderTexture2D, Shader, VrStereoConfig},
+  structs::{Camera2D, Camera3D, Color, RenderTexture, Shader, VrStereoConfig},
 };
 
 #[inline]
@@ -43,7 +43,7 @@ pub fn end_mode_3d() {
 }
 
 #[inline]
-pub fn begin_texture_mode(target: RenderTexture2D) {
+pub fn begin_texture_mode(target: RenderTexture) {
   unsafe { BeginTextureMode(target) };
 }
 

@@ -8,7 +8,7 @@ use raylib_ffi::{
     set_target_fps, window_should_close,
   },
   enums::KeyboardKey,
-  shapes::{draw_line, draw_rectangle, draw_rectangle_lines, draw_rectangle_rec},
+  shape::{draw_line, draw_rectangle, draw_rectangle_lines, draw_rectangle_rec},
   structs::{Camera2D, Color, Rectangle, Vector2},
   text::draw_text,
   texture::fade,

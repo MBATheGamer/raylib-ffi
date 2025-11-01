@@ -8,7 +8,7 @@ use raylib_ffi::{
     window_should_close,
   },
   enums::MouseButton,
-  shapes::draw_circle_v,
+  shape::draw_circle_v,
   structs::{Color, Vector2},
   text::draw_text,
 };

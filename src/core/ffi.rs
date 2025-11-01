@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
 use crate::structs::{
-  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture2D, Shader, Vector2, Vector3,
+  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture, Shader, Vector2, Vector3,
   VrDeviceInfo, VrStereoConfig,
 };
 
@@ -47,7 +47,7 @@ unsafe extern "C" {
   pub unsafe fn EndMode2D();
   pub unsafe fn BeginMode3D(camera: Camera3D);
   pub unsafe fn EndMode3D();
-  pub unsafe fn BeginTextureMode(target: RenderTexture2D);
+  pub unsafe fn BeginTextureMode(target: RenderTexture);
   pub unsafe fn EndTextureMode();
   pub unsafe fn BeginShaderMode(shader: Shader);
   pub unsafe fn EndShaderMode();

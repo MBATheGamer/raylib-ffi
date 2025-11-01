@@ -64,8 +64,6 @@ pub struct Texture {
   pub format: i32,  // Data format (PixelFormat type)
 }
 
-pub type Texture2D = Texture;
-
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct RenderTexture {
@@ -73,8 +71,6 @@ pub struct RenderTexture {
   pub texture: Texture, // Color buffer attachment texture
   pub depth: Texture,   // Depth buffer attachment texture
 }
-
-pub type RenderTexture2D = RenderTexture;
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -127,14 +123,6 @@ pub struct BoundingBox {
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
-pub struct FilePathList {
-  pub capacity: u32,
-  pub count: u32,
-  pub paths: *mut *mut i8,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
 pub struct VrDeviceInfo {
   pub h_resolution: i32,                // Horizontal resolution in pixels
   pub v_resolution: i32,                // Vertical resolution in pixels
@@ -158,4 +146,12 @@ pub struct VrStereoConfig {
   pub right_screen_center: [f32; 2], // VR right screen center
   pub scale: [f32; 2],               // VR distortion scale
   pub scale_in: [f32; 2],            // VR distortion scale in
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct FilePathList {
+  pub capacity: u32,
+  pub count: u32,
+  pub paths: *mut *mut i8,
 }

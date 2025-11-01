@@ -6,7 +6,7 @@ use raylib_ffi::{
     window_should_close,
   },
   enums::KeyboardKey,
-  shapes::draw_circle_v,
+  shape::draw_circle_v,
   structs::Vector2,
   text::draw_text,
 };

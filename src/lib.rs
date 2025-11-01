@@ -1,8 +1,8 @@
 pub mod consts;
 pub mod core;
 pub mod enums;
-pub mod shapes;
+pub mod model;
+pub mod shape;
 pub mod structs;
 pub mod text;
 pub mod texture;
-pub mod model;

@@ -7,7 +7,7 @@ use raylib_ffi::{
   },
   enums::{CameraMode, CameraProjection, KeyboardKey},
   model::{draw_cube, draw_cube_wires, draw_grid},
-  shapes::{draw_rectangle, draw_rectangle_lines},
+  shape::{draw_rectangle, draw_rectangle_lines},
   structs::{Camera3D, Vector3},
   text::draw_text,
   texture::fade,

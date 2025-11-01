@@ -1,5 +1,5 @@
 use crate::{
-  shapes::ffi::CheckCollisionPointRec,
+  shape::ffi::CheckCollisionPointRec,
   structs::{Rectangle, Vector2},
 };
 

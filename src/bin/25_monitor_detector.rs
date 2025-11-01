@@ -8,7 +8,7 @@ use raylib_ffi::{
     window_should_close,
   },
   enums::KeyboardKey,
-  shapes::{draw_rectangle_lines, draw_rectangle_lines_ex, draw_rectangle_v},
+  shape::{draw_rectangle_lines, draw_rectangle_lines_ex, draw_rectangle_v},
   structs::{Rectangle, Vector2},
   text::draw_text,
   texture::fade,

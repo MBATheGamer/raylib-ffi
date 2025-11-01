@@ -5,7 +5,7 @@ use raylib_ffi::{
     init_window, set_target_fps, touch::get_touch_position, window_should_close,
   },
   enums::Gesture,
-  shapes::{
+  shape::{
     check_collision_point_rec, draw_circle_v, draw_rectangle, draw_rectangle_lines,
     draw_rectangle_rec,
   },
