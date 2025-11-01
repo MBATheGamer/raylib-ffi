@@ -1,8 +1,8 @@
 use crate::{
   core::ffi::{
     BeginDrawing, BeginMode2D, BeginMode3D, BeginScissorMode, BeginShaderMode, BeginTextureMode,
-    BeginVrStereoMode, ClearBackground, EndDrawing, EndMode2D, EndMode3D, EndShaderMode,
-    EndTextureMode, EndVrStereoMode,
+    BeginVrStereoMode, ClearBackground, EndDrawing, EndMode2D, EndMode3D, EndScissorMode,
+    EndShaderMode, EndTextureMode, EndVrStereoMode,
   },
   structs::{Camera2D, Camera3D, Color, RenderTexture2D, Shader, VrStereoConfig},
 };
@@ -65,6 +65,12 @@ pub fn end_shader_mode() {
 #[inline]
 pub fn begin_scissor_mode(x: i32, y: i32, width: i32, height: i32) {
   unsafe { BeginScissorMode(x, y, width, height) };
+}
+
+#[inline]
+
+pub fn end_scissor_mode() {
+  unsafe { EndScissorMode() };
 }
 
 #[inline]

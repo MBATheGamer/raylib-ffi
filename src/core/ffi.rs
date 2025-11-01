@@ -52,6 +52,7 @@ unsafe extern "C" {
   pub unsafe fn BeginShaderMode(shader: Shader);
   pub unsafe fn EndShaderMode();
   pub unsafe fn BeginScissorMode(x: i32, y: i32, width: i32, height: i32);
+  pub unsafe fn EndScissorMode();
   pub unsafe fn BeginVrStereoMode(config: VrStereoConfig);
   pub unsafe fn EndVrStereoMode();
 
