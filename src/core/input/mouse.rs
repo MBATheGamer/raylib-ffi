@@ -1,7 +1,7 @@
 use crate::{
   core::ffi::{
-    GetMousePosition, GetMouseWheelMove, GetMouseX, IsMouseButtonDown, IsMouseButtonPressed,
-    IsMouseButtonReleased,
+    GetMousePosition, GetMouseWheelMove, GetMouseX, GetMouseY, IsMouseButtonDown,
+    IsMouseButtonPressed, IsMouseButtonReleased,
   },
   enums::MouseButton,
   structs::Vector2,
@@ -25,6 +25,11 @@ pub fn is_mouse_button_released(button: MouseButton) -> bool {
 #[inline]
 pub fn get_mouse_x() -> i32 {
   return unsafe { GetMouseX() };
+}
+
+#[inline]
+pub fn get_mouse_y() -> i32 {
+  return unsafe { GetMouseY() };
 }
 
 #[inline]
