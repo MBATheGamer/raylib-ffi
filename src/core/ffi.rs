@@ -107,6 +107,7 @@ unsafe extern "C" {
   pub unsafe fn IsMouseButtonPressed(button: i32) -> bool;
   pub unsafe fn IsMouseButtonDown(button: i32) -> bool;
   pub unsafe fn IsMouseButtonReleased(button: i32) -> bool;
+  pub unsafe fn GetMouseX() -> i32;
   pub unsafe fn GetMousePosition() -> Vector2;
   pub unsafe fn GetMouseWheelMove() -> f32;
 

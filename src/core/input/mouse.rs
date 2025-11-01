@@ -1,6 +1,6 @@
 use crate::{
   core::ffi::{
-    GetMousePosition, GetMouseWheelMove, IsMouseButtonDown, IsMouseButtonPressed,
+    GetMousePosition, GetMouseWheelMove, GetMouseX, IsMouseButtonDown, IsMouseButtonPressed,
     IsMouseButtonReleased,
   },
   enums::MouseButton,
@@ -20,6 +20,11 @@ pub fn is_mouse_button_down(button: MouseButton) -> bool {
 #[inline]
 pub fn is_mouse_button_released(button: MouseButton) -> bool {
   return unsafe { IsMouseButtonReleased(button as i32) };
+}
+
+#[inline]
+pub fn get_mouse_x() -> i32 {
+  return unsafe { GetMouseX() };
 }
 
 #[inline]
