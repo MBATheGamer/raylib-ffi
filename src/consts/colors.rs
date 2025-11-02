@@ -77,6 +77,13 @@ pub const LIME: Color = Color {
   alpha: 255,
 };
 
+pub const DARKGREEN: Color = Color {
+  red: 0,
+  green: 117,
+  blue: 44,
+  alpha: 255,
+};
+
 pub const SKYBLUE: Color = Color {
   red: 102,
   green: 191,
