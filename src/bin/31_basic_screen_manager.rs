@@ -1,3 +1,14 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, gesture::is_gesture_detected,
+    init_window, keyboard::is_key_pressed, set_target_fps, window_should_close,
+  },
+  enums::{Gesture, KeyboardKey},
+  shape::draw_rectangle,
+  text::draw_text,
+};
+
 enum GameScreen {
   Logo = 0,
   Title,
@@ -15,9 +26,9 @@ fn main() {
     "raylib [core] example - basic screen manager",
   );
 
-  let current_screen = GameScreen::Logo;
+  let mut current_screen = GameScreen::Logo;
 
-  let frames_counter = 0;
+  let mut frames_counter = 0;
 
   set_target_fps(60);
 
@@ -45,7 +56,6 @@ fn main() {
           current_screen = GameScreen::Title;
         }
       }
-      _ => {}
     }
     begin_drawing();
 
@@ -89,7 +99,6 @@ fn main() {
           colors::DARKBLUE,
         );
       }
-      _ => {}
     }
 
     end_drawing();
