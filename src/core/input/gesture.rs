@@ -1,13 +1,18 @@
 use std::mem::transmute;
 
 use crate::{
-  core::ffi::{GetGestureDetected, GetGestureDragAngle, GetGesturePinchAngle},
+  core::ffi::{GetGestureDetected, GetGestureDragAngle, GetGesturePinchAngle, IsGestureDetected},
   enums::Gesture,
 };
 
 #[inline]
 pub fn get_gesture_detected() -> Gesture {
   return unsafe { transmute(GetGestureDetected() as i16) };
+}
+
+#[inline]
+pub fn is_gesture_detected(gesture: Gesture) -> bool {
+  return unsafe { IsGestureDetected(gesture as u32) };
 }
 
 #[inline]
