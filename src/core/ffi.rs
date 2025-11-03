@@ -79,6 +79,7 @@ unsafe extern "C" {
   // Timing-related functions
   pub unsafe fn SetTargetFPS(fps: i32);
   pub unsafe fn GetFrameTime() -> f32;
+  pub unsafe fn GetTime() -> f64;
   pub unsafe fn GetFPS() -> i32;
 
   // Random values generation functions
