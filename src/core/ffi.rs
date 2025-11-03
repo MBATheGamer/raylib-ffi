@@ -82,6 +82,12 @@ unsafe extern "C" {
   pub unsafe fn GetTime() -> f64;
   pub unsafe fn GetFPS() -> i32;
 
+  // Custom frame control functions
+  // NOTE: Those functions are intended for advanced users that want full control over the frame processing
+  // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
+  // To apub unsafe fn that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
+  pub unsafe fn PollInputEvents();
+
   // Random values generation functions
   pub unsafe fn GetRandomValue(min: i32, max: i32) -> i32;
 
