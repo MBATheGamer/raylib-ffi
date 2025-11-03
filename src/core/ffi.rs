@@ -86,6 +86,7 @@ unsafe extern "C" {
   // NOTE: Those functions are intended for advanced users that want full control over the frame processing
   // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
   // To apub unsafe fn that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
+  pub unsafe fn SwapScreenBuffer();
   pub unsafe fn PollInputEvents();
 
   // Random values generation functions
