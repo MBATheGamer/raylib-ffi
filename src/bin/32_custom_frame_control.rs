@@ -1,4 +1,23 @@
+use std::env;
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_height,
+    get_screen_width, get_time, init_window, keyboard::is_key_pressed, poll_input_events,
+    swap_screen_buffer, wait_time, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_circle, draw_rectangle},
+  text::draw_text,
+};
+
 fn main() {
+  let platform = match env::var("PLATFORM") {
+    Ok(platform) => platform,
+    _ => format!("DESKTOP"),
+  };
+
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
 
@@ -8,17 +27,14 @@ fn main() {
     "raylib [core] example - custom frame control",
   );
 
-  let previous_time: f64 = get_time();
-  let current_time: f64 = 0.0;
-  let update_draw_time: f64 = 0.0;
-  let waiting_time = 0.0;
-  let delta_time: f32 = 0.0;
+  let mut previous_time = get_time();
+  let mut delta_time = 0.0;
 
-  let time_counter: f32 = 0.0;
-  let position: f32 = 0.0;
-  let pause = false;
+  let mut time_counter = 0.0;
+  let mut position = 0.0;
+  let mut pause = false;
 
-  let target_fps = 60;
+  let mut target_fps = 60;
 
   while !window_should_close() {
     if platform != "WEB" {
@@ -54,7 +70,7 @@ fn main() {
 
     clear_background(colors::RAYWHITE);
 
-    for i in 0..get_screen_width() / 200 {
+    for i in 0..(get_screen_width() / 200) {
       draw_rectangle(200 * i, 0, 1, get_screen_height(), colors::SKYBLUE);
     }
 
@@ -66,14 +82,14 @@ fn main() {
     );
 
     draw_text(
-      &format!("{} ms", time_counter * 1000.0),
+      &format!("{:.0} ms", time_counter * 1000.0),
       position as i32 - 40,
       get_screen_height() / 2 - 100,
       20,
       colors::MAROON,
     );
     draw_text(
-      &format!("PosX: {}", position),
+      &format!("PosX: {}", position as i32),
       position as i32 - 50,
       get_screen_height() / 2 + 40,
       20,
@@ -122,11 +138,11 @@ fn main() {
 
     swap_screen_buffer();
 
-    current_time = get_time();
-    update_draw_time = current_time - previous_time;
+    let mut current_time = get_time();
+    let update_draw_time = current_time - previous_time;
 
     if target_fps > 0 {
-      waiting_time = (1.0 / target_fps as f32) - update_draw_time as f32;
+      let waiting_time = (1.0 / target_fps as f64) - update_draw_time as f64;
       if waiting_time > 0.0 {
         wait_time(waiting_time);
         current_time = get_time();
