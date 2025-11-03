@@ -88,6 +88,7 @@ unsafe extern "C" {
   // To apub unsafe fn that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
   pub unsafe fn SwapScreenBuffer();
   pub unsafe fn PollInputEvents();
+  pub unsafe fn WaitTime(seconds: f64);
 
   // Random values generation functions
   pub unsafe fn GetRandomValue(min: i32, max: i32) -> i32;
