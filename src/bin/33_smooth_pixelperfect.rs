@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_2d, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_mode_2d, end_texture_mode, get_frame_time, get_screen_width, get_time, init_window,
+    set_target_fps, window_should_close,
+  },
+  shape::draw_rectangle_pro,
+  structs::{Camera2D, Rectangle, Vector2},
+  text::{draw_fps, draw_text},
+  texture::{draw_texture_pro, load_render_texture, unload_render_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -13,12 +26,12 @@ fn main() {
     "raylib [core] example - smooth pixelperfect",
   );
 
-  let world_space_camera = Camera2D {
+  let mut world_space_camera = Camera2D {
     zoom: 1.0,
     ..Default::default()
   };
 
-  let screen_space_camera = Camera2D {
+  let mut screen_space_camera = Camera2D {
     zoom: 1.0,
     ..Default::default()
   };
@@ -59,7 +72,7 @@ fn main() {
 
   let origin = Vector2 { x: 0.0, y: 0.0 };
 
-  let rotation = 0.0;
+  let mut rotation = 0.0;
 
   set_target_fps(60);
 
