@@ -5,8 +5,8 @@ use crate::{
     ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetMonitorHeight,
     GetMonitorName, GetMonitorPhysicalHeight, GetMonitorPhysicalWidth, GetMonitorPosition,
     GetMonitorRefreshRate, GetMonitorWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition,
-    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowMinSize,
-    SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
+    GetWindowScaleDPI, IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow,
+    SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
     WindowShouldClose,
   },
   enums::ConfigFlags,
@@ -135,6 +135,11 @@ pub fn get_monitor_refresh_rate(monitor: i32) -> i32 {
 #[inline]
 pub fn get_window_position() -> Vector2 {
   return unsafe { GetWindowPosition() };
+}
+
+#[inline]
+pub fn get_window_scale_dpi() -> Vector2 {
+  return unsafe { GetWindowScaleDPI() };
 }
 
 #[inline]
