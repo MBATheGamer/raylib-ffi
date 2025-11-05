@@ -86,6 +86,16 @@ pub struct RenderTexture {
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
+struct GlyphInfo {
+  value: i32,     // Character value (Unicode)
+  offset_x: i32,  // Character offset X when drawing
+  offset_y: i32,  // Character offset Y when drawing
+  advance_x: i32, // Character advance position X
+  image: Image,   // Character image data
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
 pub struct Camera2D {
   pub offset: Vector2, // Camera offset (displacement from target)
   pub target: Vector2, // Camera target (rotation and zoom origin)
