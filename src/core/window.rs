@@ -5,8 +5,9 @@ use crate::{
     ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetMonitorHeight,
     GetMonitorName, GetMonitorPhysicalHeight, GetMonitorPhysicalWidth, GetMonitorPosition,
     GetMonitorRefreshRate, GetMonitorWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition,
-    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowMonitor, SetWindowState,
-    ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
+    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowMinSize,
+    SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
+    WindowShouldClose,
   },
   enums::ConfigFlags,
   structs::Vector2,
@@ -74,6 +75,11 @@ pub fn restore_window() {
 #[inline]
 pub fn set_window_monitor(monitor: i32) {
   unsafe { SetWindowMonitor(monitor) };
+}
+
+#[inline]
+pub fn set_window_min_size(width: i32, height: i32) {
+  unsafe { SetWindowMinSize(width, height) };
 }
 
 #[inline]

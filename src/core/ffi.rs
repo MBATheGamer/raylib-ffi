@@ -19,6 +19,7 @@ unsafe extern "C" {
   pub unsafe fn MinimizeWindow();
   pub unsafe fn RestoreWindow();
   pub unsafe fn SetWindowMonitor(monitor: i32);
+  pub unsafe fn SetWindowMinSize(width: i32, height: i32);
   pub unsafe fn GetScreenWidth() -> i32;
   pub unsafe fn GetScreenHeight() -> i32;
   pub unsafe fn GetMonitorCount() -> i32;
