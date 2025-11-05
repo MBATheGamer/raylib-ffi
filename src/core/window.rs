@@ -4,10 +4,10 @@ use crate::{
   core::ffi::{
     ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetMonitorHeight,
     GetMonitorName, GetMonitorPhysicalHeight, GetMonitorPhysicalWidth, GetMonitorPosition,
-    GetMonitorRefreshRate, GetMonitorWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition,
-    GetWindowScaleDPI, IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow,
-    SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
-    WindowShouldClose,
+    GetMonitorRefreshRate, GetMonitorWidth, GetRenderWidth, GetScreenHeight, GetScreenWidth,
+    GetWindowPosition, GetWindowScaleDPI, IsWindowState, MaximizeWindow, MinimizeWindow,
+    RestoreWindow, SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed,
+    ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
   structs::Vector2,
@@ -90,6 +90,11 @@ pub fn get_screen_width() -> i32 {
 #[inline]
 pub fn get_screen_height() -> i32 {
   return unsafe { GetScreenHeight() };
+}
+
+#[inline]
+pub fn get_render_width() -> i32 {
+  return unsafe { GetRenderWidth() };
 }
 
 #[inline]
