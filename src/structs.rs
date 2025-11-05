@@ -58,7 +58,7 @@ pub struct Rectangle {
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
-struct Image {
+pub struct Image {
   data: *mut c_void, // Image raw data
   width: i32,        // Image base width
   height: i32,       // Image base height
@@ -86,12 +86,23 @@ pub struct RenderTexture {
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
-struct GlyphInfo {
+pub struct GlyphInfo {
   value: i32,     // Character value (Unicode)
   offset_x: i32,  // Character offset X when drawing
   offset_y: i32,  // Character offset Y when drawing
   advance_x: i32, // Character advance position X
   image: Image,   // Character image data
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct Font {
+  base_size: i32,         // Base size (default chars height)
+  glyph_count: i32,       // Number of glyph characters
+  glyph_padding: i32,     // Padding around the glyph characters
+  texture: Texture,       // Texture atlas containing the glyphs
+  recs: *mut Rectangle,   // Rectangles in texture for the glyphs
+  glyphs: *mut GlyphInfo, // Glyphs info data
 }
 
 #[repr(C)]
