@@ -1,4 +1,4 @@
-use crate::structs::{Color, Font};
+use crate::structs::{Color, Font, Vector2};
 
 unsafe extern "C" {
   // Font loading/unloading functions
@@ -10,4 +10,6 @@ unsafe extern "C" {
 
   // Text font info functions
   pub unsafe fn MeasureText(text: *const i8, font_size: i32) -> i32;
+  pub unsafe fn MeasureTextEx(font: Font, text: *const i8, font_size: f32, spacing: f32)
+  -> Vector2;
 }
