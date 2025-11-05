@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_current_monitor,
+    get_monitor_count, get_render_width, get_screen_height, get_screen_width, get_window_scale_dpi,
+    init_window, keyboard::is_key_pressed, set_config_flags, set_target_fps, set_window_min_size,
+    set_window_monitor, window_should_close,
+  },
+  enums::{ConfigFlags, KeyboardKey},
+  shape::{draw_line, draw_rectangle},
+  structs::{Color, Vector2},
+  text::{draw_text_ex, get_font_default, measure_text_ex},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -19,7 +33,6 @@ fn main() {
   let pixel_grid_label_y = pixel_grid_bottom + 30;
   let pixel_grid_desc_y = pixel_grid_label_y + 30;
   let cell_size = 50;
-  let cell_size_px = 50.0;
 
   set_target_fps(60);
 
@@ -32,7 +45,7 @@ fn main() {
 
     let current_monitor = get_current_monitor();
     let dpi_scale = get_window_scale_dpi();
-    cell_size_px = cell_size as f32 / dpi_scale.x;
+    let cell_size_px = cell_size as f32 / dpi_scale.x;
 
     begin_drawing();
 
@@ -65,8 +78,9 @@ fn main() {
       colors::ORANGE,
     );
 
-    let odd = true;
-    for i in cell_size..get_screen_width() {
+    let mut odd = true;
+    let mut i = cell_size;
+    while i < get_screen_width() {
       if odd {
         draw_rectangle(
           i,
@@ -96,9 +110,10 @@ fn main() {
 
     odd = true;
     let min_text_space = 30;
-    let last_text_x = -min_text_space;
-    for i in cell_size..get_render_width() {
-      let x = (i / dpi_scale.x) as i32;
+    let mut last_text_x = -min_text_space;
+    let mut i = cell_size;
+    while i < get_render_width() {
+      let x = i / dpi_scale.x as i32;
       if odd {
         draw_rectangle(
           x,
@@ -145,12 +160,12 @@ fn main() {
     );
 
     let text = "Can you see this?";
-    let size = measure_text_ex(get_font_default(), text, 20, 3);
+    let size = measure_text_ex(get_font_default(), text, 20.0, 3.0);
     let pos = Vector2 {
       x: get_screen_width() as f32 - size.x - 5.0,
       y: get_screen_height() as f32 - size.y - 5.0,
     };
-    draw_text_ex(get_font_default(), text, pos, 20, 3, colors::LIGHTGRAY);
+    draw_text_ex(get_font_default(), text, pos, 20.0, 3.0, colors::LIGHTGRAY);
 
     end_drawing();
   }
@@ -159,10 +174,10 @@ fn main() {
 }
 
 fn draw_text_center(text: &str, x: i32, y: i32, font_size: i32, color: Color) {
-  let size = measure_text_ex(get_font_default(), text, font_size, 3);
+  let size = measure_text_ex(get_font_default(), text, font_size as f32, 3.0);
   let pos = Vector2 {
     x: x as f32 - size.x / 2.0,
     y: y as f32 - size.y / 2.0,
   };
-  draw_text_ex(get_font_default(), text, pos, font_size, 3, color);
+  draw_text_ex(get_font_default(), text, pos, font_size as f32, 3.0, color);
 }
