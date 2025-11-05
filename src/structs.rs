@@ -1,3 +1,5 @@
+use std::ffi::c_void;
+
 use crate::enums::CameraProjection;
 
 #[repr(C)]
@@ -37,7 +39,7 @@ pub struct Matrix {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Default, PartialEq)]
 pub struct Color {
   pub red: u8,
   pub green: u8,
@@ -52,6 +54,16 @@ pub struct Rectangle {
   pub y: f32,      // Rectangle top-left corner position y
   pub width: f32,  // Rectangle width
   pub height: f32, // Rectangle height
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+struct Image {
+  data: *mut c_void, // Image raw data
+  width: i32,        // Image base width
+  height: i32,       // Image base height
+  mipmaps: i32,      // Mipmap levels, 1 by default
+  format: i32,       // Data format (PixelFormat type)
 }
 
 #[repr(C)]
