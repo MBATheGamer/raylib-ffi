@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_texture_mode, init_window, set_target_fps, window_should_close,
+  },
+  shape::{draw_circle_v, draw_rectangle},
+  structs::{Rectangle, Vector2},
+  text::{draw_fps, draw_text},
+  texture::{draw_texture_pro, load_render_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -12,14 +24,14 @@ fn main() {
   let render_texture_height = 300;
   let target = load_render_texture(render_texture_width, render_texture_height);
 
-  let ball_position = Vector2 {
+  let mut ball_position = Vector2 {
     x: render_texture_width as f32 / 2.0,
     y: render_texture_height as f32 / 2.0,
   };
-  let ball_speed = Vector2 { x: 5.0, y: 4.0 };
+  let mut ball_speed = Vector2 { x: 5.0, y: 4.0 };
   let ball_radius = 20;
 
-  let rotation = 0.0;
+  let mut rotation = 0.0;
 
   set_target_fps(60);
 
