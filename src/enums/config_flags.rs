@@ -1,3 +1,6 @@
+use std::ops::BitOr;
+
+#[derive(Clone, Copy)]
 pub enum ConfigFlags {
   VsyncHint = 0x00000040,              // Set to try enabling V-Sync on GPU
   FullscreenMode = 0x00000002,         // Set to run program in fullscreen
@@ -15,4 +18,20 @@ pub enum ConfigFlags {
   BorderlessWindowedMode = 0x00008000, // Set to run program in borderless windowed mode
   MSAA4xHint = 0x00000020,             // Set to try enabling MSAA 4X
   InterlacedHint = 0x00010000,         // Set to try enabling interlaced video format (for V3D)
+}
+
+impl BitOr for ConfigFlags {
+  type Output = u32;
+
+  fn bitor(self, rhs: Self) -> u32 {
+    return self as u32 | rhs as u32;
+  }
+}
+
+impl BitOr<u32> for ConfigFlags {
+  type Output = u32;
+
+  fn bitor(self, rhs: u32) -> u32 {
+    return self as u32 | rhs;
+  }
 }

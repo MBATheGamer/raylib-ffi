@@ -27,7 +27,7 @@ fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
 
-  set_config_flags(ConfigFlags::MSAA4xHint);
+  set_config_flags(&[ConfigFlags::MSAA4xHint]);
 
   init_window(
     SCREEN_WIDTH,
