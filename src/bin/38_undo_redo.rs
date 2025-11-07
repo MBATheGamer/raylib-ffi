@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_random_value, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_line, draw_rectangle, draw_rectangle_lines, draw_rectangle_rec},
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+};
+
 #[derive(Clone, Copy, Default, PartialEq)]
 struct Point {
   x: i32,
@@ -26,18 +39,18 @@ fn main() {
     "raylib [core] example - undo redo",
   );
 
-  let current_undo_index = 0;
-  let first_undo_index = 0;
-  let last_undo_index = 0;
-  let undo_frame_counter = 0;
+  let mut current_undo_index = 0;
+  let mut first_undo_index = 0;
+  let mut last_undo_index = 0;
+  let mut undo_frame_counter = 0;
   let undo_info_pos = Vector2 { x: 110.0, y: 400.0 };
 
-  let player = PlayerState {
+  let mut player = PlayerState {
     cell: Point { x: 10, y: 10 },
     color: colors::RED,
   };
 
-  let states: Vec<PlayerState> = vec![];
+  let mut states: Vec<PlayerState> = vec![];
 
   for _ in 0..MAX_UNDO_STATES {
     states.push(player);
@@ -114,7 +127,7 @@ fn main() {
 
     if is_key_down(KeyboardKey::KeyLeftControl) && is_key_pressed(KeyboardKey::KeyY) {
       if current_undo_index != last_undo_index {
-        let next_undo_index = current_undo_index + 1;
+        let mut next_undo_index = current_undo_index + 1;
         if next_undo_index >= MAX_UNDO_STATES {
           next_undo_index = 0;
         }
