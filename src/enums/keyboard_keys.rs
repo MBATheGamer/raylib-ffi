@@ -1,3 +1,4 @@
+#[derive(Clone, Copy)]
 pub enum KeyboardKey {
   KeyNull = 0, // Key: NULL, used for no key pressed
 
