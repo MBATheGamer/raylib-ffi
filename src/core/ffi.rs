@@ -112,7 +112,7 @@ unsafe extern "C" {
   // Input-related functions: Gamepads
   pub unsafe fn IsGamepadAvailable(gamepad: i32) -> bool;
   pub unsafe fn GetGamepadName(gamepad: i32) -> *const i8;
-  pub unsafe fn IsGamepadButtonDown(gamepad: i32, button: i32) -> bool;
+  pub unsafe fn IsGamepadButtonPressed(gamepad: i32, button: i32) -> bool;
   pub unsafe fn GetGamepadButtonPressed() -> i32;
   pub unsafe fn GetGamepadAxisCount(gamepad: i32) -> i32;
   pub unsafe fn GetGamepadAxisMovement(gamepad: i32, axis: i32) -> f32;

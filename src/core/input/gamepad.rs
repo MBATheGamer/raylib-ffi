@@ -3,7 +3,7 @@ use std::ffi::CStr;
 use crate::{
   core::ffi::{
     GetGamepadAxisCount, GetGamepadAxisMovement, GetGamepadButtonPressed, GetGamepadName,
-    IsGamepadAvailable, IsGamepadButtonDown,
+    IsGamepadAvailable, IsGamepadButtonPressed,
   },
   enums::{GamepadAxis, GamepadButton},
 };
@@ -21,8 +21,8 @@ pub fn get_gamepad_name(gamepad: i32) -> &'static str {
 }
 
 #[inline]
-pub fn is_gamepad_button_down(gamepad: i32, button: GamepadButton) -> bool {
-  return unsafe { IsGamepadButtonDown(gamepad, button as i32) };
+pub fn is_gamepad_button_pressed(gamepad: i32, button: GamepadButton) -> bool {
+  return unsafe { IsGamepadButtonPressed(gamepad, button as i32) };
 }
 
 #[inline]
