@@ -1,4 +1,4 @@
-#[derive(PartialEq)]
+#[derive(Clone, Copy, PartialEq)]
 pub enum GamepadButton {
   Unknown = 0,    // Unknown button, just for error checking
   LeftFaceUp,     // Gamepad left DPAD up button
