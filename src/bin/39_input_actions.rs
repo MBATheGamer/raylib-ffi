@@ -1,3 +1,20 @@
+use std::sync::Mutex;
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing,
+    gamepad::{is_gamepad_button_down, is_gamepad_button_pressed},
+    init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    set_target_fps, window_should_close,
+  },
+  enums::{GamepadButton, KeyboardKey},
+  shape::draw_rectangle_v,
+  structs::Vector2,
+  text::draw_text,
+};
+
 #[derive(Clone, Copy, PartialEq, PartialOrd)]
 enum ActionType {
   NoAction = 0,
@@ -21,12 +38,13 @@ struct ActionInput {
   button: GamepadButton,
 }
 
-static GAMEPAD_INDEX: i32 = 0;
-static ACTION_INPUTS: [ActionInput; ActionType::MaxAction as usize] = [ActionInput {
-  key: KeyboardKey::KeyNull,
-  button: GamepadButton::Unknown,
-};
-  ActionType::MaxAction as usize];
+static GAMEPAD_INDEX: Mutex<i32> = Mutex::new(0);
+static ACTION_INPUTS: Mutex<[ActionInput; ActionType::MaxAction as usize]> = Mutex::new(
+  [ActionInput {
+    key: KeyboardKey::KeyNull,
+    button: GamepadButton::Unknown,
+  }; ActionType::MaxAction as usize],
+);
 
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
@@ -38,17 +56,17 @@ fn main() {
     "raylib [core] example - input actions",
   );
 
-  let action_set: i8 = 0;
+  let mut action_set: i8 = 0;
   set_actions_default();
 
-  let position = Vector2 { x: 400.0, y: 200.0 };
+  let mut position = Vector2 { x: 400.0, y: 200.0 };
   let size = Vector2 { x: 40.0, y: 40.0 };
 
   set_target_fps(60);
 
   while !window_should_close() {
     {
-      let gamepad_index = GAMEPAD_INDEX;
+      let mut gamepad_index = GAMEPAD_INDEX.lock().unwrap();
       *gamepad_index = 0;
     }
     if is_action_down(ActionType::ActionUp) {
@@ -109,8 +127,8 @@ fn main() {
 }
 
 fn is_action_pressed(action: ActionType) -> bool {
-  let action_inputs = ACTION_INPUTS;
-  let gamepad_index = GAMEPAD_INDEX;
+  let action_inputs = ACTION_INPUTS.lock().unwrap();
+  let gamepad_index = GAMEPAD_INDEX.lock().unwrap();
 
   if action < ActionType::MaxAction {
     return is_key_pressed(action_inputs[action as usize].key)
@@ -121,9 +139,9 @@ fn is_action_pressed(action: ActionType) -> bool {
 }
 
 fn is_action_down(action: ActionType) -> bool {
-  let result = false;
-  let action_inputs = ACTION_INPUTS;
-  let gamepad_index = GAMEPAD_INDEX;
+  let mut result = false;
+  let action_inputs = ACTION_INPUTS.lock().unwrap();
+  let gamepad_index = GAMEPAD_INDEX.lock().unwrap();
 
   if action < ActionType::MaxAction {
     result = is_key_down(action_inputs[action as usize].key)
@@ -134,7 +152,7 @@ fn is_action_down(action: ActionType) -> bool {
 }
 
 fn set_actions_default() {
-  let action_inputs = ACTION_INPUTS;
+  let mut action_inputs = ACTION_INPUTS.lock().unwrap();
 
   action_inputs[ActionType::ActionUp as usize].key = KeyboardKey::KeyW;
   action_inputs[ActionType::ActionDown as usize].key = KeyboardKey::KeyS;
@@ -150,7 +168,7 @@ fn set_actions_default() {
 }
 
 fn set_actions_cursor() {
-  let action_inputs = ACTION_INPUTS;
+  let mut action_inputs = ACTION_INPUTS.lock().unwrap();
 
   action_inputs[ActionType::ActionUp as usize].key = KeyboardKey::KeyUp;
   action_inputs[ActionType::ActionDown as usize].key = KeyboardKey::KeyDown;
