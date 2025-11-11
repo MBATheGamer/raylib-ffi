@@ -25,4 +25,5 @@ unsafe extern "C" {
 
   // Color/pixel related functions
   pub unsafe fn Fade(color: Color, alpha: f32) -> Color;
+  pub unsafe fn ColorAlpha(color: Color, alpha: f32) -> Color;
 }
