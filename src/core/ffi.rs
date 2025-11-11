@@ -34,6 +34,7 @@ unsafe extern "C" {
   pub unsafe fn GetWindowPosition() -> Vector2;
   pub unsafe fn GetWindowScaleDPI() -> Vector2;
   pub unsafe fn GetMonitorName(monitor: i32) -> *const i8;
+  pub unsafe fn GetClipboardText() -> *const i8;
   pub unsafe fn GetClipboardImage() -> Image;
 
   // Cursor-related functions
