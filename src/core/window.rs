@@ -6,8 +6,8 @@ use crate::{
     GetMonitorCount, GetMonitorHeight, GetMonitorName, GetMonitorPhysicalHeight,
     GetMonitorPhysicalWidth, GetMonitorPosition, GetMonitorRefreshRate, GetMonitorWidth,
     GetRenderWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition, GetWindowScaleDPI,
-    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetWindowMinSize,
-    SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
+    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetClipboardText,
+    SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
     WindowShouldClose,
   },
   enums::ConfigFlags,
@@ -153,6 +153,13 @@ pub fn get_monitor_name(monitor: i32) -> &'static str {
   let name = unsafe { CStr::from_ptr(GetMonitorName(monitor)) };
 
   return name.to_str().expect("C string is not valid UTF-8");
+}
+
+#[inline]
+pub fn set_clipboard_text(text: &str) {
+  let text = CString::new(text).expect("You must add title to your application");
+
+  unsafe { SetClipboardText(text.as_ptr()) };
 }
 
 #[inline]
