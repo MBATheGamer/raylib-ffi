@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_clipboard_image,
+    get_clipboard_text, get_frame_time, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    set_clipboard_text, window_should_close,
+  },
+  enums::KeyboardKey,
+  text::draw_text,
+  texture::{color_alpha, is_image_valid, unload_image},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,23 +21,23 @@ fn main() {
     "raylib [core] example - clipboard text",
   );
 
-  let clipboard_text: &'static str;
+  let mut clipboard_text: &'static str = "";
 
   let copyable_text: Vec<&'static str> = vec!["raylib is fun", "hello, clipboard!", "potato chips"];
 
-  let text_index = 0;
+  let mut text_index = 0;
 
-  let popup_text: &'static str;
+  let mut popup_text: &'static str = "";
 
   const MAX_TIME: f32 = 3.0;
-  let text_timer = 0.0;
+  let mut text_timer = 0.0;
 
   const ANIM_MAX_TIME: f32 = 0.1;
-  let paste_anim = 0.0;
-  let copy_anim = 0.0;
-  let copy_anim_mult = 1;
-  let text_anim = 0.0;
-  let text_alpha = 0.0;
+  let mut paste_anim = 0.0;
+  let mut copy_anim = 0.0;
+  let mut copy_anim_mult = 1;
+  let mut text_anim = 0.0;
+  let mut text_alpha = 0.0;
 
   const OFFSET_AMOUNT: i32 = -4;
 
@@ -104,7 +117,7 @@ fn main() {
     clear_background(colors::RAYWHITE);
 
     if !clipboard_text.is_empty() {
-      let offset = 0;
+      let mut offset = 0;
       if paste_anim > 0.0 {
         offset = OFFSET_AMOUNT;
       }
@@ -113,7 +126,7 @@ fn main() {
       draw_text(clipboard_text, 10, 30 + offset, 20, colors::DARKGRAY);
     }
 
-    let text_offset = 0;
+    let mut text_offset = 0;
     if copy_anim > 0.0 {
       text_offset = OFFSET_AMOUNT;
     }
@@ -134,7 +147,7 @@ fn main() {
     );
 
     if text_alpha > 0.0 {
-      let offset = 0;
+      let mut offset = 0;
       if text_anim > 0.0 {
         offset = OFFSET_AMOUNT;
       }
