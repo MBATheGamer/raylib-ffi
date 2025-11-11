@@ -2,15 +2,15 @@ use std::ffi::{CStr, CString};
 
 use crate::{
   core::ffi::{
-    ClearWindowState, CloseWindow, GetCurrentMonitor, GetMonitorCount, GetMonitorHeight,
-    GetMonitorName, GetMonitorPhysicalHeight, GetMonitorPhysicalWidth, GetMonitorPosition,
-    GetMonitorRefreshRate, GetMonitorWidth, GetRenderWidth, GetScreenHeight, GetScreenWidth,
-    GetWindowPosition, GetWindowScaleDPI, IsWindowState, MaximizeWindow, MinimizeWindow,
-    RestoreWindow, SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed,
-    ToggleFullscreen, WindowShouldClose,
+    ClearWindowState, CloseWindow, GetClipboardImage, GetCurrentMonitor, GetMonitorCount,
+    GetMonitorHeight, GetMonitorName, GetMonitorPhysicalHeight, GetMonitorPhysicalWidth,
+    GetMonitorPosition, GetMonitorRefreshRate, GetMonitorWidth, GetRenderWidth, GetScreenHeight,
+    GetScreenWidth, GetWindowPosition, GetWindowScaleDPI, IsWindowState, MaximizeWindow,
+    MinimizeWindow, RestoreWindow, SetWindowMinSize, SetWindowMonitor, SetWindowState,
+    ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
-  structs::Vector2,
+  structs::{Image, Vector2},
 };
 
 use super::ffi::InitWindow;
@@ -152,4 +152,9 @@ pub fn get_monitor_name(monitor: i32) -> &'static str {
   let name = unsafe { CStr::from_ptr(GetMonitorName(monitor)) };
 
   return name.to_str().expect("C string is not valid UTF-8");
+}
+
+#[inline]
+pub fn get_clipboard_image() -> Image {
+  return unsafe { GetClipboardImage() };
 }

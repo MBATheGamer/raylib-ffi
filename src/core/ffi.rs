@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
 use crate::structs::{
-  Camera2D, Camera3D, Color, FilePathList, Ray, RenderTexture, Shader, Vector2, Vector3,
+  Camera2D, Camera3D, Color, FilePathList, Image, Ray, RenderTexture, Shader, Vector2, Vector3,
   VrDeviceInfo, VrStereoConfig,
 };
 
@@ -34,6 +34,7 @@ unsafe extern "C" {
   pub unsafe fn GetWindowPosition() -> Vector2;
   pub unsafe fn GetWindowScaleDPI() -> Vector2;
   pub unsafe fn GetMonitorName(monitor: i32) -> *const i8;
+  pub unsafe fn GetClipboardImage() -> Image;
 
   // Cursor-related functions
   pub unsafe fn ShowCursor();
