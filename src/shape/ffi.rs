@@ -12,6 +12,13 @@ unsafe extern "C" {
   pub unsafe fn DrawLineV(start_pos: Vector2, end_pos: Vector2, color: Color);
   pub unsafe fn DrawLineEx(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Color);
   pub unsafe fn DrawCircle(center_x: i32, center_y: i32, radius: f32, color: Color);
+  pub unsafe fn DrawCircleGradient(
+    center_x: i32,
+    center_y: i32,
+    radius: f32,
+    inner: Color,
+    outer: Color,
+  );
   pub unsafe fn DrawCircleV(center: Vector2, radius: f32, color: Color);
   pub unsafe fn DrawRing(
     center: Vector2,
