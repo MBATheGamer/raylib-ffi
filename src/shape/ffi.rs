@@ -28,6 +28,13 @@ unsafe extern "C" {
     radius_v: f32,
     color: Color,
   );
+  pub unsafe fn DrawEllipseLines(
+    center_x: i32,
+    center_y: i32,
+    radius_h: f32,
+    radius_v: f32,
+    color: Color,
+  );
   pub unsafe fn DrawRing(
     center: Vector2,
     inner_radius: f32,
