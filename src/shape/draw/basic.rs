@@ -3,7 +3,7 @@ use crate::{
     DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleV, DrawEllipse, DrawEllipseLines,
     DrawLine, DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleGradientV, DrawRectangleLines,
     DrawRectangleLinesEx, DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV,
-    DrawRing, DrawTriangle,
+    DrawRing, DrawTriangle, DrawTriangleLines,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -136,4 +136,9 @@ pub fn draw_rectangle_rounded(rectangle: Rectangle, roundness: f32, segments: i3
 #[inline]
 pub fn draw_triangle(v1: Vector2, v2: Vector2, v3: Vector2, color: Color) {
   unsafe { DrawTriangle(v1, v2, v3, color) };
+}
+
+#[inline]
+pub fn draw_triangle_lines(v1: Vector2, v2: Vector2, v3: Vector2, color: Color) {
+  unsafe { DrawTriangleLines(v1, v2, v3, color) };
 }
