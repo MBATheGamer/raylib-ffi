@@ -1,8 +1,9 @@
 use crate::{
   shape::ffi::{
-    DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleV, DrawLine, DrawLineEx, DrawLineV,
-    DrawRectangle, DrawRectangleLines, DrawRectangleLinesEx, DrawRectanglePro, DrawRectangleRec,
-    DrawRectangleRounded, DrawRectangleV, DrawRing, DrawTriangle,
+    DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleV, DrawEllipse, DrawLine,
+    DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleLines, DrawRectangleLinesEx,
+    DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing,
+    DrawTriangle,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -42,6 +43,11 @@ pub fn draw_circle_v(center: Vector2, radius: f32, color: Color) {
 #[inline]
 pub fn draw_circle_lines(center_x: i32, center_y: i32, radius: f32, color: Color) {
   unsafe { DrawCircleLines(center_x, center_y, radius, color) };
+}
+
+#[inline]
+pub fn draw_ellipse(center_x: i32, center_y: i32, radius_h: f32, radius_v: f32, color: Color) {
+  unsafe { DrawEllipse(center_x, center_y, radius_h, radius_v, color) };
 }
 
 #[inline]
