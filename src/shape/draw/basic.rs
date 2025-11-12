@@ -1,7 +1,7 @@
 use crate::{
   shape::ffi::{
     DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleV, DrawEllipse, DrawEllipseLines,
-    DrawLine, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines, DrawRectangle,
+    DrawLine, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines, DrawPolyLinesEx, DrawRectangle,
     DrawRectangleGradientV, DrawRectangleLines, DrawRectangleLinesEx, DrawRectanglePro,
     DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing, DrawTriangle,
     DrawTriangleLines,
@@ -152,4 +152,16 @@ pub fn draw_poly(center: Vector2, sides: i32, radius: f32, rotation: f32, color:
 #[inline]
 pub fn draw_poly_lines(center: Vector2, sides: i32, radius: f32, rotation: f32, color: Color) {
   unsafe { DrawPolyLines(center, sides, radius, rotation, color) };
+}
+
+#[inline]
+pub fn draw_poly_lines_ex(
+  center: Vector2,
+  sides: i32,
+  radius: f32,
+  rotation: f32,
+  line_thick: f32,
+  color: Color,
+) {
+  unsafe { DrawPolyLinesEx(center, sides, radius, rotation, line_thick, color) };
 }

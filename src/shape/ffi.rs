@@ -74,6 +74,14 @@ unsafe extern "C" {
     rotation: f32,
     color: Color,
   );
+  pub unsafe fn DrawPolyLinesEx(
+    center: Vector2,
+    sides: i32,
+    radius: f32,
+    rotation: f32,
+    line_thick: f32,
+    color: Color,
+  );
 
   // Basic shapes collision detection functions
   pub unsafe fn CheckCollisionPointRec(point: Vector2, rectangle: Rectangle) -> bool;
