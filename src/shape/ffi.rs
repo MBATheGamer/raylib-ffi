@@ -48,6 +48,14 @@ unsafe extern "C" {
   pub unsafe fn DrawRectangleV(position: Vector2, size: Vector2, color: Color);
   pub unsafe fn DrawRectangleRec(rectangle: Rectangle, color: Color);
   pub unsafe fn DrawRectanglePro(rec: Rectangle, origin: Vector2, rotation: f32, color: Color);
+  pub unsafe fn DrawRectangleGradientV(
+    pos_x: i32,
+    pos_y: i32,
+    width: i32,
+    height: i32,
+    top: Color,
+    bottom: Color,
+  );
   pub unsafe fn DrawRectangleLines(pos_x: i32, pos_y: i32, width: i32, height: i32, color: Color);
   pub unsafe fn DrawRectangleLinesEx(rec: Rectangle, line_thick: f32, color: Color);
   pub unsafe fn DrawRectangleRounded(

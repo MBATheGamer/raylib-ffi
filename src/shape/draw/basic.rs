@@ -1,9 +1,9 @@
 use crate::{
   shape::ffi::{
     DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleV, DrawEllipse, DrawEllipseLines,
-    DrawLine, DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleLines, DrawRectangleLinesEx,
-    DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing,
-    DrawTriangle,
+    DrawLine, DrawLineEx, DrawLineV, DrawRectangle, DrawRectangleGradientV, DrawRectangleLines,
+    DrawRectangleLinesEx, DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV,
+    DrawRing, DrawTriangle,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -104,6 +104,18 @@ pub fn draw_rectangle_rec(rectangle: Rectangle, color: Color) {
 #[inline]
 pub fn draw_rectangle_pro(rec: Rectangle, origin: Vector2, rotation: f32, color: Color) {
   unsafe { DrawRectanglePro(rec, origin, rotation, color) };
+}
+
+#[inline]
+pub fn draw_rectangle_gradient_v(
+  pos_x: i32,
+  pos_y: i32,
+  width: i32,
+  height: i32,
+  top: Color,
+  bottom: Color,
+) {
+  unsafe { DrawRectangleGradientV(pos_x, pos_y, width, height, top, bottom) };
 }
 
 #[inline]
