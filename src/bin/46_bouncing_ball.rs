@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_height,
+    get_screen_width, init_window, keyboard::is_key_pressed, set_config_flags, set_target_fps,
+    window_should_close,
+  },
+  enums::{ConfigFlags, KeyboardKey},
+  shape::draw_circle_v,
+  structs::Vector2,
+  text::{draw_fps, draw_text},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -9,17 +22,17 @@ fn main() {
     "raylib [shapes] example - bouncing ball",
   );
 
-  let ball_position = Vector2 {
+  let mut ball_position = Vector2 {
     x: get_screen_width() as f32 / 2.0,
     y: get_screen_height() as f32 / 2.0,
   };
-  let ball_speed = Vector2 { x: 5.0, y: 4.0 };
+  let mut ball_speed = Vector2 { x: 5.0, y: 4.0 };
   let ball_radius = 20;
   let gravity = 0.2;
 
-  let use_gravity = true;
-  let pause = false;
-  let frames_counter = 0;
+  let mut use_gravity = true;
+  let mut pause = false;
+  let mut frames_counter = 0;
 
   set_target_fps(60);
 
