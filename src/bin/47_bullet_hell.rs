@@ -1,3 +1,23 @@
+use std::f32::consts::PI;
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_texture_mode, get_fps, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{
+    draw_circle, draw_circle_lines, draw_circle_lines_v, draw_circle_v, draw_rectangle,
+    draw_rectangle_pro,
+  },
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::{draw_texture, load_render_texture, unload_render_texture},
+};
+
 const MAX_BULLETS: i32 = 500000;
 
 struct Bullet {
@@ -18,21 +38,21 @@ fn main() {
     "raylib [shapes] example - bullet hell",
   );
 
-  let bullets: Vec<Bullet> = vec![];
-  let bullet_count = 0;
-  let bullet_disabled_count = 0;
+  let mut bullets: Vec<Bullet> = vec![];
+  let mut bullet_count = 0;
+  let mut bullet_disabled_count = 0;
   let bullet_radius = 10;
-  let bullet_speed = 3.0;
-  let bullet_rows = 6;
+  let mut bullet_speed = 3.0;
+  let mut bullet_rows = 6;
   let bullet_color: [Color; 2] = [colors::RED, colors::BLUE];
 
-  let base_direction = 0.0;
-  let angle_increment = 5;
+  let mut base_direction = 0.0;
+  let mut angle_increment = 5;
 
-  let spawn_cooldown = 2;
-  let spawn_cooldown_timer = 2;
+  let mut spawn_cooldown = 2;
+  let mut spawn_cooldown_timer = 2;
 
-  let magic_circle_rotation = 0;
+  let mut magic_circle_rotation = 0;
 
   let bullet_texture = load_render_texture(24, 24);
 
@@ -41,7 +61,7 @@ fn main() {
   draw_circle_lines(12, 12, bullet_radius as f32, colors::BLACK);
   end_texture_mode();
 
-  let draw_in_performance_mode = true;
+  let mut draw_in_performance_mode = true;
 
   set_target_fps(60);
 
