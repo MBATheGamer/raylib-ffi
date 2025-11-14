@@ -1,10 +1,10 @@
 use crate::{
   shape::ffi::{
-    DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleV, DrawEllipse, DrawEllipseLines,
-    DrawLine, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines, DrawPolyLinesEx, DrawRectangle,
-    DrawRectangleGradientV, DrawRectangleLines, DrawRectangleLinesEx, DrawRectanglePro,
-    DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing, DrawTriangle,
-    DrawTriangleLines,
+    DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleLinesV, DrawCircleV, DrawEllipse,
+    DrawEllipseLines, DrawLine, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines, DrawPolyLinesEx,
+    DrawRectangle, DrawRectangleGradientV, DrawRectangleLines, DrawRectangleLinesEx,
+    DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing,
+    DrawTriangle, DrawTriangleLines,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -44,6 +44,11 @@ pub fn draw_circle_v(center: Vector2, radius: f32, color: Color) {
 #[inline]
 pub fn draw_circle_lines(center_x: i32, center_y: i32, radius: f32, color: Color) {
   unsafe { DrawCircleLines(center_x, center_y, radius, color) };
+}
+
+#[inline]
+pub fn draw_circle_lines_v(center: Vector2, radius: f32, color: Color) {
+  unsafe { DrawCircleLinesV(center, radius, color) };
 }
 
 #[inline]

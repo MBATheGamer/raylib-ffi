@@ -21,6 +21,7 @@ unsafe extern "C" {
   );
   pub unsafe fn DrawCircleV(center: Vector2, radius: f32, color: Color);
   pub unsafe fn DrawCircleLines(center_x: i32, center_y: i32, radius: f32, color: Color);
+  pub unsafe fn DrawCircleLinesV(center: Vector2, radius: f32, color: Color);
   pub unsafe fn DrawEllipse(
     center_x: i32,
     center_y: i32,
