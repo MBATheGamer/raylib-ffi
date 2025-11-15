@@ -140,6 +140,13 @@ pub const BROWN: Color = Color {
   alpha: 255,
 };
 
+pub const DARKBROWN: Color = Color {
+  red: 76,
+  green: 63,
+  blue: 47,
+  alpha: 255,
+};
+
 pub const WHITE: Color = Color {
   red: 255,
   green: 255,
