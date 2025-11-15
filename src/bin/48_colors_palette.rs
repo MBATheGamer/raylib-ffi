@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_height,
+    get_screen_width, init_window, keyboard::is_key_down, mouse::get_mouse_position,
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{check_collision_point_rec, draw_rectangle, draw_rectangle_lines_ex, draw_rectangle_rec},
+  structs::{Color, Rectangle},
+  text::{draw_text, measure_text},
+  texture::fade,
+};
+
 const MAX_COLORS_COUNT: usize = 21;
 
 fn main() {
@@ -58,7 +72,7 @@ fn main() {
     "BEIGE",
   ];
 
-  let colors_recs = [Rectangle::default(); MAX_COLORS_COUNT];
+  let mut colors_recs = [Rectangle::default(); MAX_COLORS_COUNT];
 
   for i in 0..MAX_COLORS_COUNT {
     colors_recs[i].x = 20.0 + 100.0 * (i % 7) as f32 + 10.0 * (i % 7) as f32;
@@ -67,7 +81,7 @@ fn main() {
     colors_recs[i].height = 100.0;
   }
 
-  let color_state = [false; MAX_COLORS_COUNT];
+  let mut color_state = [false; MAX_COLORS_COUNT];
 
   set_target_fps(60);
 
