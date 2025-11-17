@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_height,
+    get_screen_width, init_window, keyboard::is_key_pressed, set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::draw_rectangle,
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -11,17 +23,17 @@ fn main() {
   let logo_position_x = SCREEN_WIDTH / 2 - 128;
   let logo_position_y = SCREEN_HEIGHT / 2 - 128;
 
-  let frames_counter = 0;
-  let letters_count = 0;
+  let mut frames_counter = 0;
+  let mut letters_count = 0;
 
-  let top_side_rec_width = 16;
-  let left_side_rec_height = 16;
+  let mut top_side_rec_width = 16;
+  let mut left_side_rec_height = 16;
 
-  let bottom_side_rec_width = 16;
-  let right_side_rec_height = 16;
+  let mut bottom_side_rec_width = 16;
+  let mut right_side_rec_height = 16;
 
-  let state = 0;
-  let alpha = 1.0;
+  let mut state = 0;
+  let mut alpha = 1.0;
 
   set_target_fps(60);
 
