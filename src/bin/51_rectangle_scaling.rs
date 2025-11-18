@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_height,
+    get_screen_width, init_window,
+    mouse::{get_mouse_position, is_mouse_button_pressed, is_mouse_button_released},
+    set_target_fps, window_should_close,
+  },
+  enums::MouseButton,
+  shape::{check_collision_point_rec, draw_rectangle_lines_ex, draw_rectangle_rec, draw_triangle},
+  structs::{Rectangle, Vector2},
+  text::draw_text,
+  texture::fade,
+};
+
 const MOUSE_SCALE_MARK_SIZE: i32 = 12;
 
 fn main() {
@@ -10,15 +25,15 @@ fn main() {
     "raylib [shapes] example - rectangle scaling",
   );
 
-  let rec = Rectangle {
+  let mut rec = Rectangle {
     x: 100.0,
     y: 100.0,
     width: 200.0,
     height: 80.0,
   };
 
-  let mouse_scale_ready;
-  let mouse_scale_mode = false;
+  let mut mouse_scale_ready;
+  let mut mouse_scale_mode = false;
 
   set_target_fps(60);
 
