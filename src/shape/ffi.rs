@@ -86,4 +86,5 @@ unsafe extern "C" {
 
   // Basic shapes collision detection functions
   pub unsafe fn CheckCollisionPointRec(point: Vector2, rectangle: Rectangle) -> bool;
+  pub unsafe fn CheckCollisionPointCircle(point: Vector2, center: Vector2, radius: f32) -> bool;
 }
