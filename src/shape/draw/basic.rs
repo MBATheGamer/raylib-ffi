@@ -1,10 +1,10 @@
 use crate::{
   shape::ffi::{
     DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleLinesV, DrawCircleV, DrawEllipse,
-    DrawEllipseLines, DrawLine, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines, DrawPolyLinesEx,
-    DrawRectangle, DrawRectangleGradientV, DrawRectangleLines, DrawRectangleLinesEx,
-    DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing,
-    DrawTriangle, DrawTriangleLines,
+    DrawEllipseLines, DrawLine, DrawLineBezier, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines,
+    DrawPolyLinesEx, DrawRectangle, DrawRectangleGradientV, DrawRectangleLines,
+    DrawRectangleLinesEx, DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV,
+    DrawRing, DrawTriangle, DrawTriangleLines,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -22,6 +22,11 @@ pub fn draw_line_v(start_pos: Vector2, end_pos: Vector2, color: Color) {
 #[inline]
 pub fn draw_line_ex(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Color) {
   unsafe { DrawLineEx(start_pos, end_pos, thick, color) };
+}
+
+#[inline]
+pub fn draw_line_bezier(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Color) {
+  unsafe { DrawLineBezier(start_pos, end_pos, thick, color) };
 }
 
 #[inline]
