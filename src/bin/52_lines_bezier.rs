@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    mouse::{get_mouse_position, is_mouse_button_down, is_mouse_button_released},
+    set_config_flags, set_target_fps, window_should_close,
+  },
+  enums::{ConfigFlags, MouseButton},
+  shape::{check_collision_point_circle, draw_circle_v, draw_line_bezier},
+  structs::Vector2,
+  text::draw_text,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -9,13 +22,13 @@ fn main() {
     "raylib [shapes] example - lines bezier",
   );
 
-  let start_point = Vector2 { x: 30.0, y: 30.0 };
-  let end_point = Vector2 {
+  let mut start_point = Vector2 { x: 30.0, y: 30.0 };
+  let mut end_point = Vector2 {
     x: SCREEN_WIDTH as f32 - 30.0,
     y: SCREEN_HEIGHT as f32 - 30.0,
   };
-  let move_start_point = false;
-  let move_end_point = false;
+  let mut move_start_point = false;
+  let mut move_end_point = false;
 
   set_target_fps(60);
 
