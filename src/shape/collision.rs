@@ -1,5 +1,7 @@
 use crate::{
-  shape::ffi::{CheckCollisionPointCircle, CheckCollisionPointRec, CheckCollisionRecs},
+  shape::ffi::{
+    CheckCollisionPointCircle, CheckCollisionPointRec, CheckCollisionRecs, GetCollisionRec,
+  },
   structs::{Rectangle, Vector2},
 };
 
@@ -16,4 +18,9 @@ pub fn check_collision_point_rec(point: Vector2, rectangle: Rectangle) -> bool {
 #[inline]
 pub fn check_collision_point_circle(point: Vector2, center: Vector2, radius: f32) -> bool {
   return unsafe { CheckCollisionPointCircle(point, center, radius) };
+}
+
+#[inline]
+pub fn get_collision_rec(rec1: Rectangle, rec2: Rectangle) -> Rectangle {
+  return unsafe { GetCollisionRec(rec1, rec2) };
 }
