@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_height,
+    get_screen_width, init_window,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_x, get_mouse_y},
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{check_collision_recs, draw_rectangle, draw_rectangle_rec, get_collision_rec},
+  structs::Rectangle,
+  text::{draw_fps, draw_text, measure_text},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,27 +23,26 @@ fn main() {
     "raylib [shapes] example - collision area",
   );
 
-  let box_a = Rectangle {
+  let mut box_a = Rectangle {
     x: 10.0,
     y: get_screen_height() as f32 / 2.0 - 50.0,
     width: 200.0,
     height: 100.0,
   };
-  let box_aspeed_x = 4;
+  let mut box_aspeed_x = 4;
 
-  let box_b = Rectangle {
+  let mut box_b = Rectangle {
     x: get_screen_width() as f32 / 2.0 - 30.0,
     y: get_screen_height() as f32 / 2.0 - 30.0,
     width: 60.0,
     height: 60.0,
   };
 
-  let box_collision = Rectangle::default();
+  let mut box_collision = Rectangle::default();
 
   let screen_upper_limit = 40;
 
-  let pause = false;
-  let collision = false;
+  let mut pause = false;
 
   set_target_fps(60);
 
@@ -56,7 +70,7 @@ fn main() {
       box_b.y = screen_upper_limit as f32;
     }
 
-    collision = check_collision_recs(box_a, box_b);
+    let collision = check_collision_recs(box_a, box_b);
 
     if collision {
       box_collision = get_collision_rec(box_a, box_b);
