@@ -11,6 +11,9 @@ unsafe extern "C" {
   pub unsafe fn UnloadTexture(texture: Texture);
   pub unsafe fn UnloadRenderTexture(target: RenderTexture);
 
+  // Texture configuration functions
+  pub unsafe fn SetTextureFilter(texture: Texture, filter: i32);
+
   // Texture drawing functions
   pub unsafe fn DrawTexture(texture: Texture, pos_x: i32, pos_y: i32, tint: Color);
   pub unsafe fn DrawTextureRec(texture: Texture, source: Rectangle, position: Vector2, tint: Color);
