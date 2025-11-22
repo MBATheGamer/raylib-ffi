@@ -7,6 +7,7 @@ mod gesture;
 mod keyboard_keys;
 mod mouse_button;
 mod shader_uniform;
+mod texture_filter;
 
 pub use camera_mode::CameraMode;
 pub use camera_projection::CameraProjection;
@@ -17,3 +18,4 @@ pub use gesture::Gesture;
 pub use keyboard_keys::KeyboardKey;
 pub use mouse_button::MouseButton;
 pub use shader_uniform::ShaderUniformType;
+pub use texture_filter::TextureFilter;
