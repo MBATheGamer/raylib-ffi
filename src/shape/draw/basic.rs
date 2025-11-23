@@ -1,8 +1,8 @@
 use crate::{
   shape::ffi::{
     DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleLinesV, DrawCircleV, DrawEllipse,
-    DrawEllipseLines, DrawLine, DrawLineBezier, DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines,
-    DrawPolyLinesEx, DrawRectangle, DrawRectangleGradientV, DrawRectangleLines,
+    DrawEllipseLines, DrawLine, DrawLineBezier, DrawLineDashed, DrawLineEx, DrawLineV, DrawPoly,
+    DrawPolyLines, DrawPolyLinesEx, DrawRectangle, DrawRectangleGradientV, DrawRectangleLines,
     DrawRectangleLinesEx, DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV,
     DrawRing, DrawTriangle, DrawTriangleLines,
   },
@@ -27,6 +27,17 @@ pub fn draw_line_ex(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Col
 #[inline]
 pub fn draw_line_bezier(start_pos: Vector2, end_pos: Vector2, thick: f32, color: Color) {
   unsafe { DrawLineBezier(start_pos, end_pos, thick, color) };
+}
+
+#[inline]
+pub fn draw_line_dashed(
+  start_pos: Vector2,
+  end_pos: Vector2,
+  dash_size: i32,
+  space_size: i32,
+  color: Color,
+) {
+  unsafe { DrawLineDashed(start_pos, end_pos, dash_size, space_size, color) };
 }
 
 #[inline]
