@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    mouse::get_mouse_position,
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_line_dashed, draw_rectangle, draw_rectangle_lines},
+  structs::{Color, Vector2},
+  text::{draw_fps, draw_text},
+  texture::fade,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -11,9 +26,8 @@ fn main() {
   );
 
   let line_start_position = Vector2 { x: 20.0, y: 50.0 };
-  let line_end_position = Vector2 { x: 780.0, y: 400.0 };
-  let dash_length = 25.0;
-  let blank_length = 15.0;
+  let mut dash_length = 25.0;
+  let mut blank_length = 15.0;
 
   const LINE_COLORS: [Color; MAX_COLORS] = [
     colors::RED,
@@ -26,12 +40,12 @@ fn main() {
     colors::BLACK,
   ];
 
-  let color_index = 0;
+  let mut color_index = 0;
 
   set_target_fps(60);
 
   while !window_should_close() {
-    line_end_position = get_mouse_position();
+    let line_end_position = get_mouse_position();
 
     if is_key_down(KeyboardKey::KeyUp) {
       dash_length += 1.0;
