@@ -2,24 +2,17 @@ use std::ffi::c_void;
 
 mod color;
 mod matrix;
+mod rectangle;
 mod vector2;
 mod vector3;
 
 pub use color::Color;
 pub use matrix::Matrix;
+pub use rectangle::Rectangle;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Rectangle {
-  pub x: f32,      // Rectangle top-left corner position x
-  pub y: f32,      // Rectangle top-left corner position y
-  pub width: f32,  // Rectangle width
-  pub height: f32, // Rectangle height
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
