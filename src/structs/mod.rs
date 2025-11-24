@@ -1,4 +1,5 @@
 mod color;
+mod glyph_info;
 mod image;
 mod matrix;
 mod rectangle;
@@ -8,6 +9,7 @@ mod vector2;
 mod vector3;
 
 pub use color::Color;
+pub use glyph_info::GlyphInfo;
 pub use image::Image;
 pub use matrix::Matrix;
 pub use rectangle::Rectangle;
@@ -17,16 +19,6 @@ pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct GlyphInfo {
-  value: i32,     // Character value (Unicode)
-  offset_x: i32,  // Character offset X when drawing
-  offset_y: i32,  // Character offset Y when drawing
-  advance_x: i32, // Character advance position X
-  image: Image,   // Character image data
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
