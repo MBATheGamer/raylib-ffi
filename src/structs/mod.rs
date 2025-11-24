@@ -2,6 +2,7 @@ mod bounding_box;
 mod camera2d;
 mod camera3d;
 mod color;
+mod file_path_list;
 mod font;
 mod glyph_info;
 mod image;
@@ -21,6 +22,7 @@ pub use bounding_box::BoundingBox;
 pub use camera2d::Camera2D;
 pub use camera3d::Camera3D;
 pub use color::Color;
+pub use file_path_list::FilePathList;
 pub use font::Font;
 pub use glyph_info::GlyphInfo;
 pub use image::Image;
@@ -35,11 +37,3 @@ pub use vector2::Vector2;
 pub use vector3::Vector3;
 pub use vr_device_info::VrDeviceInfo;
 pub use vr_stereo_config::VrStereoConfig;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct FilePathList {
-  pub capacity: u32,
-  pub count: u32,
-  pub paths: *mut *mut i8,
-}
