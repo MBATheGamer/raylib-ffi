@@ -1,3 +1,4 @@
+mod bounding_box;
 mod camera2d;
 mod camera3d;
 mod color;
@@ -14,6 +15,7 @@ mod texture;
 mod vector2;
 mod vector3;
 
+pub use bounding_box::BoundingBox;
 pub use camera2d::Camera2D;
 pub use camera3d::Camera3D;
 pub use color::Color;
@@ -29,13 +31,6 @@ pub use shader::Shader;
 pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct BoundingBox {
-  pub min: Vector3, // Minimum vertex box-corner
-  pub max: Vector3, // Maximum vertex box-corner
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
