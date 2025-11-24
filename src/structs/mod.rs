@@ -2,6 +2,7 @@ mod color;
 mod image;
 mod matrix;
 mod rectangle;
+mod render_texture;
 mod texture;
 mod vector2;
 mod vector3;
@@ -10,19 +11,12 @@ pub use color::Color;
 pub use image::Image;
 pub use matrix::Matrix;
 pub use rectangle::Rectangle;
+pub use render_texture::RenderTexture;
 pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct RenderTexture {
-  pub id: u32,          // OpenGL framebuffer object id
-  pub texture: Texture, // Color buffer attachment texture
-  pub depth: Texture,   // Depth buffer attachment texture
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
