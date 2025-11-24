@@ -2,6 +2,7 @@ mod color;
 mod image;
 mod matrix;
 mod rectangle;
+mod texture;
 mod vector2;
 mod vector3;
 
@@ -9,20 +10,11 @@ pub use color::Color;
 pub use image::Image;
 pub use matrix::Matrix;
 pub use rectangle::Rectangle;
+pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Texture {
-  pub id: u32,      // OpenGL texture id
-  pub width: i32,   // Texture base width
-  pub height: i32,  // Texture base height
-  pub mipmaps: i32, // Mipmap levels, 1 by default
-  pub format: i32,  // Data format (PixelFormat type)
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
