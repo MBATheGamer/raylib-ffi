@@ -1,23 +1,16 @@
 use std::ffi::c_void;
 
+mod color;
 mod matrix;
 mod vector2;
 mod vector3;
 
+pub use color::Color;
 pub use matrix::Matrix;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default, PartialEq)]
-pub struct Color {
-  pub red: u8,
-  pub green: u8,
-  pub blue: u8,
-  pub alpha: u8,
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
