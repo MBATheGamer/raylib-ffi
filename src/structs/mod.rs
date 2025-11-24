@@ -5,6 +5,7 @@ mod font;
 mod glyph_info;
 mod image;
 mod matrix;
+mod ray;
 mod rectangle;
 mod render_texture;
 mod shader;
@@ -19,19 +20,13 @@ pub use font::Font;
 pub use glyph_info::GlyphInfo;
 pub use image::Image;
 pub use matrix::Matrix;
+pub use ray::Ray;
 pub use rectangle::Rectangle;
 pub use render_texture::RenderTexture;
 pub use shader::Shader;
 pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Ray {
-  pub position: Vector3,  // Ray position (origin)
-  pub direction: Vector3, // Ray direction (normalized)
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
