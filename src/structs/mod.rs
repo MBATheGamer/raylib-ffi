@@ -6,6 +6,7 @@ mod glyph_info;
 mod image;
 mod matrix;
 mod ray;
+mod ray_collision;
 mod rectangle;
 mod render_texture;
 mod shader;
@@ -21,21 +22,13 @@ pub use glyph_info::GlyphInfo;
 pub use image::Image;
 pub use matrix::Matrix;
 pub use ray::Ray;
+pub use ray_collision::RayCollision;
 pub use rectangle::Rectangle;
 pub use render_texture::RenderTexture;
 pub use shader::Shader;
 pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct RayCollision {
-  pub hit: bool,       // Did the ray hit something?
-  pub distance: f32,   // Distance to the nearest hit
-  pub point: Vector3,  // Point of the nearest hit
-  pub normal: Vector3, // Surface normal of hit
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
