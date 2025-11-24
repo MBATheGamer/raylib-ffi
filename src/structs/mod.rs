@@ -1,28 +1,18 @@
-use std::ffi::c_void;
-
 mod color;
+mod image;
 mod matrix;
 mod rectangle;
 mod vector2;
 mod vector3;
 
 pub use color::Color;
+pub use image::Image;
 pub use matrix::Matrix;
 pub use rectangle::Rectangle;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Image {
-  data: *mut c_void, // Image raw data
-  width: i32,        // Image base width
-  height: i32,       // Image base height
-  mipmaps: i32,      // Mipmap levels, 1 by default
-  format: i32,       // Data format (PixelFormat type)
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
