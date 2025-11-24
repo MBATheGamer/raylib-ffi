@@ -15,6 +15,7 @@ mod texture;
 mod vector2;
 mod vector3;
 mod vr_device_info;
+mod vr_stereo_config;
 
 pub use bounding_box::BoundingBox;
 pub use camera2d::Camera2D;
@@ -33,19 +34,7 @@ pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
 pub use vr_device_info::VrDeviceInfo;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct VrStereoConfig {
-  pub projection: [Matrix; 2],       // VR projection matrices (per eye)
-  pub view_offset: [Matrix; 2],      // VR view offset matrices (per eye)
-  pub left_lens_center: [f32; 2],    // VR left lens center
-  pub right_lens_center: [f32; 2],   // VR right lens center
-  pub left_screen_center: [f32; 2],  // VR left screen center
-  pub right_screen_center: [f32; 2], // VR right screen center
-  pub scale: [f32; 2],               // VR distortion scale
-  pub scale_in: [f32; 2],            // VR distortion scale in
-}
+pub use vr_stereo_config::VrStereoConfig;
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
