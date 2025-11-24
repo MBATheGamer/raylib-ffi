@@ -7,6 +7,7 @@ mod image;
 mod matrix;
 mod rectangle;
 mod render_texture;
+mod shader;
 mod texture;
 mod vector2;
 mod vector3;
@@ -20,16 +21,10 @@ pub use image::Image;
 pub use matrix::Matrix;
 pub use rectangle::Rectangle;
 pub use render_texture::RenderTexture;
+pub use shader::Shader;
 pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Shader {
-  pub id: u32,        // Shader program id
-  pub locs: *mut i32, // Shader locations array (RL_MAX_SHADER_LOCATIONS)
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
