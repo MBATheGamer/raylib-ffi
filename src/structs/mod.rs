@@ -1,3 +1,4 @@
+mod camera2d;
 mod color;
 mod font;
 mod glyph_info;
@@ -9,6 +10,7 @@ mod texture;
 mod vector2;
 mod vector3;
 
+pub use camera2d::Camera2D;
 pub use color::Color;
 pub use font::Font;
 pub use glyph_info::GlyphInfo;
@@ -21,15 +23,6 @@ pub use vector2::Vector2;
 pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Camera2D {
-  pub offset: Vector2, // Camera offset (displacement from target)
-  pub target: Vector2, // Camera target (rotation and zoom origin)
-  pub rotation: f32,   // Camera rotation in degrees
-  pub zoom: f32,       // Camera zoom (scaling), should be 1.0f by default
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
