@@ -1,18 +1,12 @@
 use std::ffi::c_void;
 
 mod vector2;
+mod vector3;
 
 pub use vector2::Vector2;
+pub use vector3::Vector3;
 
 use crate::enums::CameraProjection;
-
-#[repr(C)]
-#[derive(Clone, Copy, Default)]
-pub struct Vector3 {
-  pub x: f32,
-  pub y: f32,
-  pub z: f32,
-}
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
