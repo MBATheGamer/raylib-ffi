@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_random_value, init_window,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_position, is_mouse_button_down},
+    set_target_fps, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton},
+  shape::{draw_circle_v, draw_rectangle, draw_rectangle_lines},
+  structs::{Color, Vector2},
+  text::{draw_fps, draw_text},
+  texture::fade,
+};
+
 #[repr(i32)]
 #[derive(Clone, Copy, PartialEq)]
 enum ParticleType {
@@ -43,21 +58,21 @@ fn main() {
     "raylib [shapes] example - simple particles",
   );
 
-  let particles: Vec<Particle> = vec![];
+  let mut particles: Vec<Particle> = vec![];
 
   for _ in 0..MAX_PARTICLES {
     particles.push(Particle::default());
   }
 
-  let circular_buffer = CircularBuffer {
+  let mut circular_buffer = CircularBuffer {
     head: 0,
     tail: 0,
     buffer: particles,
   };
 
-  let emission_rate = -2;
-  let current_type = ParticleType::Water;
-  let emitter_position = Vector2 {
+  let mut emission_rate = -2;
+  let mut current_type = ParticleType::Water;
+  let mut emitter_position = Vector2 {
     x: SCREEN_WIDTH as f32 / 2.0,
     y: SCREEN_HEIGHT as f32 / 2.0,
   };
@@ -168,14 +183,14 @@ fn emit_particle(
   emitter_position: Vector2,
   particle_type: ParticleType,
 ) {
-  let new_particle = add_to_circular_buffer(circular_buffer);
+  let mut new_particle = add_to_circular_buffer(circular_buffer);
 
   if let Some(particle) = &mut new_particle {
     particle.position = emitter_position;
     particle.alive = true;
     particle.life_time = 0.0;
     particle.particle_type = particle_type;
-    let speed = get_random_value(0, 10) as f32 / 5.0;
+    let mut speed = get_random_value(0, 10) as f32 / 5.0;
     match particle_type {
       ParticleType::Water => {
         particle.radius = 5.0;
@@ -201,7 +216,7 @@ fn emit_particle(
 }
 
 fn add_to_circular_buffer(circular_buffer: &mut CircularBuffer) -> Option<&mut Particle> {
-  let particle: Option<&mut Particle> = None;
+  let mut particle: Option<&mut Particle> = None;
 
   if ((circular_buffer.head + 1) % MAX_PARTICLES) != circular_buffer.tail {
     particle = Some(&mut circular_buffer.buffer[circular_buffer.head]);
@@ -212,7 +227,7 @@ fn add_to_circular_buffer(circular_buffer: &mut CircularBuffer) -> Option<&mut P
 }
 
 fn update_particles(circular_buffer: &mut CircularBuffer, screen_width: i32, screen_height: i32) {
-  let i = circular_buffer.tail;
+  let mut i = circular_buffer.tail;
   while i != circular_buffer.head {
     circular_buffer.buffer[i].life_time += 1.0 / 60.0;
 
@@ -271,7 +286,7 @@ fn update_circular_buffer(circular_buffer: &mut CircularBuffer) {
 }
 
 fn draw_particles(circular_buffer: &CircularBuffer) {
-  let i = circular_buffer.tail;
+  let mut i = circular_buffer.tail;
   while i != circular_buffer.head {
     if circular_buffer.buffer[i].alive {
       draw_circle_v(
