@@ -15,5 +15,11 @@ fn main() {
     _ => println!("cargo:warning=Unsupported target architecture"),
   };
 
+  let profile = env::var("PROFILE");
+
+  if let Ok(profile) = profile {
+    println!("cargo:rustc-env=PROFILE={}", profile)
+  }
+
   println!("cargo:rustc-env=PLATFORM={}", platform);
 }
