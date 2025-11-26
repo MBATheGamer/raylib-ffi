@@ -7,8 +7,8 @@ use crate::{
     GetMonitorPhysicalWidth, GetMonitorPosition, GetMonitorRefreshRate, GetMonitorWidth,
     GetRenderWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition, GetWindowScaleDPI,
     IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetClipboardText,
-    SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed, ToggleFullscreen,
-    WindowShouldClose,
+    SetTraceLogLevel, SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed,
+    ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
   structs::{Image, Vector2},
@@ -20,7 +20,14 @@ use super::ffi::InitWindow;
 pub fn init_window(width: i32, height: i32, title: &str) {
   let title = CString::new(title).expect("You must add title to your application");
 
-  unsafe { InitWindow(width, height, title.as_ptr()) };
+  let profile = env!("PROFILE");
+
+  unsafe {
+    if profile == "release" {
+      SetTraceLogLevel(7);
+    }
+    InitWindow(width, height, title.as_ptr())
+  };
 }
 
 #[inline]

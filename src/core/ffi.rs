@@ -102,6 +102,9 @@ unsafe extern "C" {
   // Misc. functions
   pub unsafe fn SetConfigFlags(flags: u32);
 
+  // NOTE: Following functions implemented in module [utils]
+  pub unsafe fn SetTraceLogLevel(log_level: i32);
+
   // File system functions
   pub unsafe fn IsFileDropped() -> bool;
   pub unsafe fn LoadDroppedFiles() -> FilePathList;
