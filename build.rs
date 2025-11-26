@@ -7,6 +7,7 @@ fn main() {
   let mut platform = "DESKTOP";
 
   match target.as_str() {
+    "i686-unknown-linux-gnu" => println!("cargo:rustc-link-lib=raylib_x86"),
     "x86_64-unknown-linux-gnu" => println!("cargo:rustc-link-lib=raylib_x64"),
     "wasm32-unknown-unknown" => {
       println!("cargo:rustc-link-lib=raylib_wasm");
