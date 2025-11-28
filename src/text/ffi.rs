@@ -3,6 +3,7 @@ use crate::structs::{Color, Font, Vector2};
 unsafe extern "C" {
   // Font loading/unloading functions
   pub unsafe fn GetFontDefault() -> Font;
+  pub unsafe fn LoadFont(file_name: *const i8) -> Font;
 
   // Text drawing functions
   pub unsafe fn DrawFPS(pos_x: i32, pos_y: i32);
