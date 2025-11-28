@@ -20,6 +20,14 @@ unsafe extern "C" {
     radius: i32,
     color: Color,
   );
+  pub unsafe fn ImageDrawRectangle(
+    dst: *mut Image,
+    pos_x: i32,
+    pos_y: i32,
+    width: i32,
+    height: i32,
+    color: Color,
+  );
   pub unsafe fn ImageDraw(
     dst: *mut Image,
     src: Image,
