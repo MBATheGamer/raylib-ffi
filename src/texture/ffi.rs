@@ -8,6 +8,7 @@ unsafe extern "C" {
 
   // Image manipulation functions
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
+  pub unsafe fn ImageFlipHorizontal(image: *mut Image);
 
   // Texture loading functions
   pub unsafe fn LoadTexture(filename: *const i8) -> Texture;
