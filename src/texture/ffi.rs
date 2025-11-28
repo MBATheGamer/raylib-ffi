@@ -11,6 +11,15 @@ unsafe extern "C" {
   pub unsafe fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
   pub unsafe fn ImageFlipHorizontal(image: *mut Image);
 
+  // Image drawing functions
+  pub unsafe fn ImageDraw(
+    dst: *mut Image,
+    src: Image,
+    src_rec: Rectangle,
+    dst_rec: Rectangle,
+    tint: Color,
+  );
+
   // Texture loading functions
   pub unsafe fn LoadTexture(filename: *const i8) -> Texture;
   pub unsafe fn LoadRenderTexture(width: i32, height: i32) -> RenderTexture;
