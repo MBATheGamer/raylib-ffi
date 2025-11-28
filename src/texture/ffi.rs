@@ -13,6 +13,13 @@ unsafe extern "C" {
 
   // Image drawing functions
   pub unsafe fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
+  pub unsafe fn ImageDrawCircleLines(
+    dst: *mut Image,
+    center_x: i32,
+    center_y: i32,
+    radius: i32,
+    color: Color,
+  );
   pub unsafe fn ImageDraw(
     dst: *mut Image,
     src: Image,
