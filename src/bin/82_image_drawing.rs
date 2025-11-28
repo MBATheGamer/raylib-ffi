@@ -1,3 +1,19 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window, set_target_fps,
+    window_should_close,
+  },
+  shape::draw_rectangle_lines,
+  structs::{Rectangle, Vector2},
+  text::{draw_text, load_font, unload_font},
+  texture::{
+    draw_texture, image_crop, image_draw, image_draw_circle_lines, image_draw_pixel,
+    image_draw_rectangle, image_draw_text_ex, image_flip_horizontal, image_resize, load_image,
+    load_texture_from_image, unload_image, unload_texture,
+  },
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,9 +24,9 @@ fn main() {
     "raylib [textures] example - image drawing",
   );
 
-  let cat = load_image("resources/cat.png");
+  let mut cat = load_image("resources/cat.png");
   image_crop(
-    &cat,
+    &mut cat,
     Rectangle {
       x: 100.0,
       y: 10.0,
@@ -18,13 +34,13 @@ fn main() {
       height: 380.0,
     },
   );
-  image_flip_horizontal(&cat);
-  image_resize(&cat, 150, 200);
+  image_flip_horizontal(&mut cat);
+  image_resize(&mut cat, 150, 200);
 
-  let parrots = load_image("resources/parrots.png");
+  let mut parrots = load_image("resources/parrots.png");
 
   image_draw(
-    &parrots,
+    &mut parrots,
     cat,
     Rectangle {
       x: 0.0,
@@ -40,31 +56,31 @@ fn main() {
     },
     colors::WHITE,
   );
-  image_crop(
-    &parrots,
-    Rectangle {
-      x: 0.0,
-      y: 50.0,
-      width: parrots.width as f32,
-      height: parrots.height as f32 - 100,
-    },
-  );
 
-  image_draw_pixel(&parrots, 10, 10, colors::RAYWHITE);
-  image_draw_circleLines(&parrots, 10, 10, 5, colors::RAYWHITE);
-  image_draw_rectangle(&parrots, 5, 20, 10, 10, colors::RAYWHITE);
+  let crop = Rectangle {
+    x: 0.0,
+    y: 50.0,
+    width: parrots.width as f32,
+    height: parrots.height as f32 - 100.0,
+  };
+
+  image_crop(&mut parrots, crop);
+
+  image_draw_pixel(&mut parrots, 10, 10, colors::RAYWHITE);
+  image_draw_circle_lines(&mut parrots, 10, 10, 5, colors::RAYWHITE);
+  image_draw_rectangle(&mut parrots, 5, 20, 10, 10, colors::RAYWHITE);
 
   unload_image(cat);
 
   let font = load_font("resources/custom_jupiter_crash.png");
 
-  image_drawTextEx(
-    &parrots,
+  image_draw_text_ex(
+    &mut parrots,
     font,
     "PARROTS & CAT",
     Vector2 { x: 300.0, y: 230.0 },
-    font.baseSize as f32,
-    -2,
+    font.base_size as f32,
+    -2.0,
     colors::WHITE,
   );
 
