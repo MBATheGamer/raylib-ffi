@@ -12,6 +12,7 @@ unsafe extern "C" {
   pub unsafe fn ImageFlipHorizontal(image: *mut Image);
 
   // Image drawing functions
+  pub unsafe fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
   pub unsafe fn ImageDraw(
     dst: *mut Image,
     src: Image,
