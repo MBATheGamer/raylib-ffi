@@ -1,6 +1,10 @@
+use std::ffi::CString;
+
 use crate::{
-  structs::{Color, Image, Rectangle},
-  texture::ffi::{ImageDraw, ImageDrawCircleLines, ImageDrawPixel, ImageDrawRectangle},
+  structs::{Color, Font, Image, Rectangle, Vector2},
+  texture::ffi::{
+    ImageDraw, ImageDrawCircleLines, ImageDrawPixel, ImageDrawRectangle, ImageDrawTextEx,
+  },
 };
 
 #[inline]
@@ -40,4 +44,19 @@ pub fn image_draw(
   tint: Color,
 ) {
   unsafe { ImageDraw(dst, src, src_rec, dst_rec, tint) };
+}
+
+#[inline]
+pub fn image_draw_text_ex(
+  dst: &mut Image,
+  font: Font,
+  text: &str,
+  position: Vector2,
+  font_size: f32,
+  spacing: f32,
+  tint: Color,
+) {
+  let text = CString::new(text).expect("Expecting text message!");
+
+  unsafe { ImageDrawTextEx(dst, font, text.as_ptr(), position, font_size, spacing, tint) }
 }

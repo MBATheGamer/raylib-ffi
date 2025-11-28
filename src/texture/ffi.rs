@@ -1,4 +1,4 @@
-use crate::structs::{Color, Image, Rectangle, RenderTexture, Texture, Vector2};
+use crate::structs::{Color, Font, Image, Rectangle, RenderTexture, Texture, Vector2};
 
 unsafe extern "C" {
   // Image loading functions
@@ -33,6 +33,15 @@ unsafe extern "C" {
     src: Image,
     src_rec: Rectangle,
     dst_rec: Rectangle,
+    tint: Color,
+  );
+  pub unsafe fn ImageDrawTextEx(
+    dst: *mut Image,
+    font: Font,
+    text: *const i8,
+    position: Vector2,
+    font_size: f32,
+    spacing: f32,
     tint: Color,
   );
 
