@@ -1,8 +1,10 @@
 use std::ffi::CString;
 
 use crate::{
-  structs::{RenderTexture, Texture},
-  texture::ffi::{LoadRenderTexture, LoadTexture, UnloadRenderTexture, UnloadTexture},
+  structs::{Image, RenderTexture, Texture},
+  texture::ffi::{
+    LoadRenderTexture, LoadTexture, LoadTextureFromImage, UnloadRenderTexture, UnloadTexture,
+  },
 };
 
 #[inline]
@@ -10,6 +12,11 @@ pub fn load_texture(filename: &str) -> Texture {
   let filename = CString::new(filename).expect("Invalid filename");
 
   return unsafe { LoadTexture(filename.as_ptr()) };
+}
+
+#[inline]
+pub fn load_texture_from_image(image: Image) -> Texture {
+  return unsafe { LoadTextureFromImage(image) };
 }
 
 #[inline]
