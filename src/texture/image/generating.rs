@@ -1,6 +1,6 @@
 use crate::{
   structs::{Color, Image},
-  texture::ffi::{GenImageGradientLinear, GenImageGradientRadial},
+  texture::ffi::{GenImageGradientLinear, GenImageGradientRadial, GenImageGradientSquare},
 };
 
 #[inline]
@@ -23,4 +23,15 @@ pub fn gen_image_gradient_radial(
   outer: Color,
 ) -> Image {
   return unsafe { GenImageGradientRadial(width, height, density, inner, outer) };
+}
+
+#[inline]
+pub fn gen_image_gradient_square(
+  width: i32,
+  height: i32,
+  density: f32,
+  inner: Color,
+  outer: Color,
+) -> Image {
+  return unsafe { GenImageGradientSquare(width, height, density, inner, outer) };
 }

@@ -21,6 +21,13 @@ unsafe extern "C" {
     inner: Color,
     outer: Color,
   ) -> Image;
+  pub unsafe fn GenImageGradientSquare(
+    width: i32,
+    height: i32,
+    density: f32,
+    inner: Color,
+    outer: Color,
+  ) -> Image;
 
   // Image manipulation functions
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
