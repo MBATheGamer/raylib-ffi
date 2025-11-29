@@ -44,6 +44,7 @@ unsafe extern "C" {
     offset_y: i32,
     scale: f32,
   ) -> Image;
+  pub unsafe fn GenImageCellular(width: i32, height: i32, tile_size: i32) -> Image;
 
   // Image manipulation functions
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);

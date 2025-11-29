@@ -1,8 +1,8 @@
 use crate::{
   structs::{Color, Image},
   texture::ffi::{
-    GenImageChecked, GenImageGradientLinear, GenImageGradientRadial, GenImageGradientSquare,
-    GenImagePerlinNoise, GenImageWhiteNoise,
+    GenImageCellular, GenImageChecked, GenImageGradientLinear, GenImageGradientRadial,
+    GenImageGradientSquare, GenImagePerlinNoise, GenImageWhiteNoise,
   },
 };
 
@@ -65,4 +65,9 @@ pub fn gen_image_perlin_noise(
   scale: f32,
 ) -> Image {
   return unsafe { GenImagePerlinNoise(width, height, offset_x, offset_y, scale) };
+}
+
+#[inline]
+pub fn gen_image_cellular(width: i32, height: i32, tile_size: i32) -> Image {
+  return unsafe { GenImageCellular(width, height, tile_size) };
 }
