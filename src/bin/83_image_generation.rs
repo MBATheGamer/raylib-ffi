@@ -1,3 +1,20 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    keyboard::is_key_pressed, mouse::is_mouse_button_pressed, set_target_fps, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton},
+  shape::{draw_rectangle, draw_rectangle_lines},
+  structs::Texture,
+  text::draw_text,
+  texture::{
+    draw_texture, fade, gen_image_cellular, gen_image_checked, gen_image_gradient_linear,
+    gen_image_gradient_radial, gen_image_gradient_square, gen_image_perlin_noise,
+    gen_image_white_noise, load_texture_from_image, unload_image, unload_texture,
+  },
+};
+
 const NUM_TEXTURES: usize = 9;
 
 fn main() {
@@ -42,17 +59,17 @@ fn main() {
   let perlin_noise = gen_image_perlin_noise(SCREEN_WIDTH, SCREEN_HEIGHT, 50, 50, 4.0);
   let cellular = gen_image_cellular(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
 
-  let textures: [Texture; NUM_TEXTURES] = [Texture::default(); NUM_TEXTURES];
-
-  textures[0] = load_texture_from_image(vertical_gradient);
-  textures[1] = load_texture_from_image(horizontal_gradient);
-  textures[2] = load_texture_from_image(diagonal_gradient);
-  textures[3] = load_texture_from_image(radial_gradient);
-  textures[4] = load_texture_from_image(square_gradient);
-  textures[5] = load_texture_from_image(checked);
-  textures[6] = load_texture_from_image(white_noise);
-  textures[7] = load_texture_from_image(perlin_noise);
-  textures[8] = load_texture_from_image(cellular);
+  let textures: [Texture; NUM_TEXTURES] = [
+    load_texture_from_image(vertical_gradient),
+    load_texture_from_image(horizontal_gradient),
+    load_texture_from_image(diagonal_gradient),
+    load_texture_from_image(radial_gradient),
+    load_texture_from_image(square_gradient),
+    load_texture_from_image(checked),
+    load_texture_from_image(white_noise),
+    load_texture_from_image(perlin_noise),
+    load_texture_from_image(cellular),
+  ];
 
   unload_image(vertical_gradient);
   unload_image(horizontal_gradient);
@@ -64,7 +81,7 @@ fn main() {
   unload_image(perlin_noise);
   unload_image(cellular);
 
-  let current_texture = 0;
+  let mut current_texture = 0;
 
   set_target_fps(60);
 
