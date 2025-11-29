@@ -2,6 +2,7 @@ use crate::{
   structs::{Color, Image},
   texture::ffi::{
     GenImageChecked, GenImageGradientLinear, GenImageGradientRadial, GenImageGradientSquare,
+    GenImageWhiteNoise,
   },
 };
 
@@ -48,4 +49,9 @@ pub fn gen_image_checked(
   col2: Color,
 ) -> Image {
   return unsafe { GenImageChecked(width, height, checks_x, checks_y, col1, col2) };
+}
+
+#[inline]
+pub fn gen_image_white_noise(width: i32, height: i32, factor: f32) -> Image {
+  return unsafe { GenImageWhiteNoise(width, height, factor) };
 }

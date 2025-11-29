@@ -36,6 +36,7 @@ unsafe extern "C" {
     col1: Color,
     col2: Color,
   ) -> Image;
+  pub unsafe fn GenImageWhiteNoise(width: i32, height: i32, factor: f32) -> Image;
 
   // Image manipulation functions
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
