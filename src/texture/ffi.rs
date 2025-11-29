@@ -28,6 +28,14 @@ unsafe extern "C" {
     inner: Color,
     outer: Color,
   ) -> Image;
+  pub unsafe fn GenImageChecked(
+    width: i32,
+    height: i32,
+    checks_x: i32,
+    checks_y: i32,
+    col1: Color,
+    col2: Color,
+  ) -> Image;
 
   // Image manipulation functions
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
