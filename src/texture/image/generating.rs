@@ -2,7 +2,7 @@ use crate::{
   structs::{Color, Image},
   texture::ffi::{
     GenImageChecked, GenImageGradientLinear, GenImageGradientRadial, GenImageGradientSquare,
-    GenImageWhiteNoise,
+    GenImagePerlinNoise, GenImageWhiteNoise,
   },
 };
 
@@ -54,4 +54,15 @@ pub fn gen_image_checked(
 #[inline]
 pub fn gen_image_white_noise(width: i32, height: i32, factor: f32) -> Image {
   return unsafe { GenImageWhiteNoise(width, height, factor) };
+}
+
+#[inline]
+pub fn gen_image_perlin_noise(
+  width: i32,
+  height: i32,
+  offset_x: i32,
+  offset_y: i32,
+  scale: f32,
+) -> Image {
+  return unsafe { GenImagePerlinNoise(width, height, offset_x, offset_y, scale) };
 }
