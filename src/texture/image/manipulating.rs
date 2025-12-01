@@ -1,7 +1,9 @@
 use crate::{
   enums::PixelFormat,
   structs::{Image, Rectangle},
-  texture::ffi::{ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize},
+  texture::ffi::{
+    ImageColorGrayscale, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize,
+  },
 };
 
 #[inline]
@@ -27,4 +29,9 @@ pub fn image_resize(image: *mut Image, new_width: i32, new_height: i32) {
 #[inline]
 pub fn image_flip_horizontal(image: &mut Image) {
   unsafe { ImageFlipHorizontal(image) }
+}
+
+#[inline]
+pub fn image_color_grayscale(image: &mut Image) {
+  unsafe { ImageColorGrayscale(image) };
 }
