@@ -60,6 +60,7 @@ unsafe extern "C" {
   pub unsafe fn ImageColorContrast(image: *mut Image, contrast: f32);
   pub unsafe fn ImageColorBrightness(image: *mut Image, brightness: i32);
   pub unsafe fn LoadImageColors(image: Image) -> *mut Color;
+  pub unsafe fn UnloadImageColors(colors: *mut Color);
 
   // Image drawing functions
   pub unsafe fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
