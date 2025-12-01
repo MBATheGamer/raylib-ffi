@@ -1,8 +1,13 @@
 use crate::{
   enums::PixelFormat,
   structs::{Image, Rectangle},
-  texture::ffi::{ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize},
+  texture::ffi::{ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize},
 };
+
+#[inline]
+pub fn image_copy(image: Image) -> Image {
+  return unsafe { ImageCopy(image) };
+}
 
 #[inline]
 pub fn image_format(image: &mut Image, new_format: PixelFormat) {

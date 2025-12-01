@@ -47,6 +47,7 @@ unsafe extern "C" {
   pub unsafe fn GenImageCellular(width: i32, height: i32, tile_size: i32) -> Image;
 
   // Image manipulation functions
+  pub unsafe fn ImageCopy(image: Image) -> Image;
   pub unsafe fn ImageFormat(image: *mut Image, new_format: i32);
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
   pub unsafe fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
