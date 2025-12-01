@@ -6,6 +6,7 @@ mod gamepad_button;
 mod gesture;
 mod keyboard_keys;
 mod mouse_button;
+mod pixel_format;
 mod shader_uniform;
 mod texture_filter;
 
@@ -17,5 +18,6 @@ pub use gamepad_button::GamepadButton;
 pub use gesture::Gesture;
 pub use keyboard_keys::KeyboardKey;
 pub use mouse_button::MouseButton;
+pub use pixel_format::PixelFormat;
 pub use shader_uniform::ShaderUniformType;
 pub use texture_filter::TextureFilter;
