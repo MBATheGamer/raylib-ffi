@@ -1,9 +1,10 @@
 use std::ffi::CString;
 
 use crate::{
-  structs::{Image, RenderTexture, Texture},
+  structs::{Color, Image, RenderTexture, Texture},
   texture::ffi::{
     LoadRenderTexture, LoadTexture, LoadTextureFromImage, UnloadRenderTexture, UnloadTexture,
+    UpdateTexture,
   },
 };
 
@@ -32,4 +33,9 @@ pub fn unload_texture(texture: Texture) {
 #[inline]
 pub fn unload_render_texture(target: RenderTexture) {
   unsafe { UnloadRenderTexture(target) };
+}
+
+#[inline]
+pub fn update_texture(texture: Texture, pixels: *const Color) {
+  unsafe { UpdateTexture(texture, pixels) };
 }

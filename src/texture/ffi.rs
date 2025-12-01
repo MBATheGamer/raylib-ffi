@@ -101,6 +101,7 @@ unsafe extern "C" {
   pub unsafe fn LoadRenderTexture(width: i32, height: i32) -> RenderTexture;
   pub unsafe fn UnloadTexture(texture: Texture);
   pub unsafe fn UnloadRenderTexture(target: RenderTexture);
+  pub unsafe fn UpdateTexture(texture: Texture, pixels: *const Color);
 
   // Texture configuration functions
   pub unsafe fn SetTextureFilter(texture: Texture, filter: i32);
