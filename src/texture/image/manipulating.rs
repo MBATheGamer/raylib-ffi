@@ -2,8 +2,8 @@ use crate::{
   enums::PixelFormat,
   structs::{Color, Image, Rectangle},
   texture::ffi::{
-    ImageColorGrayscale, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat,
-    ImageResize,
+    ImageColorGrayscale, ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop,
+    ImageFlipHorizontal, ImageFormat, ImageResize,
   },
 };
 
@@ -35,6 +35,11 @@ pub fn image_flip_horizontal(image: &mut Image) {
 #[inline]
 pub fn image_color_tint(image: &mut Image, color: Color) {
   unsafe { ImageColorTint(image, color) };
+}
+
+#[inline]
+pub fn image_color_invert(image: &mut Image) {
+  unsafe { ImageColorInvert(image) };
 }
 
 #[inline]

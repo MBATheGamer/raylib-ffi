@@ -53,6 +53,7 @@ unsafe extern "C" {
   pub unsafe fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
   pub unsafe fn ImageFlipHorizontal(image: *mut Image);
   pub unsafe fn ImageColorTint(image: *mut Image, color: Color);
+  pub unsafe fn ImageColorInvert(image: *mut Image);
   pub unsafe fn ImageColorGrayscale(image: *mut Image);
 
   // Image drawing functions
