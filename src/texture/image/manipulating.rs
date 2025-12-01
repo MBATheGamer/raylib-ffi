@@ -3,8 +3,8 @@ use crate::{
   structs::{Color, Image, Rectangle},
   texture::ffi::{
     ImageBlurGaussian, ImageColorBrightness, ImageColorContrast, ImageColorGrayscale,
-    ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat,
-    ImageResize,
+    ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFlipVertical,
+    ImageFormat, ImageResize,
   },
 };
 
@@ -31,6 +31,11 @@ pub fn image_blur_gaussian(image: &mut Image, blur_size: i32) {
 #[inline]
 pub fn image_resize(image: *mut Image, new_width: i32, new_height: i32) {
   unsafe { ImageResize(image, new_width, new_height) };
+}
+
+#[inline]
+pub fn image_flip_vertical(image: &mut Image) {
+  unsafe { ImageFlipVertical(image) };
 }
 
 #[inline]

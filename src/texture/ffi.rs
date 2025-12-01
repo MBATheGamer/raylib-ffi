@@ -52,6 +52,7 @@ unsafe extern "C" {
   pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
   pub unsafe fn ImageBlurGaussian(image: *mut Image, blur_size: i32);
   pub unsafe fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
+  pub unsafe fn ImageFlipVertical(image: *mut Image);
   pub unsafe fn ImageFlipHorizontal(image: *mut Image);
   pub unsafe fn ImageColorTint(image: *mut Image, color: Color);
   pub unsafe fn ImageColorInvert(image: *mut Image);
