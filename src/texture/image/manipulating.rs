@@ -2,8 +2,8 @@ use crate::{
   enums::PixelFormat,
   structs::{Color, Image, Rectangle},
   texture::ffi::{
-    ImageColorGrayscale, ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop,
-    ImageFlipHorizontal, ImageFormat, ImageResize,
+    ImageColorContrast, ImageColorGrayscale, ImageColorInvert, ImageColorTint, ImageCopy,
+    ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize,
   },
 };
 
@@ -45,4 +45,9 @@ pub fn image_color_invert(image: &mut Image) {
 #[inline]
 pub fn image_color_grayscale(image: &mut Image) {
   unsafe { ImageColorGrayscale(image) };
+}
+
+#[inline]
+pub fn image_color_contrast(image: &mut Image, contrast: f32) {
+  unsafe { ImageColorContrast(image, contrast) };
 }
