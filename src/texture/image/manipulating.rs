@@ -4,7 +4,7 @@ use crate::{
   texture::ffi::{
     ImageBlurGaussian, ImageColorBrightness, ImageColorContrast, ImageColorGrayscale,
     ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFlipVertical,
-    ImageFormat, ImageResize,
+    ImageFormat, ImageResize, LoadImageColors,
   },
 };
 
@@ -66,4 +66,9 @@ pub fn image_color_contrast(image: &mut Image, contrast: f32) {
 #[inline]
 pub fn image_color_brightness(image: &mut Image, brightness: i32) {
   unsafe { ImageColorBrightness(image, brightness) };
+}
+
+#[inline]
+pub fn load_image_colors(image: Image) -> *mut Color {
+  return unsafe { LoadImageColors(image) };
 }
