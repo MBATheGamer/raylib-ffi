@@ -2,8 +2,9 @@ use crate::{
   enums::PixelFormat,
   structs::{Color, Image, Rectangle},
   texture::ffi::{
-    ImageColorBrightness, ImageColorContrast, ImageColorGrayscale, ImageColorInvert,
-    ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize,
+    ImageBlurGaussian, ImageColorBrightness, ImageColorContrast, ImageColorGrayscale,
+    ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFormat,
+    ImageResize,
   },
 };
 
@@ -20,6 +21,11 @@ pub fn image_format(image: &mut Image, new_format: PixelFormat) {
 #[inline]
 pub fn image_crop(image: &mut Image, crop: Rectangle) {
   unsafe { ImageCrop(image, crop) };
+}
+
+#[inline]
+pub fn image_blur_gaussian(image: &mut Image, blur_size: i32) {
+  unsafe { ImageBlurGaussian(image, blur_size) };
 }
 
 #[inline]
