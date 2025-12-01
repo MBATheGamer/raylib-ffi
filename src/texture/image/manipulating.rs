@@ -1,7 +1,13 @@
 use crate::{
+  enums::PixelFormat,
   structs::{Image, Rectangle},
-  texture::ffi::{ImageCrop, ImageFlipHorizontal, ImageResize},
+  texture::ffi::{ImageCrop, ImageFlipHorizontal, ImageFormat, ImageResize},
 };
+
+#[inline]
+pub fn image_format(image: &mut Image, new_format: PixelFormat) {
+  unsafe { ImageFormat(image, new_format as i32) };
+}
 
 #[inline]
 pub fn image_crop(image: &mut Image, crop: Rectangle) {
