@@ -1,5 +1,31 @@
+use std::{
+  mem::transmute,
+  ops::{AddAssign, SubAssign},
+};
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_position, is_mouse_button_released},
+    set_target_fps, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton, PixelFormat},
+  shape::{check_collision_point_rec, draw_rectangle_lines, draw_rectangle_rec},
+  structs::Rectangle,
+  text::{draw_text, measure_text},
+  texture::{
+    draw_texture, image_blur_gaussian, image_color_brightness, image_color_contrast,
+    image_color_grayscale, image_color_invert, image_color_tint, image_copy, image_flip_horizontal,
+    image_flip_vertical, image_format, load_image, load_image_colors, load_texture_from_image,
+    unload_image, unload_image_colors, unload_texture, update_texture,
+  },
+};
+
 const NUM_PROCESSES: usize = 9;
 
+#[derive(Clone, Copy, PartialEq, PartialOrd)]
 enum ImageProcess {
   None = 0,
   ColorGrayscale,
@@ -10,6 +36,18 @@ enum ImageProcess {
   GaussianBlur,
   FlipVertical,
   FlipHorizontal,
+}
+
+impl AddAssign<i32> for ImageProcess {
+  fn add_assign(&mut self, rhs: i32) {
+    *self = unsafe { transmute(((*self as i32 + rhs) % 9) as i8) };
+  }
+}
+
+impl SubAssign<i32> for ImageProcess {
+  fn sub_assign(&mut self, rhs: i32) {
+    *self = unsafe { transmute(((*self as i32 - rhs) % 9) as i8) };
+  }
 }
 
 const PROCESS_TEXT: [&'static str; 9] = [
@@ -34,17 +72,17 @@ fn main() {
     "raylib [textures] example - image processing",
   );
 
-  let img_origin = load_image("resources/parrots.png");
-  image_format(&img_origin, PixelFormat::UncompressedR8G8B8A8);
+  let mut img_origin = load_image("resources/parrots.png");
+  image_format(&mut img_origin, PixelFormat::UncompressedR8G8B8A8);
   let texture = load_texture_from_image(img_origin);
 
-  let img_copy = image_copy(img_origin);
+  let mut img_copy = image_copy(img_origin);
 
-  let current_process = ImageProcess::None;
-  let texture_reload = false;
+  let mut current_process = ImageProcess::None;
+  let mut texture_reload = false;
 
-  let toggle_recs: [Rectangle; NUM_PROCESSES] = [Rectangle::default(); NUM_PROCESSES];
-  let mouse_hover_rec = -1;
+  let mut toggle_recs: [Rectangle; NUM_PROCESSES] = [Rectangle::default(); NUM_PROCESSES];
+  let mut mouse_hover_rec = -1;
 
   for i in 0..NUM_PROCESSES {
     toggle_recs[i] = Rectangle {
@@ -63,7 +101,7 @@ fn main() {
         mouse_hover_rec = i as i32;
 
         if is_mouse_button_released(MouseButton::Left) {
-          current_process = i;
+          current_process = unsafe { transmute(i as i8) };
           texture_reload = true;
         }
         break;
@@ -74,14 +112,14 @@ fn main() {
 
     if is_key_pressed(KeyboardKey::KeyDown) {
       current_process += 1;
-      if current_process > (NUM_PROCESSES - 1) {
-        current_process = 0;
+      if current_process > ImageProcess::FlipHorizontal {
+        current_process = ImageProcess::None;
       }
       texture_reload = true;
-    } else if is_key_pressed(KEY_UP) {
+    } else if is_key_pressed(KeyboardKey::KeyUp) {
       current_process -= 1;
-      if current_process < 0 {
-        current_process = 7;
+      if current_process < ImageProcess::None {
+        current_process = ImageProcess::FlipVertical;
       }
       texture_reload = true;
     }
@@ -91,14 +129,14 @@ fn main() {
       img_copy = image_copy(img_origin);
 
       match current_process {
-        ImageProcess::ColorGrayscale => image_color_grayscale(&img_copy),
-        ImageProcess::ColorTint => image_color_tint(&img_copy, colors::GREEN),
-        ImageProcess::ColorInvert => image_color_invert(&img_copy),
-        ImageProcess::ColorContrast => image_color_contrast(&img_copy, -40),
-        ImageProcess::ColorBrightness => image_color_brightness(&img_copy, -80),
-        ImageProcess::GaussianBlur => image_blur_gaussian(&img_copy, 10),
-        ImageProcess::FlipVertical => image_flip_vertical(&img_copy),
-        ImageProcess::FlipHorizontal => image_flip_horizontal(&img_copy),
+        ImageProcess::ColorGrayscale => image_color_grayscale(&mut img_copy),
+        ImageProcess::ColorTint => image_color_tint(&mut img_copy, colors::GREEN),
+        ImageProcess::ColorInvert => image_color_invert(&mut img_copy),
+        ImageProcess::ColorContrast => image_color_contrast(&mut img_copy, -40.0),
+        ImageProcess::ColorBrightness => image_color_brightness(&mut img_copy, -80),
+        ImageProcess::GaussianBlur => image_blur_gaussian(&mut img_copy, 10),
+        ImageProcess::FlipVertical => image_flip_vertical(&mut img_copy),
+        ImageProcess::FlipHorizontal => image_flip_horizontal(&mut img_copy),
         _ => {}
       }
 
@@ -118,7 +156,7 @@ fn main() {
     for i in 0..NUM_PROCESSES {
       draw_rectangle_rec(
         toggle_recs[i],
-        if i == current_process || i == mouse_hover_rec {
+        if i == current_process as usize || i == mouse_hover_rec as usize {
           colors::SKYBLUE
         } else {
           colors::LIGHTGRAY
@@ -129,7 +167,7 @@ fn main() {
         toggle_recs[i].y as i32,
         toggle_recs[i].width as i32,
         toggle_recs[i].height as i32,
-        if i == current_process || i == mouse_hover_rec {
+        if i == current_process as usize || i == mouse_hover_rec as usize {
           colors::BLUE
         } else {
           colors::GRAY
@@ -137,11 +175,11 @@ fn main() {
       );
       draw_text(
         PROCESS_TEXT[i],
-        (toggle_recs[i].x + toggle_recs[i].width / 2 - measure_text(PROCESS_TEXT[i], 10) / 2)
-          as i32,
+        (toggle_recs[i].x + toggle_recs[i].width / 2.0
+          - measure_text(PROCESS_TEXT[i], 10) as f32 / 2.0) as i32,
         toggle_recs[i].y as i32 + 11,
         10,
-        if i == current_process || i == mouse_hover_rec {
+        if i == current_process as usize || i == mouse_hover_rec as usize {
           colors::DARKBLUE
         } else {
           colors::DARKGRAY
