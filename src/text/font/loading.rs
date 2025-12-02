@@ -2,7 +2,7 @@ use std::ffi::CString;
 
 use crate::{
   structs::Font,
-  text::ffi::{GetFontDefault, LoadFont, UnloadFont},
+  text::ffi::{GetFontDefault, LoadFont, LoadFontEx, UnloadFont},
 };
 
 #[inline]
@@ -15,6 +15,25 @@ pub fn load_font(file_name: &str) -> Font {
   let file_name = CString::new(file_name).expect("Expecting font path!");
 
   return unsafe { LoadFont(file_name.as_ptr()) };
+}
+
+#[inline]
+pub fn load_font_ex(
+  file_name: &str,
+  font_size: i32,
+  codepoints: Vec<i32>,
+  codepoint_count: i32,
+) -> Font {
+  let file_name = CString::new(file_name).expect("Expecting font path!");
+
+  return unsafe {
+    LoadFontEx(
+      file_name.as_ptr(),
+      font_size,
+      codepoints.as_ptr(),
+      codepoint_count,
+    )
+  };
 }
 
 #[inline]

@@ -4,6 +4,12 @@ unsafe extern "C" {
   // Font loading/unloading functions
   pub unsafe fn GetFontDefault() -> Font;
   pub unsafe fn LoadFont(file_name: *const i8) -> Font;
+  pub unsafe fn LoadFontEx(
+    file_name: *const i8,
+    font_size: i32,
+    codepoints: *const i32,
+    codepoint_count: i32,
+  ) -> Font;
   pub unsafe fn UnloadFont(font: Font);
 
   // Text drawing functions
