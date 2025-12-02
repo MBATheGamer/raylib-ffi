@@ -21,7 +21,7 @@ pub fn load_font(file_name: &str) -> Font {
 pub fn load_font_ex(
   file_name: &str,
   font_size: i32,
-  codepoints: Vec<i32>,
+  codepoints: Option<Vec<i32>>,
   codepoint_count: i32,
 ) -> Font {
   let file_name = CString::new(file_name).expect("Expecting font path!");
@@ -30,7 +30,10 @@ pub fn load_font_ex(
     LoadFontEx(
       file_name.as_ptr(),
       font_size,
-      codepoints.as_ptr(),
+      match codepoints {
+        Some(codepoints) => codepoints.as_ptr(),
+        None => std::ptr::null(),
+      },
       codepoint_count,
     )
   };
