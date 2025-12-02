@@ -109,6 +109,7 @@ unsafe extern "C" {
 
   // Texture drawing functions
   pub unsafe fn DrawTexture(texture: Texture, pos_x: i32, pos_y: i32, tint: Color);
+  pub unsafe fn DrawTextureV(texture: Texture, position: Vector2, tint: Color);
   pub unsafe fn DrawTextureRec(texture: Texture, source: Rectangle, position: Vector2, tint: Color);
   pub unsafe fn DrawTexturePro(
     texture: Texture,

@@ -1,11 +1,16 @@
 use crate::{
   structs::{Color, Rectangle, Texture, Vector2},
-  texture::ffi::{DrawTexture, DrawTexturePro, DrawTextureRec},
+  texture::ffi::{DrawTexture, DrawTexturePro, DrawTextureRec, DrawTextureV},
 };
 
 #[inline]
 pub fn draw_texture(texture: Texture, pos_x: i32, pos_y: i32, tint: Color) {
   unsafe { DrawTexture(texture, pos_x, pos_y, tint) };
+}
+
+#[inline]
+pub fn draw_texture_v(texture: Texture, position: Vector2, tint: Color) {
+  unsafe { DrawTextureV(texture, position, tint) };
 }
 
 #[inline]
