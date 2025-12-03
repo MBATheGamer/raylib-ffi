@@ -3,6 +3,7 @@ use crate::structs::{Color, Font, Image, Rectangle, RenderTexture, Texture, Vect
 unsafe extern "C" {
   // Image loading functions
   pub unsafe fn LoadImage(file_name: *const i8) -> Image;
+  pub unsafe fn LoadImageFromTexture(texture: Texture) -> Image;
   pub unsafe fn IsImageValid(image: Image) -> bool;
   pub unsafe fn UnloadImage(image: Image);
 
