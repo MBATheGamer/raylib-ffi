@@ -1,3 +1,5 @@
+#[repr(i32)]
+#[derive(Clone, Copy)]
 pub enum PixelFormat {
   UncompressedGrayscale = 1, // 8 bit per pixel (no alpha)
   UncompressedGrayAlpha,     // 8*2 bpp (2 channels)
