@@ -3,7 +3,7 @@ use std::ffi::c_void;
 use crate::enums::PixelFormat;
 
 #[repr(C)]
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy)]
 pub struct Image {
   pub data: *mut c_void,   // Image raw data
   pub width: i32,          // Image base width
