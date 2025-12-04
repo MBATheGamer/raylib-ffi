@@ -1,8 +1,3 @@
-use std::{
-  mem::transmute,
-  ops::{AddAssign, SubAssign},
-};
-
 use raylib_ffi::{
   consts::colors,
   core::{
@@ -38,15 +33,19 @@ enum ImageProcess {
   FlipHorizontal,
 }
 
-impl AddAssign<i32> for ImageProcess {
-  fn add_assign(&mut self, rhs: i32) {
-    *self = unsafe { transmute(((*self as i32 + rhs) % 9) as i8) };
-  }
-}
-
-impl SubAssign<i32> for ImageProcess {
-  fn sub_assign(&mut self, rhs: i32) {
-    *self = unsafe { transmute(((*self as i32 - rhs) % 9) as i8) };
+impl ImageProcess {
+  fn get(index: i32) -> ImageProcess {
+    return match index {
+      1 => Self::ColorGrayscale,
+      2 => Self::ColorTint,
+      3 => Self::ColorInvert,
+      4 => Self::ColorContrast,
+      5 => Self::ColorBrightness,
+      6 => Self::GaussianBlur,
+      7 => Self::FlipVertical,
+      8 | -1 => Self::FlipHorizontal,
+      _ => Self::None,
+    };
   }
 }
 
@@ -101,7 +100,7 @@ fn main() {
         mouse_hover_rec = i as i32;
 
         if is_mouse_button_released(MouseButton::Left) {
-          current_process = unsafe { transmute(i as i8) };
+          current_process = ImageProcess::get(i as i32);
           texture_reload = true;
         }
         break;
@@ -111,16 +110,10 @@ fn main() {
     }
 
     if is_key_pressed(KeyboardKey::KeyDown) {
-      current_process += 1;
-      if current_process > ImageProcess::FlipHorizontal {
-        current_process = ImageProcess::None;
-      }
+      current_process = ImageProcess::get(current_process as i32 + 1);
       texture_reload = true;
     } else if is_key_pressed(KeyboardKey::KeyUp) {
-      current_process -= 1;
-      if current_process < ImageProcess::None {
-        current_process = ImageProcess::FlipVertical;
-      }
+      current_process = ImageProcess::get(current_process as i32 - 1);
       texture_reload = true;
     }
 
