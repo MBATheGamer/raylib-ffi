@@ -1,6 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_blend_mode, begin_drawing, clear_background, close_window, end_blend_mode, end_drawing,
+    get_random_value, init_window, keyboard::is_key_pressed, mouse::get_mouse_position,
+    set_target_fps, window_should_close,
+  },
+  enums::{BlendMode, KeyboardKey},
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::{draw_texture_pro, fade, load_texture, unload_texture},
+};
+
 const MAX_PARTICLES: usize = 200;
 
-#[derive(Clone, Copy, Default)]
 struct Particle {
   position: Vector2,
   color: Color,
@@ -20,50 +32,53 @@ fn main() {
     "raylib [textures] example - particles blending",
   );
 
-  let mouse_tail: [Particle; MAX_PARTICLES] = [Particle::default(); MAX_PARTICLES];
+  let mut mouse_tail: Vec<Particle> = vec![];
+  mouse_tail.reserve(MAX_PARTICLES);
 
-  for i in 0..MAX_PARTICLES {
-    mouse_tail[i].position = Vector2 { x: 0.0, y: 0.0 };
-    mouse_tail[i].color = Color {
-      red: get_random_value(0, 255) as u8,
-      green: get_random_value(0, 255) as u8,
-      blue: get_random_value(0, 255) as u8,
-      alpha: 255,
-    };
-    mouse_tail[i].alpha = 1.0;
-    mouse_tail[i].size = get_random_value(1, 30) as f32 / 20.0;
-    mouse_tail[i].rotation = get_random_value(0, 360) as f32;
-    mouse_tail[i].active = false;
+  for _ in 0..mouse_tail.capacity() {
+    mouse_tail.push(Particle {
+      position: Vector2 { x: 0.0, y: 0.0 },
+      color: Color {
+        red: get_random_value(0, 255) as u8,
+        green: get_random_value(0, 255) as u8,
+        blue: get_random_value(0, 255) as u8,
+        alpha: 255,
+      },
+      alpha: 1.0,
+      size: get_random_value(1, 30) as f32 / 20.0,
+      rotation: get_random_value(0, 360) as f32,
+      active: false,
+    });
   }
 
   let gravity = 3.0;
 
   let smoke = load_texture("resources/spark_flame.png");
 
-  let blending = BlendMode::Alpha;
+  let mut blending = BlendMode::Alpha;
 
   set_target_fps(60);
 
   while !window_should_close() {
-    for i in 0..MAX_PARTICLES {
-      if !mouse_tail[i].active {
-        mouse_tail[i].active = true;
-        mouse_tail[i].alpha = 1.0;
-        mouse_tail[i].position = get_mouse_position();
-        i = MAX_PARTICLES;
+    for tail in &mut mouse_tail {
+      if !tail.active {
+        tail.active = true;
+        tail.alpha = 1.0;
+        tail.position = get_mouse_position();
+        break;
       }
     }
 
-    for i in 0..MAX_PARTICLES {
-      if mouse_tail[i].active {
-        mouse_tail[i].position.y += gravity / 2.0;
-        mouse_tail[i].alpha -= 0.005;
+    for tail in &mut mouse_tail {
+      if tail.active {
+        tail.position.y += gravity / 2.0;
+        tail.alpha -= 0.005;
 
-        if mouse_tail[i].alpha <= 0.0 {
-          mouse_tail[i].active = false;
+        if tail.alpha <= 0.0 {
+          tail.active = false;
         }
 
-        mouse_tail[i].rotation += 2.0;
+        tail.rotation += 2.0;
       }
     }
 
@@ -81,8 +96,8 @@ fn main() {
 
     begin_blend_mode(blending);
 
-    for i in 0..MAX_PARTICLES {
-      if mouse_tail[i].active {
+    for tail in &mouse_tail {
+      if tail.active {
         draw_texture_pro(
           smoke,
           Rectangle {
@@ -92,17 +107,17 @@ fn main() {
             height: smoke.height as f32,
           },
           Rectangle {
-            x: mouse_tail[i].position.x,
-            y: mouse_tail[i].position.y,
-            width: smoke.width as f32 * mouse_tail[i].size,
-            height: smoke.height as f32 * mouse_tail[i].size,
+            x: tail.position.x,
+            y: tail.position.y,
+            width: smoke.width as f32 * tail.size,
+            height: smoke.height as f32 * tail.size,
           },
           Vector2 {
-            x: smoke.width as f32 * mouse_tail[i].size / 2.0,
-            y: smoke.height as f32 * mouse_tail[i].size / 2.0,
+            x: smoke.width as f32 * tail.size / 2.0,
+            y: smoke.height as f32 * tail.size / 2.0,
           },
-          mouse_tail[i].rotation,
-          fade(mouse_tail[i].color, mouse_tail[i].alpha),
+          tail.rotation,
+          fade(tail.color, tail.alpha),
         );
       }
     }
