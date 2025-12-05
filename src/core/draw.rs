@@ -1,8 +1,8 @@
 use crate::{
   core::ffi::{
     BeginBlendMode, BeginDrawing, BeginMode2D, BeginMode3D, BeginScissorMode, BeginShaderMode,
-    BeginTextureMode, BeginVrStereoMode, ClearBackground, EndDrawing, EndMode2D, EndMode3D,
-    EndScissorMode, EndShaderMode, EndTextureMode, EndVrStereoMode,
+    BeginTextureMode, BeginVrStereoMode, ClearBackground, EndBlendMode, EndDrawing, EndMode2D,
+    EndMode3D, EndScissorMode, EndShaderMode, EndTextureMode, EndVrStereoMode,
   },
   enums::BlendMode,
   structs::{Camera2D, Camera3D, Color, RenderTexture, Shader, VrStereoConfig},
@@ -66,6 +66,11 @@ pub fn end_shader_mode() {
 #[inline]
 pub fn begin_blend_mode(mode: BlendMode) {
   unsafe { BeginBlendMode(mode as i32) };
+}
+
+#[inline]
+pub fn end_blend_mode() {
+  unsafe { EndBlendMode() };
 }
 
 #[inline]
