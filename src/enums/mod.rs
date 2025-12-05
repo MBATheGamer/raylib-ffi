@@ -1,3 +1,4 @@
+mod blend_mode;
 mod camera_mode;
 mod camera_projection;
 mod config_flags;
@@ -10,6 +11,7 @@ mod pixel_format;
 mod shader_uniform;
 mod texture_filter;
 
+pub use blend_mode::BlendMode;
 pub use camera_mode::CameraMode;
 pub use camera_projection::CameraProjection;
 pub use config_flags::ConfigFlags;
