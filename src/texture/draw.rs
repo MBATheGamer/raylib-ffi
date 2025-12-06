@@ -1,6 +1,6 @@
 use crate::{
-  structs::{Color, Rectangle, Texture, Vector2},
-  texture::ffi::{DrawTexture, DrawTexturePro, DrawTextureRec, DrawTextureV},
+  structs::{Color, NPatchInfo, Rectangle, Texture, Vector2},
+  texture::ffi::{DrawTexture, DrawTextureNPatch, DrawTexturePro, DrawTextureRec, DrawTextureV},
 };
 
 #[inline]
@@ -28,4 +28,15 @@ pub fn draw_texture_pro(
   tint: Color,
 ) {
   unsafe { DrawTexturePro(texture, source, dest, origin, rotation, tint) };
+}
+
+pub fn draw_texture_n_patch(
+  texture: Texture,
+  n_patch_info: NPatchInfo,
+  dest: Rectangle,
+  origin: Vector2,
+  rotation: f32,
+  tint: Color,
+) {
+  unsafe { DrawTextureNPatch(texture, n_patch_info, dest, origin, rotation, tint) };
 }

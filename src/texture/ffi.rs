@@ -1,4 +1,4 @@
-use crate::structs::{Color, Font, Image, Rectangle, RenderTexture, Texture, Vector2};
+use crate::structs::{Color, Font, Image, NPatchInfo, Rectangle, RenderTexture, Texture, Vector2};
 
 unsafe extern "C" {
   // Image loading functions
@@ -122,6 +122,14 @@ unsafe extern "C" {
   pub unsafe fn DrawTexturePro(
     texture: Texture,
     source: Rectangle,
+    dest: Rectangle,
+    origin: Vector2,
+    rotation: f32,
+    tint: Color,
+  );
+  pub unsafe fn DrawTextureNPatch(
+    texture: Texture,
+    n_patch_info: NPatchInfo,
     dest: Rectangle,
     origin: Vector2,
     rotation: f32,
