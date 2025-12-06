@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    mouse::get_mouse_position, set_target_fps, window_should_close,
+  },
+  enums::NPatchLayout,
+  shape::draw_rectangle_lines,
+  structs::{NPatchInfo, Rectangle, Vector2},
+  text::draw_text,
+  texture::{draw_texture, draw_texture_n_patch, load_texture, unload_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -12,25 +25,25 @@ fn main() {
 
   let origin = Vector2::default();
 
-  let dst_rec1 = Rectangle {
+  let mut dst_rec1 = Rectangle {
     x: 480.0,
     y: 160.0,
     width: 32.0,
     height: 32.0,
   };
-  let dst_rec2 = Rectangle {
+  let mut dst_rec2 = Rectangle {
     x: 160.0,
     y: 160.0,
     width: 32.0,
     height: 32.0,
   };
-  let dst_rec_h = Rectangle {
+  let mut dst_rec_h = Rectangle {
     x: 160.0,
     y: 93.0,
     width: 32.0,
     height: 32.0,
   };
-  let dst_rec_v = Rectangle {
+  let mut dst_rec_v = Rectangle {
     x: 92.0,
     y: 160.0,
     width: 32.0,
