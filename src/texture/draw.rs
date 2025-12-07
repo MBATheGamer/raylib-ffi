@@ -1,6 +1,8 @@
 use crate::{
   structs::{Color, NPatchInfo, Rectangle, Texture, Vector2},
-  texture::ffi::{DrawTexture, DrawTextureNPatch, DrawTexturePro, DrawTextureRec, DrawTextureV},
+  texture::ffi::{
+    DrawTexture, DrawTextureEx, DrawTextureNPatch, DrawTexturePro, DrawTextureRec, DrawTextureV,
+  },
 };
 
 #[inline]
@@ -11,6 +13,17 @@ pub fn draw_texture(texture: Texture, pos_x: i32, pos_y: i32, tint: Color) {
 #[inline]
 pub fn draw_texture_v(texture: Texture, position: Vector2, tint: Color) {
   unsafe { DrawTextureV(texture, position, tint) };
+}
+
+#[inline]
+pub fn draw_texture_ex(
+  texture: Texture,
+  position: Vector2,
+  rotation: f32,
+  scale: f32,
+  tint: Color,
+) {
+  unsafe { DrawTextureEx(texture, position, rotation, scale, tint) };
 }
 
 #[inline]
