@@ -1,3 +1,14 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window, set_target_fps,
+    window_should_close,
+  },
+  structs::Vector2,
+  text::draw_text,
+  texture::{draw_texture_ex, get_color, load_texture, unload_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -12,9 +23,9 @@ fn main() {
   let midground = load_texture("resources/cyberpunk_street_midground.png");
   let foreground = load_texture("resources/cyberpunk_street_foreground.png");
 
-  let scrolling_back = 0.0;
-  let scrolling_mid = 0.0;
-  let scrolling_fore = 0.0;
+  let mut scrolling_back = 0.0;
+  let mut scrolling_mid = 0.0;
+  let mut scrolling_fore = 0.0;
 
   set_target_fps(60);
 
@@ -71,7 +82,7 @@ fn main() {
     draw_texture_ex(
       midground,
       Vector2 {
-        x: midground.width as f32 * 2 + scrolling_mid,
+        x: midground.width as f32 * 2.0 + scrolling_mid,
         y: 20.0,
       },
       0.0,
