@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    keyboard::is_key_pressed, set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_rectangle, draw_rectangle_lines},
+  structs::{Rectangle, Vector2},
+  text::draw_text,
+  texture::{draw_texture, draw_texture_rec, load_texture, unload_texture},
+};
+
 const MAX_FRAME_SPEED: i32 = 15;
 const MIN_FRAME_SPEED: i32 = 1;
 
@@ -14,16 +27,16 @@ fn main() {
   let scarfy = load_texture("resources/scarfy.png");
 
   let position = Vector2 { x: 350.0, y: 280.0 };
-  let frame_rec = Rectangle {
+  let mut frame_rec = Rectangle {
     x: 0.0,
     y: 0.0,
     width: scarfy.width as f32 / 6.0,
     height: scarfy.height as f32,
   };
-  let current_frame = 0;
+  let mut current_frame = 0;
 
-  let frames_counter = 0;
-  let frames_speed = 8;
+  let mut frames_counter = 0;
+  let mut frames_speed = 8;
 
   set_target_fps(60);
 
