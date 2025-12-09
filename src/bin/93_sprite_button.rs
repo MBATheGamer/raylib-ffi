@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  audio::{close_audio_device, init_audio_device, load_sound, play_sound, unload_sound},
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    mouse::{get_mouse_position, is_mouse_button_down, is_mouse_button_released},
+    set_target_fps, window_should_close,
+  },
+  enums::MouseButton,
+  shape::check_collision_point_rec,
+  structs::{Rectangle, Vector2},
+  texture::{draw_texture_rec, load_texture, unload_texture},
+};
+
 const NUM_FRAMES: i32 = 3;
 
 fn main() {
@@ -16,7 +30,7 @@ fn main() {
   let button = load_texture("resources/button.png");
 
   let frame_height = button.height as f32 / NUM_FRAMES as f32;
-  let source_rec = Rectangle {
+  let mut source_rec = Rectangle {
     x: 0.0,
     y: 0.0,
     width: button.width as f32,
@@ -30,16 +44,13 @@ fn main() {
     height: frame_height,
   };
 
-  let btn_state = 0;
-  let btn_action = false;
-
-  let mouse_point = Vector2 { x: 0.0, y: 0.0 };
+  let mut btn_state;
 
   set_target_fps(60);
 
   while !window_should_close() {
-    mouse_point = get_mouse_position();
-    btn_action = false;
+    let mouse_point = get_mouse_position();
+    let mut btn_action = false;
 
     if check_collision_point_rec(mouse_point, btn_bounds) {
       if is_mouse_button_down(MouseButton::Left) {
