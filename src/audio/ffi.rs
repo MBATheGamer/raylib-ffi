@@ -6,4 +6,7 @@ unsafe extern "C" {
 
   // Wave/Sound loading/unloading functions
   pub unsafe fn LoadSound(file_name: *const i8) -> Sound;
+
+  // Wave/Sound management functions
+  pub unsafe fn PlaySound(sound: Sound);
 }
