@@ -1,3 +1,16 @@
+use raylib_ffi::{
+  audio::{close_audio_device, init_audio_device, load_sound, play_sound, unload_sound},
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    mouse::{get_mouse_position, is_mouse_button_pressed},
+    set_target_fps, window_should_close,
+  },
+  enums::MouseButton,
+  structs::{Rectangle, Vector2},
+  texture::{draw_texture_rec, load_texture, unload_texture},
+};
+
 const NUM_FRAMES_PER_LINE: i32 = 5;
 const NUM_LINES: i32 = 5;
 
@@ -19,19 +32,19 @@ fn main() {
 
   let frame_width = (explosion.width / NUM_FRAMES_PER_LINE) as f32;
   let frame_height = (explosion.height / NUM_LINES) as f32;
-  let current_frame = 0;
-  let current_line = 0;
+  let mut current_frame = 0;
+  let mut current_line = 0;
 
-  let frame_rec = Rectangle {
+  let mut frame_rec = Rectangle {
     x: 0.0,
     y: 0.0,
     width: frame_width,
     height: frame_height,
   };
-  let position = Vector2 { x: 0.0, y: 0.0 };
+  let mut position = Vector2::default();
 
-  let active = false;
-  let frames_counter = 0;
+  let mut active = false;
+  let mut frames_counter = 0;
 
   set_target_fps(60);
 
