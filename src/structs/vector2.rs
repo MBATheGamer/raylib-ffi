@@ -8,6 +8,10 @@ pub struct Vector2 {
 }
 
 impl Vector2 {
+  pub fn length(&self) -> f32 {
+    return (self.x * self.x + self.y * self.y).sqrt();
+  }
+
   pub fn sub(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x - rhs.x,
