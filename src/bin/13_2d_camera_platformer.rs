@@ -1,3 +1,20 @@
+use std::sync::{LazyLock, Mutex};
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_2d, clear_background, close_window, end_drawing, end_mode_2d,
+    get_frame_time, get_screen_to_world_2d, get_world_to_screen_2d, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    mouse::get_mouse_wheel_move,
+    set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_circle_v, draw_rectangle_rec},
+  structs::{Camera2D, Color, Rectangle, Vector2},
+  text::draw_text,
+};
+
 const G: f32 = 400.0;
 const PLAYER_JUMP_SPD: f32 = 350.0;
 const PLAYER_HOR_SPD: f32 = 200.0;
@@ -24,7 +41,7 @@ fn main() {
     "raylib [core] example - 2d camera platformer",
   );
 
-  let player = Player {
+  let mut player = Player {
     position: Vector2 { x: 400.0, y: 280.0 },
     speed: 0.0,
     can_jump: false,
@@ -82,7 +99,7 @@ fn main() {
     },
   ];
 
-  let camera = Camera2D {
+  let mut camera = Camera2D {
     target: player.position,
     offset: Vector2 {
       x: SCREEN_WIDTH as f32 / 2.0,
@@ -92,7 +109,7 @@ fn main() {
     zoom: 1.0,
   };
 
-  let camera_updaters: Vec<fn(&Camera2D, &Player, &Vec<EnvItem>, f32, i32, i32)> = vec![
+  let camera_updaters: Vec<fn(&mut Camera2D, &mut Player, &Vec<EnvItem>, f32, i32, i32)> = vec![
     update_camera_center,
     update_camera_center_inside_map,
     update_camera_center_smooth_follow,
@@ -100,7 +117,7 @@ fn main() {
     update_camera_player_bounds_push,
   ];
 
-  let camera_option = 0;
+  let mut camera_option = 0;
 
   let camera_descriptions: Vec<&str> = vec![
     "Follow player center",
@@ -115,7 +132,7 @@ fn main() {
   while !window_should_close() {
     let delta_time = get_frame_time();
 
-    update_player(&player, &env_items, delta_time);
+    update_player(&mut player, &env_items, delta_time);
 
     camera.zoom += get_mouse_wheel_move() as f32 * 0.05;
 
@@ -135,8 +152,8 @@ fn main() {
     }
 
     camera_updaters[camera_option](
-      &camera,
-      &player,
+      &mut camera,
+      &mut player,
       &env_items,
       delta_time,
       SCREEN_WIDTH,
@@ -191,7 +208,7 @@ fn main() {
   close_window();
 }
 
-fn update_player(player: &Player, env_items: &Vec<EnvItem>, delta: f32) {
+fn update_player(player: &mut Player, env_items: &Vec<EnvItem>, delta: f32) {
   if is_key_down(KeyboardKey::KeyLeft) {
     player.position.x -= PLAYER_HOR_SPD * delta;
   }
@@ -203,10 +220,10 @@ fn update_player(player: &Player, env_items: &Vec<EnvItem>, delta: f32) {
     player.can_jump = false;
   }
 
-  let hit_obstacle = false;
+  let mut hit_obstacle = false;
   for i in 0..env_items.len() {
     let ei = &env_items[i];
-    let p = player.position;
+    let mut p = player.position;
     if ei.blocking
       && ei.rect.x <= p.x
       && ei.rect.x + ei.rect.width >= p.x
@@ -230,8 +247,8 @@ fn update_player(player: &Player, env_items: &Vec<EnvItem>, delta: f32) {
 }
 
 fn update_camera_center(
-  camera: &Camera2D,
-  player: &Player,
+  camera: &mut Camera2D,
+  player: &mut Player,
   _: &Vec<EnvItem>,
   _: f32,
   width: i32,
@@ -245,8 +262,8 @@ fn update_camera_center(
 }
 
 fn update_camera_center_inside_map(
-  camera: &Camera2D,
-  player: &Player,
+  camera: &mut Camera2D,
+  player: &mut Player,
   env_items: &Vec<EnvItem>,
   _: f32,
   width: i32,
@@ -257,10 +274,10 @@ fn update_camera_center_inside_map(
     x: width as f32 / 2.0,
     y: height as f32 / 2.0,
   };
-  let min_x = 1000.0;
-  let min_y = 1000.0;
-  let max_x = -1000.0;
-  let max_y = -1000.0;
+  let mut min_x = 1000.0;
+  let mut min_y = 1000.0;
+  let mut max_x = -1000.0;
+  let mut max_y = -1000.0;
 
   for i in 0..env_items.len() {
     let ei = &env_items[i];
@@ -288,8 +305,8 @@ fn update_camera_center_inside_map(
 }
 
 fn update_camera_center_smooth_follow(
-  camera: &Camera2D,
-  player: &Player,
+  camera: &mut Camera2D,
+  player: &mut Player,
   _: &Vec<EnvItem>,
   delta: f32,
   width: i32,
@@ -308,13 +325,13 @@ fn update_camera_center_smooth_follow(
 
   if length > MIN_EFFECT_LENGTH {
     let speed = (FRACTION_SPEED * length).max(MIN_SPEED);
-    camera.target = camera.target + diff.scale(speed * delta / length);
+    camera.target = camera.target + diff * (speed * delta / length);
   }
 }
 
 fn update_camera_even_out_on_landing(
-  camera: &Camera2D,
-  player: &Player,
+  camera: &mut Camera2D,
+  player: &mut Player,
   _: &Vec<EnvItem>,
   delta: f32,
   width: i32,
@@ -328,10 +345,10 @@ fn update_camera_even_out_on_landing(
     return Mutex::new(0.0);
   });
 
-  let evening_out = EVENING_OUT
+  let mut evening_out = EVENING_OUT
     .lock()
     .expect("Expecting EVENING_OUT has a value");
-  let evening_out_target = EVEN_OUT_TARGET
+  let mut evening_out_target = EVEN_OUT_TARGET
     .lock()
     .expect("Expecting EVEN_OUT_TARGET has a value");
 
@@ -366,8 +383,8 @@ fn update_camera_even_out_on_landing(
 }
 
 fn update_camera_player_bounds_push(
-  camera: &Camera2D,
-  player: &Player,
+  camera: &mut Camera2D,
+  player: &mut Player,
   _: &Vec<EnvItem>,
   _: f32,
   width: i32,
