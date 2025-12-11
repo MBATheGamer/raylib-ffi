@@ -1,4 +1,4 @@
-use std::ops::{Mul, Sub};
+use std::ops::{Add, Mul, Sub};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -12,6 +12,13 @@ impl Vector2 {
     return (self.x * self.x + self.y * self.y).sqrt();
   }
 
+  pub fn add(&self, rhs: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
+    };
+  }
+
   pub fn sub(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x - rhs.x,
@@ -23,6 +30,17 @@ impl Vector2 {
     return Vector2 {
       x: self.x * scaler,
       y: self.y * scaler,
+    };
+  }
+}
+
+impl Add for Vector2 {
+  type Output = Vector2;
+
+  fn add(self, rhs: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
     };
   }
 }
