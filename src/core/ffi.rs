@@ -83,6 +83,7 @@ unsafe extern "C" {
   // Screen-space-related functions
   pub unsafe fn GetScreenToWorldRay(position: Vector2, camera: Camera3D) -> Ray;
   pub unsafe fn GetWorldToScreen(position: Vector3, camera: Camera3D) -> Vector2;
+  pub unsafe fn GetWorldToScreen2D(position: Vector2, camera: Camera2D) -> Vector2;
 
   // Timing-related functions
   pub unsafe fn SetTargetFPS(fps: i32);
