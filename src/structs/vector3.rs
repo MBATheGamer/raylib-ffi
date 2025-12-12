@@ -45,6 +45,22 @@ impl Vector3 {
     };
   }
 
+  pub fn normalize(&self) -> Vector3 {
+    let length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
+
+    if length != 0.0 {
+      let length = 1.0 / length;
+
+      return Vector3 {
+        x: self.x * length,
+        y: self.y * length,
+        z: self.z * length,
+      };
+    }
+
+    return *self;
+  }
+
   pub fn rotate_by_axis_angle(&self, mut axis: Vector3, mut angle: f32) -> Vector3 {
     // Using Euler-Rodrigues Formula
     // Ref.: https://en.wikipedia.org/w/index.php?title=Euler%E2%80%93Rodrigues_formula
