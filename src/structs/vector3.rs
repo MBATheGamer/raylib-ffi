@@ -1,3 +1,5 @@
+use std::ops::Neg;
+
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Vector3 {
@@ -94,5 +96,17 @@ impl Vector3 {
     result.z += w_wv.z;
 
     return result;
+  }
+}
+
+impl Neg for Vector3 {
+  type Output = Self;
+
+  fn neg(self) -> Self {
+    return Self {
+      x: -self.x,
+      y: -self.y,
+      z: -self.z,
+    };
   }
 }
