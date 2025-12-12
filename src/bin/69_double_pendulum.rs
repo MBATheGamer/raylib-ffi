@@ -50,7 +50,7 @@ fn main() {
   let fate_alpha = 0.01;
 
   let target = load_render_texture(SCREEN_WIDTH, SCREEN_HEIGHT);
-  set_texture_filter(target.texture, TextureFilter::TextureFilterBilinear);
+  set_texture_filter(target.texture, TextureFilter::Bilinear);
 
   set_target_fps(60);
 
