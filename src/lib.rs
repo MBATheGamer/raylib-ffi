@@ -2,6 +2,7 @@ pub mod audio;
 pub mod consts;
 pub mod core;
 pub mod enums;
+pub mod math;
 pub mod model;
 pub mod shape;
 pub mod structs;
