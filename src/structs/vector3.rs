@@ -21,6 +21,14 @@ impl Vector3 {
     return len.atan2(dot);
   }
 
+  pub fn cross_product(&self, other: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.y * other.z - self.z * other.y,
+      y: self.z * other.x - self.x * other.z,
+      z: self.x * other.y - self.y * other.x,
+    };
+  }
+
   pub fn dot_product(&self, other: Vector3) -> f32 {
     return self.x * other.x + self.y * other.y + self.z * other.z;
   }
