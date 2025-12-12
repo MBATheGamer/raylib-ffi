@@ -1,5 +1,5 @@
 use crate::{
-  model::ffi::{DrawCube, DrawCubeV, DrawCubeWires, DrawGrid, DrawPlane, DrawRay},
+  model::ffi::{DrawCube, DrawCubeV, DrawCubeWires, DrawCubeWiresV, DrawGrid, DrawPlane, DrawRay},
   structs::{Color, Ray, Vector2, Vector3},
 };
 
@@ -16,6 +16,11 @@ pub fn draw_cube_v(position: Vector3, size: Vector3, color: Color) {
 #[inline]
 pub fn draw_cube_wires(position: Vector3, width: f32, height: f32, length: f32, color: Color) {
   unsafe { DrawCubeWires(position, width, height, length, color) };
+}
+
+#[inline]
+pub fn draw_cube_wires_v(position: Vector3, size: Vector3, color: Color) {
+  unsafe { DrawCubeWiresV(position, size, color) };
 }
 
 #[inline]
