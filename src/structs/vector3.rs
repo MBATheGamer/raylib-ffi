@@ -121,6 +121,14 @@ impl Vector3 {
 
     return result;
   }
+
+  pub fn scale(&self, scalar: f32) -> Vector3 {
+    return Vector3 {
+      x: self.x * scalar,
+      y: self.y * scalar,
+      z: self.z * scalar,
+    };
+  }
 }
 
 impl Neg for Vector3 {
