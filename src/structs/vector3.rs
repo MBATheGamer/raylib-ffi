@@ -7,6 +7,18 @@ pub struct Vector3 {
 }
 
 impl Vector3 {
+  pub fn angle(&self, other: Vector3) -> f32 {
+    let cross = Vector3 {
+      x: self.y * other.z - self.z * other.y,
+      y: self.z * other.x - self.x * other.z,
+      z: self.x * other.y - self.y * other.x,
+    };
+    let len = (cross.x * cross.x + cross.y * cross.y + cross.z * cross.z).sqrt();
+    let dot = self.x * other.x + self.y * other.y + self.z * other.z;
+
+    return len.atan2(dot);
+  }
+
   pub fn dot_product(&self, other: Vector3) -> f32 {
     return self.x * other.x + self.y * other.y + self.z * other.z;
   }
