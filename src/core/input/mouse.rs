@@ -1,6 +1,6 @@
 use crate::{
   core::ffi::{
-    GetMousePosition, GetMouseWheelMove, GetMouseX, GetMouseY, IsMouseButtonDown,
+    GetMouseDelta, GetMousePosition, GetMouseWheelMove, GetMouseX, GetMouseY, IsMouseButtonDown,
     IsMouseButtonPressed, IsMouseButtonReleased,
   },
   enums::MouseButton,
@@ -35,6 +35,11 @@ pub fn get_mouse_y() -> i32 {
 #[inline]
 pub fn get_mouse_position() -> Vector2 {
   return unsafe { GetMousePosition() };
+}
+
+#[inline]
+pub fn get_mouse_delta() -> Vector2 {
+  return unsafe { GetMouseDelta() };
 }
 
 #[inline]

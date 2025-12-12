@@ -137,6 +137,7 @@ unsafe extern "C" {
   pub unsafe fn GetMouseX() -> i32;
   pub unsafe fn GetMouseY() -> i32;
   pub unsafe fn GetMousePosition() -> Vector2;
+  pub unsafe fn GetMouseDelta() -> Vector2;
   pub unsafe fn GetMouseWheelMove() -> f32;
 
   // Input-related functions: Touch
