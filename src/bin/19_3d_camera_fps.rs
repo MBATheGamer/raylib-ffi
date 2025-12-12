@@ -1,3 +1,26 @@
+use std::{
+  f32::consts::PI,
+  sync::{LazyLock, Mutex},
+};
+
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, clear_background, close_window, disable_cursor, end_drawing,
+    end_mode_3d, get_frame_time, init_window,
+    keyboard::{is_key_down, is_key_pressed},
+    mouse::get_mouse_delta,
+    set_target_fps, window_should_close,
+  },
+  enums::{CameraProjection, KeyboardKey},
+  math::lerp,
+  model::{draw_cube_v, draw_cube_wires_v, draw_plane, draw_sphere},
+  shape::{draw_rectangle, draw_rectangle_lines},
+  structs::{Camera3D, Color, Vector2, Vector3},
+  text::draw_text,
+  texture::fade,
+};
+
 const GRAVITY: f32 = 32.0;
 const MAX_SPEED: f32 = 20.0;
 const CROUCH_SPEED: f32 = 5.0;
@@ -23,31 +46,37 @@ struct Body {
   is_grounded: bool,
 }
 
-static SENSITIVITY: Vector2 = Vector2 { x: 0.001, y: 0.001 };
+const SENSITIVITY: Vector2 = Vector2 { x: 0.001, y: 0.001 };
 
-static PLAYER: Body = Body {
-  position: Vector3 {
-    x: 0.0,
-    y: 0.0,
-    z: 0.0,
-  },
-  velocity: Vector3 {
-    x: 0.0,
-    y: 0.0,
-    z: 0.0,
-  },
-  dir: Vector3 {
-    x: 0.0,
-    y: 0.0,
-    z: 0.0,
-  },
-  is_grounded: false,
-};
-static LOOK_ROTATION: Vector2 = Vector2 { x: 0.0, y: 0.0 };
-static HEAD_TIMER: f32 = 0.0;
-static WALK_LERP: f32 = 0.0;
-static HEAD_LERP: f32 = STAND_HEIGHT;
-static LEAN: Vector2 = Vector2 { x: 0.0, y: 0.0 };
+static PLAYER: LazyLock<Mutex<Body>> = LazyLock::new(|| {
+  return Mutex::new(Body {
+    position: Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    },
+    velocity: Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    },
+    dir: Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    },
+    is_grounded: false,
+  });
+});
+static LOOK_ROTATION: LazyLock<Mutex<Vector2>> = LazyLock::new(|| {
+  return Mutex::new(Vector2::default());
+});
+static HEAD_TIMER: Mutex<f32> = Mutex::new(0.0);
+static WALK_LERP: Mutex<f32> = Mutex::new(0.0);
+static HEAD_LERP: Mutex<f32> = Mutex::new(STAND_HEIGHT);
+static LEAN: LazyLock<Mutex<Vector2>> = LazyLock::new(|| {
+  return Mutex::new(Vector2::default());
+});
 
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
@@ -59,19 +88,25 @@ fn main() {
     "raylib [core] example - 3d camera fps",
   );
 
-  let camera = Camera3D {
+  let mut head_lerp = HEAD_LERP
+    .lock()
+    .expect("expecting HEAD_LERP was intialized");
+
+  let mut player = PLAYER.lock().expect("expecting PLAYER was intialized");
+
+  let mut camera = Camera3D {
     fovy: 60.0,
     projection: CameraProjection::Perspective,
     position: Vector3 {
-      x: PLAYER.position.x,
-      y: PLAYER.position.y + (BOTTOM_HEIGHT + HEAD_LERP),
-      z: PLAYER.position.z,
+      x: player.position.x,
+      y: player.position.y + (BOTTOM_HEIGHT + *head_lerp),
+      z: player.position.z,
     },
     target: Vector3::default(),
     up: Vector3::default(),
   };
 
-  update_camera_fps(&camera);
+  update_camera_fps(&mut camera);
 
   disable_cursor();
 
@@ -79,8 +114,23 @@ fn main() {
 
   while !window_should_close() {
     let mouse_delta = get_mouse_delta();
-    LOOK_ROTATION.x -= mouse_delta.x * SENSITIVITY.x;
-    LOOK_ROTATION.y += mouse_delta.y * SENSITIVITY.y;
+    // update_camera_fps
+    let mut look_rotation = LOOK_ROTATION
+      .lock()
+      .expect("expecting LOOK_ROTATION was intialized");
+    // update_camera_fps
+    let mut head_timer = HEAD_TIMER
+      .lock()
+      .expect("expecting HEAD_TIMER was intialized");
+    // update_camera_fps
+    let mut walk_lerp = WALK_LERP
+      .lock()
+      .expect("expecting WALK_LERP was intialized");
+    // update_camera_fps
+    let mut lean = LEAN.lock().expect("expecting LEAN was intialized");
+
+    look_rotation.x -= mouse_delta.x * SENSITIVITY.x;
+    look_rotation.y += mouse_delta.y * SENSITIVITY.y;
 
     let sideway = if is_key_down(KeyboardKey::KeyD) {
       1.0
@@ -98,8 +148,8 @@ fn main() {
     };
     let crouching = is_key_down(KeyboardKey::KeyLeftControl);
     update_body(
-      &PLAYER,
-      LOOK_ROTATION.x,
+      &mut player,
+      look_rotation.x,
       sideway,
       forward,
       is_key_pressed(KeyboardKey::KeySpace),
@@ -107,7 +157,8 @@ fn main() {
     );
 
     let delta = get_frame_time();
-    HEAD_LERP = HEAD_LERP.lerp(
+    *head_lerp = lerp(
+      *head_lerp,
       if crouching {
         CROUCH_HEIGHT
       } else {
@@ -116,24 +167,29 @@ fn main() {
       20.0 * delta,
     );
     camera.position = Vector3 {
-      x: PLAYER.position.x,
-      y: PLAYER.position.y + (BOTTOM_HEIGHT + HEAD_LERP),
-      z: PLAYER.position.z,
+      x: player.position.x,
+      y: player.position.y + (BOTTOM_HEIGHT + *head_lerp),
+      z: player.position.z,
     };
 
-    if PLAYER.is_grounded && (forward != 0.0 || sideway != 0.0) {
-      HEAD_TIMER += delta * 3.0;
-      WALK_LERP = WALK_LERP.lerp(1.0, 10.0 * delta);
-      camera.fovy = camera.fovy.lerp(55.0, 5.0 * delta);
+    if player.is_grounded && (forward != 0.0 || sideway != 0.0) {
+      *head_timer += delta * 3.0;
+      *walk_lerp = lerp(*walk_lerp, 1.0, 10.0 * delta);
+      camera.fovy = lerp(camera.fovy, 55.0, 5.0 * delta);
     } else {
-      WALK_LERP = WALK_LERP.lerp(0.0, 10.0 * delta);
-      camera.fovy = camera.fovy.lerp(60.0, 5.0 * delta);
+      *walk_lerp = lerp(*walk_lerp, 0.0, 10.0 * delta);
+      camera.fovy = lerp(camera.fovy, 60.0, 5.0 * delta);
     }
 
-    LEAN.x = LEAN.x.lerp(sideway * 0.02, 10.0 * delta);
-    LEAN.y = LEAN.y.lerp(forward * 0.015, 10.0 * delta);
+    lean.x = lerp(lean.x, sideway * 0.02, 10.0 * delta);
+    lean.y = lerp(lean.y, forward * 0.015, 10.0 * delta);
 
-    update_camera_fps(&camera);
+    drop(look_rotation);
+    drop(lean);
+    drop(head_timer);
+    drop(walk_lerp);
+
+    update_camera_fps(&mut camera);
 
     begin_drawing();
 
@@ -165,8 +221,8 @@ fn main() {
       &format!(
         "- Velocity Len: ({:06.3})",
         Vector2 {
-          x: PLAYER.velocity.x,
-          y: PLAYER.velocity.z
+          x: player.velocity.x,
+          y: player.velocity.z
         }
         .length()
       ),
@@ -183,14 +239,14 @@ fn main() {
 }
 
 fn update_body(
-  body: &Body,
+  body: &mut Body,
   rot: f32,
   side: f32,
   forward: f32,
   jump_pressed: bool,
   crouch_hold: bool,
 ) {
-  let input = Vector2 {
+  let mut input = Vector2 {
     x: side,
     y: -forward,
   };
@@ -218,9 +274,9 @@ fn update_body(
     z: rot.cos(),
   };
   let right = Vector3 {
-    x: -rot.cos(),
+    x: (-rot).cos(),
     y: 0.0,
-    z: -rot.sin(),
+    z: (-rot).sin(),
   };
 
   let desired_dir = Vector3 {
@@ -231,7 +287,7 @@ fn update_body(
   body.dir = body.dir.lerp(desired_dir, CONTROL * delta);
 
   let decel = if body.is_grounded { FRICTION } else { AIR_DRAG };
-  let hvel = Vector3 {
+  let mut hvel = Vector3 {
     x: body.velocity.x * decel,
     y: 0.0,
     z: body.velocity.z * decel,
@@ -263,7 +319,7 @@ fn update_body(
   }
 }
 
-fn update_camera_fps(camera: &Camera3D) {
+fn update_camera_fps(camera: &mut Camera3D) {
   const UP: Vector3 = Vector3 {
     x: 0.0,
     y: 1.0,
@@ -275,39 +331,50 @@ fn update_camera_fps(camera: &Camera3D) {
     z: -1.0,
   };
 
-  let yaw = TARGET_OFFSET.rotate_by_axis_angle(UP, LOOK_ROTATION.x);
+  let mut look_rotation = LOOK_ROTATION
+    .lock()
+    .expect("expecting LOOK_ROTATION was initialized");
+  let lean = LEAN.lock().expect("expecting LEAN was initialized");
+  let head_timer = HEAD_TIMER
+    .lock()
+    .expect("expecting HEAD_TIMER was initialized");
+  let walk_lerp = WALK_LERP
+    .lock()
+    .expect("expecting WALK_LERP was initialzed");
 
-  let max_angle_up = UP.angle(yaw);
+  let yaw = TARGET_OFFSET.rotate_by_axis_angle(UP, look_rotation.x);
+
+  let mut max_angle_up = UP.angle(yaw);
   max_angle_up -= 0.001;
-  if -LOOK_ROTATION.y > max_angle_up {
-    LOOK_ROTATION.y = -max_angle_up;
+  if -look_rotation.y > max_angle_up {
+    look_rotation.y = -max_angle_up;
   }
 
-  let max_angle_down = (-UP).angle(yaw);
+  let mut max_angle_down = (-UP).angle(yaw);
   max_angle_down *= -1.0;
   max_angle_down += 0.001;
-  if -LOOK_ROTATION.y < max_angle_down {
-    LOOK_ROTATION.y = -max_angle_down;
+  if -look_rotation.y < max_angle_down {
+    look_rotation.y = -max_angle_down;
   }
 
   let right = yaw.cross_product(UP).normalize();
 
-  let pitch_angle = -LOOK_ROTATION.y - LEAN.y;
+  let mut pitch_angle = -look_rotation.y - lean.y;
   pitch_angle = pitch_angle.clamp(-PI / 2.0 + 0.0001, PI / 2.0 - 0.0001);
 
   let pitch = yaw.rotate_by_axis_angle(right, pitch_angle);
 
-  let head_sin = (HEAD_TIMER * PI).sin();
-  let head_cos = (HEAD_TIMER * PI).cos();
+  let head_sin = (*head_timer * PI).sin();
+  let head_cos = (*head_timer * PI).cos();
   const STEP_ROTATION: f32 = 0.01;
-  camera.up = UP.rotate_by_axis_angle(pitch, head_sin * STEP_ROTATION + LEAN.x);
+  camera.up = UP.rotate_by_axis_angle(pitch, head_sin * STEP_ROTATION + lean.x);
 
   const BOB_SIDE: f32 = 0.1;
   const BOB_UP: f32 = 0.15;
-  let bobbing = right.scale(head_sin * BOB_SIDE);
+  let mut bobbing = right.scale(head_sin * BOB_SIDE);
   bobbing.y = (head_cos * BOB_UP).abs();
 
-  camera.position = camera.position + bobbing.scale(WALK_LERP);
+  camera.position = camera.position + bobbing.scale(*walk_lerp);
   camera.target = camera.position + pitch;
 }
 
@@ -365,7 +432,7 @@ fn draw_level() {
     alpha: 255,
   };
 
-  let tower_pos = Vector3 {
+  let mut tower_pos = Vector3 {
     x: 16.0,
     y: 16.0,
     z: 16.0,
