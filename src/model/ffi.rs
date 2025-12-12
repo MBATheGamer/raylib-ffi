@@ -12,6 +12,7 @@ unsafe extern "C" {
     color: Color,
   );
   pub unsafe fn DrawCubeWiresV(position: Vector3, size: Vector3, color: Color);
+  pub unsafe fn DrawSphere(center_pos: Vector3, radius: f32, color: Color);
   pub unsafe fn DrawPlane(center_pos: Vector3, size: Vector2, color: Color);
   pub unsafe fn DrawRay(ray: Ray, color: Color);
   pub unsafe fn DrawGrid(slices: i32, spacing: f32);
