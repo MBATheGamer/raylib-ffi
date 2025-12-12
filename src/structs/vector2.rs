@@ -12,6 +12,20 @@ impl Vector2 {
     return (self.x * self.x + self.y * self.y).sqrt();
   }
 
+  pub fn normalize(&self) -> Vector2 {
+    let length = (self.x * self.x + self.y * self.y).sqrt();
+
+    if length > 0.0 {
+      let length = 1.0 / length;
+      return Vector2 {
+        x: self.x * length,
+        y: self.y * length,
+      };
+    }
+
+    return Vector2::default();
+  }
+
   pub fn add(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x + rhs.x,
