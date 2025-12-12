@@ -1,4 +1,4 @@
-use std::ops::Neg;
+use std::ops::{Add, Neg};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -127,6 +127,18 @@ impl Vector3 {
       x: self.x * scalar,
       y: self.y * scalar,
       z: self.z * scalar,
+    };
+  }
+}
+
+impl Add for Vector3 {
+  type Output = Self;
+
+  fn add(self, rhs: Self) -> Self {
+    return Self {
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
+      z: self.z + rhs.z,
     };
   }
 }
