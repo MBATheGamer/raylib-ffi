@@ -7,15 +7,19 @@ pub struct Vector3 {
 }
 
 impl Vector3 {
+  pub fn dot_product(&self, other: Vector3) -> f32 {
+    return self.x * other.x + self.y * other.y + self.z * other.z;
+  }
+
   pub fn length(&self) -> f32 {
     return self.x * self.x + self.y * self.y + self.z * self.z;
   }
 
-  pub fn lerp(&self, other_vector: Vector3, amount: f32) -> Vector3 {
+  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
     return Vector3 {
-      x: self.x + amount * (other_vector.x - self.x),
-      y: self.y + amount * (other_vector.y - self.y),
-      z: self.z + amount * (other_vector.z - self.z),
+      x: self.x + amount * (other.x - self.x),
+      y: self.y + amount * (other.y - self.y),
+      z: self.z + amount * (other.z - self.z),
     };
   }
 }
