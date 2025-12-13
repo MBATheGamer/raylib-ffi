@@ -1,3 +1,23 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_2d, clear_background, close_window, end_drawing, end_mode_2d,
+    get_screen_height, get_screen_to_world_2d, get_screen_width, init_window,
+    keyboard::is_key_pressed,
+    mouse::{
+      get_mouse_delta, get_mouse_position, get_mouse_wheel_move, get_mouse_x, get_mouse_y,
+      is_mouse_button_down, is_mouse_button_pressed,
+    },
+    set_target_fps, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton},
+  model::draw_grid,
+  rlgl::{rl_pop_matrix, rl_push_matrix, rl_rotate, rl_translate},
+  shape::{draw_circle, draw_circle_v},
+  structs::{Camera2D, Vector2},
+  text::{draw_text, draw_text_ex, get_font_default},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,12 +28,12 @@ fn main() {
     "raylib [core] example - 2d camera mouse zoom",
   );
 
-  let camera = Camera2D {
+  let mut camera = Camera2D {
     zoom: 1.0,
     ..Camera2D::default()
   };
 
-  let zoom_mode = 0;
+  let mut zoom_mode = 0;
 
   set_target_fps(60);
 
@@ -25,7 +45,7 @@ fn main() {
     }
 
     if is_mouse_button_down(MouseButton::Left) {
-      let delta = get_mouse_delta();
+      let mut delta = get_mouse_delta();
       delta = delta.scale(-1.0 / camera.zoom);
       camera.target = camera.target + delta;
     }
