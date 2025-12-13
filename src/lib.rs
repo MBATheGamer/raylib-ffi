@@ -4,6 +4,7 @@ pub mod core;
 pub mod enums;
 pub mod math;
 pub mod model;
+pub mod rlgl;
 pub mod shape;
 pub mod structs;
 pub mod text;
