@@ -154,6 +154,16 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn reflect(&self, normal: Vector2) -> Vector2 {
+    let dot_product = self.x * normal.x + self.y * normal.y; // Dot product
+
+    return Vector2 {
+      x: self.x - (2.0 * normal.x) * dot_product,
+      y: self.y - (2.0 * normal.y) * dot_product,
+    };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
