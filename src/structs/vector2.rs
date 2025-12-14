@@ -9,6 +9,11 @@ pub struct Vector2 {
 
 impl Vector2 {
   #[inline]
+  pub fn zero() -> Vector2 {
+    return Vector2 { x: 0.0, y: 0.0 };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
@@ -33,7 +38,7 @@ impl Vector2 {
       };
     }
 
-    return Vector2::default();
+    return Vector2 { x: 0.0, y: 0.0 };
   }
 
   #[inline]
