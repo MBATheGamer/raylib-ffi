@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Neg, Sub};
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -109,6 +109,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn divide(self, other: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x / other.x,
+      y: self.y / other.y,
+    };
+  }
+
+  #[inline]
   pub fn normalize(&self) -> Vector2 {
     let length = (self.x * self.x + self.y * self.y).sqrt();
 
@@ -194,6 +202,17 @@ impl Neg for Vector2 {
     return Vector2 {
       x: -self.x,
       y: -self.y,
+    };
+  }
+}
+
+impl Div for Vector2 {
+  type Output = Self;
+
+  fn div(self, rhs: Self) -> Self {
+    return Vector2 {
+      x: self.x / rhs.x,
+      y: self.y / rhs.y,
     };
   }
 }
