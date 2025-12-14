@@ -32,6 +32,11 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn length_sqr(&self) -> f32 {
+    return self.x * self.x + self.y * self.y;
+  }
+
+  #[inline]
   pub fn normalize(&self) -> Vector2 {
     let length = (self.x * self.x + self.y * self.y).sqrt();
 
