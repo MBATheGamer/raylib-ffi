@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_3d, clear_background, close_window, disable_cursor, end_drawing,
+    end_mode_3d, get_random_value, init_window, keyboard::is_key_pressed, set_target_fps,
+    update_camera, window_should_close,
+  },
+  enums::{CameraMode, CameraProjection, KeyboardKey},
+  model::{draw_cube, draw_cube_wires, draw_plane},
+  shape::{draw_rectangle, draw_rectangle_lines},
+  structs::{Camera3D, Color, Vector2, Vector3},
+  text::draw_text,
+  texture::fade,
+};
+
 const MAX_COLUMNS: usize = 20;
 
 fn main() {
@@ -10,7 +25,7 @@ fn main() {
     "raylib [core] example - 3d camera first person",
   );
 
-  let camera = Camera3D {
+  let mut camera = Camera3D {
     position: Vector3 {
       x: 0.0,
       y: 2.0,
@@ -30,11 +45,11 @@ fn main() {
     projection: CameraProjection::Perspective,
   };
 
-  let camera_mode = CameraMode::FirstPerson;
+  let mut camera_mode = CameraMode::FirstPerson;
 
-  let heights: Vec<f32> = vec![];
-  let positions: Vec<Vector3> = vec![];
-  let colors: Vec<Color> = vec![];
+  let mut heights: Vec<f32> = vec![];
+  let mut positions: Vec<Vector3> = vec![];
+  let mut colors: Vec<Color> = vec![];
 
   for i in 0..MAX_COLUMNS {
     heights.push(get_random_value(1, 12) as f32);
@@ -137,7 +152,7 @@ fn main() {
       }
     }
 
-    update_camera(&camera, camera_mode);
+    update_camera(&mut camera, camera_mode);
 
     // camera.update_camera_pro(
     //   Vector3 {
