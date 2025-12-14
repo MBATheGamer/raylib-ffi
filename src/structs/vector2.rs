@@ -14,6 +14,11 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn one() -> Vector2 {
+    return Vector2 { x: 1.0, y: 1.0 };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
