@@ -71,6 +71,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn sub_value(&self, sub: f32) -> Vector2 {
+    return Vector2 {
+      x: self.x - sub,
+      y: self.y - sub,
+    };
+  }
+
+  #[inline]
   pub fn scale(&self, scaler: f32) -> Self {
     return Vector2 {
       x: self.x * scaler,
