@@ -55,6 +55,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn add_value(&self, add: f32) -> Vector2 {
+    return Vector2 {
+      x: self.x + add,
+      y: self.y + add,
+    };
+  }
+
+  #[inline]
   pub fn sub(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x - rhs.x,
