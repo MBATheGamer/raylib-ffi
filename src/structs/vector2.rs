@@ -77,6 +77,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn angle(v1: Vector2, v2: Vector2) -> f32 {
+    let dot = v1.x * v2.x + v1.y * v2.y;
+    let det = v1.x * v2.y - v1.y * v2.x;
+
+    return det.atan2(dot);
+  }
+
+  #[inline]
   pub fn scale(&self, scaler: f32) -> Self {
     return Vector2 {
       x: self.x * scaler,
