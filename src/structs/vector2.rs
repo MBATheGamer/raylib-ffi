@@ -146,6 +146,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn lerp(&self, other: Vector2, amount: f32) -> Vector2 {
+    return Vector2 {
+      x: self.x + amount * (other.x - self.x),
+      y: self.y + amount * (other.y - self.y),
+    };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
