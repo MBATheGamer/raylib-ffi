@@ -1,4 +1,5 @@
 pub mod audio;
+pub mod camera;
 pub mod consts;
 pub mod core;
 pub mod enums;
