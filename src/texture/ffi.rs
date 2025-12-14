@@ -2,41 +2,41 @@ use crate::structs::{Color, Font, Image, NPatchInfo, Rectangle, RenderTexture, T
 
 unsafe extern "C" {
   // Image loading functions
-  pub unsafe fn LoadImage(file_name: *const i8) -> Image;
-  pub unsafe fn LoadImageRaw(
+  pub fn LoadImage(file_name: *const i8) -> Image;
+  pub fn LoadImageRaw(
     file_name: *const i8,
     width: i32,
     height: i32,
     format: i32,
     header_size: i32,
   ) -> Image;
-  pub unsafe fn LoadImageFromTexture(texture: Texture) -> Image;
-  pub unsafe fn IsImageValid(image: Image) -> bool;
-  pub unsafe fn UnloadImage(image: Image);
+  pub fn LoadImageFromTexture(texture: Texture) -> Image;
+  pub fn IsImageValid(image: Image) -> bool;
+  pub fn UnloadImage(image: Image);
 
   // Image generation functions
-  pub unsafe fn GenImageGradientLinear(
+  pub fn GenImageGradientLinear(
     width: i32,
     height: i32,
     direction: i32,
     start: Color,
     end: Color,
   ) -> Image;
-  pub unsafe fn GenImageGradientRadial(
+  pub fn GenImageGradientRadial(
     width: i32,
     height: i32,
     density: f32,
     inner: Color,
     outer: Color,
   ) -> Image;
-  pub unsafe fn GenImageGradientSquare(
+  pub fn GenImageGradientSquare(
     width: i32,
     height: i32,
     density: f32,
     inner: Color,
     outer: Color,
   ) -> Image;
-  pub unsafe fn GenImageChecked(
+  pub fn GenImageChecked(
     width: i32,
     height: i32,
     checks_x: i32,
@@ -44,42 +44,42 @@ unsafe extern "C" {
     col1: Color,
     col2: Color,
   ) -> Image;
-  pub unsafe fn GenImageWhiteNoise(width: i32, height: i32, factor: f32) -> Image;
-  pub unsafe fn GenImagePerlinNoise(
+  pub fn GenImageWhiteNoise(width: i32, height: i32, factor: f32) -> Image;
+  pub fn GenImagePerlinNoise(
     width: i32,
     height: i32,
     offset_x: i32,
     offset_y: i32,
     scale: f32,
   ) -> Image;
-  pub unsafe fn GenImageCellular(width: i32, height: i32, tile_size: i32) -> Image;
+  pub fn GenImageCellular(width: i32, height: i32, tile_size: i32) -> Image;
 
   // Image manipulation functions
-  pub unsafe fn ImageCopy(image: Image) -> Image;
-  pub unsafe fn ImageFormat(image: *mut Image, new_format: i32);
-  pub unsafe fn ImageCrop(image: *mut Image, crop: Rectangle);
-  pub unsafe fn ImageBlurGaussian(image: *mut Image, blur_size: i32);
-  pub unsafe fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
-  pub unsafe fn ImageFlipVertical(image: *mut Image);
-  pub unsafe fn ImageFlipHorizontal(image: *mut Image);
-  pub unsafe fn ImageColorTint(image: *mut Image, color: Color);
-  pub unsafe fn ImageColorInvert(image: *mut Image);
-  pub unsafe fn ImageColorGrayscale(image: *mut Image);
-  pub unsafe fn ImageColorContrast(image: *mut Image, contrast: f32);
-  pub unsafe fn ImageColorBrightness(image: *mut Image, brightness: i32);
-  pub unsafe fn LoadImageColors(image: Image) -> *mut Color;
-  pub unsafe fn UnloadImageColors(colors: *mut Color);
+  pub fn ImageCopy(image: Image) -> Image;
+  pub fn ImageFormat(image: *mut Image, new_format: i32);
+  pub fn ImageCrop(image: *mut Image, crop: Rectangle);
+  pub fn ImageBlurGaussian(image: *mut Image, blur_size: i32);
+  pub fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
+  pub fn ImageFlipVertical(image: *mut Image);
+  pub fn ImageFlipHorizontal(image: *mut Image);
+  pub fn ImageColorTint(image: *mut Image, color: Color);
+  pub fn ImageColorInvert(image: *mut Image);
+  pub fn ImageColorGrayscale(image: *mut Image);
+  pub fn ImageColorContrast(image: *mut Image, contrast: f32);
+  pub fn ImageColorBrightness(image: *mut Image, brightness: i32);
+  pub fn LoadImageColors(image: Image) -> *mut Color;
+  pub fn UnloadImageColors(colors: *mut Color);
 
   // Image drawing functions
-  pub unsafe fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
-  pub unsafe fn ImageDrawCircleLines(
+  pub fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
+  pub fn ImageDrawCircleLines(
     dst: *mut Image,
     center_x: i32,
     center_y: i32,
     radius: i32,
     color: Color,
   );
-  pub unsafe fn ImageDrawRectangle(
+  pub fn ImageDrawRectangle(
     dst: *mut Image,
     pos_x: i32,
     pos_y: i32,
@@ -87,14 +87,14 @@ unsafe extern "C" {
     height: i32,
     color: Color,
   );
-  pub unsafe fn ImageDraw(
+  pub fn ImageDraw(
     dst: *mut Image,
     src: Image,
     src_rec: Rectangle,
     dst_rec: Rectangle,
     tint: Color,
   );
-  pub unsafe fn ImageDrawTextEx(
+  pub fn ImageDrawTextEx(
     dst: *mut Image,
     font: Font,
     text: *const i8,
@@ -105,28 +105,22 @@ unsafe extern "C" {
   );
 
   // Texture loading functions
-  pub unsafe fn LoadTexture(filename: *const i8) -> Texture;
-  pub unsafe fn LoadTextureFromImage(image: Image) -> Texture;
-  pub unsafe fn LoadRenderTexture(width: i32, height: i32) -> RenderTexture;
-  pub unsafe fn UnloadTexture(texture: Texture);
-  pub unsafe fn UnloadRenderTexture(target: RenderTexture);
-  pub unsafe fn UpdateTexture(texture: Texture, pixels: *const Color);
+  pub fn LoadTexture(filename: *const i8) -> Texture;
+  pub fn LoadTextureFromImage(image: Image) -> Texture;
+  pub fn LoadRenderTexture(width: i32, height: i32) -> RenderTexture;
+  pub fn UnloadTexture(texture: Texture);
+  pub fn UnloadRenderTexture(target: RenderTexture);
+  pub fn UpdateTexture(texture: Texture, pixels: *const Color);
 
   // Texture configuration functions
-  pub unsafe fn SetTextureFilter(texture: Texture, filter: i32);
+  pub fn SetTextureFilter(texture: Texture, filter: i32);
 
   // Texture drawing functions
-  pub unsafe fn DrawTexture(texture: Texture, pos_x: i32, pos_y: i32, tint: Color);
-  pub unsafe fn DrawTextureV(texture: Texture, position: Vector2, tint: Color);
-  pub unsafe fn DrawTextureEx(
-    texture: Texture,
-    position: Vector2,
-    rotation: f32,
-    scale: f32,
-    tint: Color,
-  );
-  pub unsafe fn DrawTextureRec(texture: Texture, source: Rectangle, position: Vector2, tint: Color);
-  pub unsafe fn DrawTexturePro(
+  pub fn DrawTexture(texture: Texture, pos_x: i32, pos_y: i32, tint: Color);
+  pub fn DrawTextureV(texture: Texture, position: Vector2, tint: Color);
+  pub fn DrawTextureEx(texture: Texture, position: Vector2, rotation: f32, scale: f32, tint: Color);
+  pub fn DrawTextureRec(texture: Texture, source: Rectangle, position: Vector2, tint: Color);
+  pub fn DrawTexturePro(
     texture: Texture,
     source: Rectangle,
     dest: Rectangle,
@@ -134,7 +128,7 @@ unsafe extern "C" {
     rotation: f32,
     tint: Color,
   );
-  pub unsafe fn DrawTextureNPatch(
+  pub fn DrawTextureNPatch(
     texture: Texture,
     n_patch_info: NPatchInfo,
     dest: Rectangle,
@@ -144,7 +138,7 @@ unsafe extern "C" {
   );
 
   // Color/pixel related functions
-  pub unsafe fn Fade(color: Color, alpha: f32) -> Color;
-  pub unsafe fn ColorAlpha(color: Color, alpha: f32) -> Color;
-  pub unsafe fn GetColor(hex_value: u32) -> Color;
+  pub fn Fade(color: Color, alpha: f32) -> Color;
+  pub fn ColorAlpha(color: Color, alpha: f32) -> Color;
+  pub fn GetColor(hex_value: u32) -> Color;
 }
