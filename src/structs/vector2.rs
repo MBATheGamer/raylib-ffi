@@ -164,6 +164,17 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn rotate(&self, angle: f32) -> Vector2 {
+    let cosres = angle.cos();
+    let sinres = angle.sin();
+
+    return Vector2 {
+      x: self.x * cosres - self.y * sinres,
+      y: self.x * sinres + self.y * cosres,
+    };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
