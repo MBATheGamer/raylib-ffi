@@ -19,39 +19,6 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
-    return Vector2 {
-      x: max.x.min(min.x.max(self.x)),
-      y: max.y.min(min.y.max(self.y)),
-    };
-  }
-
-  #[inline]
-  pub fn length(&self) -> f32 {
-    return (self.x * self.x + self.y * self.y).sqrt();
-  }
-
-  #[inline]
-  pub fn length_sqr(&self) -> f32 {
-    return self.x * self.x + self.y * self.y;
-  }
-
-  #[inline]
-  pub fn normalize(&self) -> Vector2 {
-    let length = (self.x * self.x + self.y * self.y).sqrt();
-
-    if length > 0.0 {
-      let length = 1.0 / length;
-      return Vector2 {
-        x: self.x * length,
-        y: self.y * length,
-      };
-    }
-
-    return Vector2 { x: 0.0, y: 0.0 };
-  }
-
-  #[inline]
   pub fn add(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x + rhs.x,
@@ -84,10 +51,48 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn length(&self) -> f32 {
+    return (self.x * self.x + self.y * self.y).sqrt();
+  }
+
+  #[inline]
+  pub fn length_sqr(&self) -> f32 {
+    return self.x * self.x + self.y * self.y;
+  }
+
+  #[inline]
+  pub fn dot_product(&self, other: Vector2) -> f32 {
+    return self.x * other.x + self.y * other.y;
+  }
+
+  #[inline]
   pub fn scale(&self, scaler: f32) -> Self {
     return Vector2 {
       x: self.x * scaler,
       y: self.y * scaler,
+    };
+  }
+
+  #[inline]
+  pub fn normalize(&self) -> Vector2 {
+    let length = (self.x * self.x + self.y * self.y).sqrt();
+
+    if length > 0.0 {
+      let length = 1.0 / length;
+      return Vector2 {
+        x: self.x * length,
+        y: self.y * length,
+      };
+    }
+
+    return Vector2 { x: 0.0, y: 0.0 };
+  }
+
+  #[inline]
+  pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
+    return Vector2 {
+      x: max.x.min(min.x.max(self.x)),
+      y: max.y.min(min.y.max(self.y)),
     };
   }
 }
