@@ -1,5 +1,7 @@
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
+use crate::structs::Matrix;
+
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Vector2 {
@@ -129,6 +131,18 @@ impl Vector2 {
     }
 
     return Vector2 { x: 0.0, y: 0.0 };
+  }
+
+  #[inline]
+  pub fn transform(&self, matrix: Matrix) -> Vector2 {
+    let x = self.x;
+    let y = self.y;
+    let z = 0.0;
+
+    return Vector2 {
+      x: matrix.m0 * x + matrix.m4 * y + matrix.m8 * z + matrix.m12,
+      y: matrix.m1 * x + matrix.m5 * y + matrix.m9 * z + matrix.m13,
+    };
   }
 
   #[inline]
