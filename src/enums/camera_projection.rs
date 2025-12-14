@@ -1,5 +1,5 @@
 #[repr(i32)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub enum CameraProjection {
   Perspective = 0, // Perspective projection
   Orthographic,    // Orthographic projection
