@@ -72,6 +72,11 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn distance_sqr(&self, other: Vector2) -> f32 {
+    return (self.x - other.x) * (self.x - other.x) + (self.y - other.y) * (self.y - other.y);
+  }
+
+  #[inline]
   pub fn scale(&self, scaler: f32) -> Self {
     return Vector2 {
       x: self.x * scaler,
