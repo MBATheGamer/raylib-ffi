@@ -16,3 +16,7 @@ pub fn remap(
   return (value - input_start) / (input_end - input_start) * (output_end - output_start)
     + output_start;
 }
+
+pub fn wrap(value: f32, min: f32, max: f32) -> f32 {
+  return value - (max - min) * ((value - min) / (max - min)).floor();
+}
