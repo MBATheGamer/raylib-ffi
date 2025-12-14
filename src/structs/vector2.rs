@@ -175,6 +175,24 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn move_towards(&self, target: Vector2, max_distance: f32) -> Vector2 {
+    let dx = target.x - self.x;
+    let dy = target.y - self.y;
+    let value = (dx * dx) + (dy * dy);
+
+    if value == 0.0 || (max_distance >= 0.0 && value <= max_distance * max_distance) {
+      return target;
+    }
+
+    let dist = value.sqrt();
+
+    return Vector2 {
+      x: self.x + dx / dist * max_distance,
+      y: self.y + dy / dist * max_distance,
+    };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
