@@ -1,5 +1,5 @@
 #[repr(i32)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub enum CameraMode {
   Custom = 0,  // Camera custom, controlled by user (UpdateCamera() does nothing)
   Free,        // Camera free mode
