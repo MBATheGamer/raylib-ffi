@@ -193,6 +193,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn invert(&self) -> Vector2 {
+    return Vector2 {
+      x: 1.0 / self.x,
+      y: 1.0 / self.y,
+    };
+  }
+
+  #[inline]
   pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
