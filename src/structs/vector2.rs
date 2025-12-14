@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Sub};
+use std::ops::{Add, Mul, Neg, Sub};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -101,6 +101,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn negate(&self) -> Vector2 {
+    return Vector2 {
+      x: -self.x,
+      y: -self.y,
+    };
+  }
+
+  #[inline]
   pub fn normalize(&self) -> Vector2 {
     let length = (self.x * self.x + self.y * self.y).sqrt();
 
@@ -175,6 +183,17 @@ impl Mul for Vector2 {
     return Vector2 {
       x: self.x * rhs.x,
       y: self.y * rhs.y,
+    };
+  }
+}
+
+impl Neg for Vector2 {
+  type Output = Self;
+
+  fn neg(self) -> Self {
+    return Vector2 {
+      x: -self.x,
+      y: -self.y,
     };
   }
 }
