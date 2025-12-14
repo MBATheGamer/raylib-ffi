@@ -93,6 +93,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn multiply(&self, other: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x * other.x,
+      y: self.y * other.y,
+    };
+  }
+
+  #[inline]
   pub fn normalize(&self) -> Vector2 {
     let length = (self.x * self.x + self.y * self.y).sqrt();
 
@@ -156,6 +164,17 @@ impl Mul<f32> for Vector2 {
     return Vector2 {
       x: self.x * rhs,
       y: self.y * rhs,
+    };
+  }
+}
+
+impl Mul for Vector2 {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
+    return Vector2 {
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
     };
   }
 }
