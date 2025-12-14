@@ -8,10 +8,20 @@ pub struct Vector2 {
 }
 
 impl Vector2 {
+  #[inline]
+  pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
+    return Vector2 {
+      x: max.x.min(min.x.max(self.x)),
+      y: max.y.min(min.y.max(self.y)),
+    };
+  }
+
+  #[inline]
   pub fn length(&self) -> f32 {
     return (self.x * self.x + self.y * self.y).sqrt();
   }
 
+  #[inline]
   pub fn normalize(&self) -> Vector2 {
     let length = (self.x * self.x + self.y * self.y).sqrt();
 
@@ -26,6 +36,7 @@ impl Vector2 {
     return Vector2::default();
   }
 
+  #[inline]
   pub fn add(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x + rhs.x,
@@ -33,6 +44,7 @@ impl Vector2 {
     };
   }
 
+  #[inline]
   pub fn sub(&self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x - rhs.x,
@@ -40,6 +52,7 @@ impl Vector2 {
     };
   }
 
+  #[inline]
   pub fn scale(&self, scaler: f32) -> Self {
     return Vector2 {
       x: self.x * scaler,
