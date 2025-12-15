@@ -343,6 +343,13 @@ impl Mul<Matrix> for Vector2 {
   }
 }
 
+impl MulAssign for Vector2 {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
+  }
+}
+
 impl MulAssign<f32> for Vector2 {
   fn mul_assign(&mut self, rhs: f32) {
     self.x *= rhs;
@@ -350,10 +357,16 @@ impl MulAssign<f32> for Vector2 {
   }
 }
 
-impl MulAssign for Vector2 {
-  fn mul_assign(&mut self, rhs: Self) {
-    self.x *= rhs.x;
-    self.y *= rhs.y;
+impl MulAssign<Matrix> for Vector2 {
+  fn mul_assign(&mut self, rhs: Matrix) {
+    let x = self.x;
+    let y = self.y;
+    let z = 0.0;
+
+    *self = Vector2 {
+      x: x * rhs.m0 + y * rhs.m4 + z * rhs.m8 + rhs.m12,
+      y: x * rhs.m1 + y * rhs.m5 + z * rhs.m9 + rhs.m13,
+    };
   }
 }
 
@@ -364,17 +377,6 @@ impl Neg for Vector2 {
     return Vector2 {
       x: -self.x,
       y: -self.y,
-    };
-  }
-}
-
-impl Div<f32> for Vector2 {
-  type Output = Self;
-
-  fn div(self, rhs: f32) -> Self {
-    return Vector2 {
-      x: self.x / rhs,
-      y: self.y / rhs,
     };
   }
 }
@@ -390,10 +392,14 @@ impl Div for Vector2 {
   }
 }
 
-impl DivAssign<f32> for Vector2 {
-  fn div_assign(&mut self, rhs: f32) {
-    self.x /= rhs;
-    self.y /= rhs;
+impl Div<f32> for Vector2 {
+  type Output = Self;
+
+  fn div(self, rhs: f32) -> Self {
+    return Vector2 {
+      x: self.x / rhs,
+      y: self.y / rhs,
+    };
   }
 }
 
@@ -401,5 +407,12 @@ impl DivAssign for Vector2 {
   fn div_assign(&mut self, rhs: Self) {
     self.x /= rhs.x;
     self.y /= rhs.y;
+  }
+}
+
+impl DivAssign<f32> for Vector2 {
+  fn div_assign(&mut self, rhs: f32) {
+    self.x /= rhs;
+    self.y /= rhs;
   }
 }
