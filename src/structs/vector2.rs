@@ -79,11 +79,17 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn angle(v1: Vector2, v2: Vector2) -> f32 {
-    let dot = v1.x * v2.x + v1.y * v2.y;
-    let det = v1.x * v2.y - v1.y * v2.x;
+  pub fn angle(&self, other: Vector2) -> f32 {
+    let dot = self.x * other.x + self.y * other.y;
+    let det = self.x * other.y - self.y * other.x;
 
     return det.atan2(dot);
+  }
+
+  #[inline]
+  pub fn line_angle(&self, end: Vector2) -> f32 {
+    // TODO(10/9/2023): Currently angles move clockwise, determine if this is wanted behavior
+    return -(end.y - self.y).atan2(end.x - self.x);
   }
 
   #[inline]
