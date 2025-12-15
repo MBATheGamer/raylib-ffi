@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_texture_mode, get_random_value, get_screen_height, get_screen_width, init_window,
+    keyboard::is_key_pressed, mouse::get_mouse_position, set_config_flags, set_target_fps,
+    set_window_min_size, window_should_close,
+  },
+  enums::{ConfigFlags, KeyboardKey, TextureFilter},
+  shape::draw_rectangle,
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::{draw_texture_pro, load_render_texture, set_texture_filter, unload_render_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -16,7 +31,7 @@ fn main() {
   let target = load_render_texture(game_screen_width, game_screen_height);
   set_texture_filter(target.texture, TextureFilter::Bilinear);
 
-  let colors: Vec<Color> = vec![];
+  let mut colors: Vec<Color> = vec![];
   for _ in 0..10 {
     colors.push(Color {
       red: get_random_value(100, 250) as u8,
@@ -43,7 +58,7 @@ fn main() {
     }
 
     let mouse = get_mouse_position();
-    let virtual_mouse = Vector2 {
+    let mut virtual_mouse = Vector2 {
       x: (mouse.x - (get_screen_width() as f32 - game_screen_width as f32 * scale) * 0.5)
         / scale as f32,
       y: (mouse.y - (get_screen_height() as f32 - game_screen_height as f32 * scale) * 0.5)
