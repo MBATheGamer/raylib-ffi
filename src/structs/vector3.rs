@@ -393,6 +393,33 @@ impl Vector3 {
       z: self.z + amount * (other.z - self.z),
     };
   }
+
+  #[inline]
+  pub fn cubic_hermite(
+    &self,
+    tangent1: Vector3,
+    v2: Vector3,
+    tangent2: Vector3,
+    amount: f32,
+  ) -> Vector3 {
+    let amount_pow2 = amount * amount;
+    let amount_pow3 = amount * amount * amount;
+
+    return Vector3 {
+      x: (2.0 * amount_pow3 - 3.0 * amount_pow2 + 1.0) * self.x
+        + (amount_pow3 - 2.0 * amount_pow2 + amount) * tangent1.x
+        + (-2.0 * amount_pow3 + 3.0 * amount_pow2) * v2.x
+        + (amount_pow3 - amount_pow2) * tangent2.x,
+      y: (2.0 * amount_pow3 - 3.0 * amount_pow2 + 1.0) * self.y
+        + (amount_pow3 - 2.0 * amount_pow2 + amount) * tangent1.y
+        + (-2.0 * amount_pow3 + 3.0 * amount_pow2) * v2.y
+        + (amount_pow3 - amount_pow2) * tangent2.y,
+      z: (2.0 * amount_pow3 - 3.0 * amount_pow2 + 1.0) * self.z
+        + (amount_pow3 - 2.0 * amount_pow2 + amount) * tangent1.z
+        + (-2.0 * amount_pow3 + 3.0 * amount_pow2) * v2.z
+        + (amount_pow3 - amount_pow2) * tangent2.z,
+    };
+  }
 }
 
 impl Add for Vector3 {
