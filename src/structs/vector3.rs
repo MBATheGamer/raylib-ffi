@@ -653,6 +653,15 @@ impl Vector3 {
   pub fn to_array(&self) -> [f32; 3] {
     return [self.x, self.y, self.z];
   }
+
+  #[inline]
+  pub fn invert(&self) -> Vector3 {
+    return Vector3 {
+      x: 1.0 / self.x,
+      y: 1.0 / self.y,
+      z: 1.0 / self.z,
+    };
+  }
 }
 
 impl Add for Vector3 {
