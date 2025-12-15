@@ -131,6 +131,11 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn length_sqr(&self) -> f32 {
+    return self.x * self.x + self.y * self.y + self.z * self.z;
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
