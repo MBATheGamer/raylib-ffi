@@ -136,6 +136,20 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn dot_product(&self, other: Vector3) -> f32 {
+    return self.x * other.x + self.y * other.y + self.z * other.z;
+  }
+
+  #[inline]
+  pub fn distance(self, other: Vector3) -> f32 {
+    let dx = other.x - self.x;
+    let dy = other.y - self.y;
+    let dz = other.z - self.z;
+
+    return (dx * dx + dy * dy + dz * dz).sqrt();
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
@@ -146,11 +160,6 @@ impl Vector3 {
     let dot = self.x * other.x + self.y * other.y + self.z * other.z;
 
     return len.atan2(dot);
-  }
-
-  #[inline]
-  pub fn dot_product(&self, other: Vector3) -> f32 {
-    return self.x * other.x + self.y * other.y + self.z * other.z;
   }
 
   #[inline]
