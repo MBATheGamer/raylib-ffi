@@ -1,4 +1,4 @@
-use std::ops::{Add, Neg};
+use std::ops::{Add, Neg, Sub};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -42,6 +42,15 @@ impl Vector3 {
       x: self.x + add,
       y: self.y + add,
       z: self.z + add,
+    };
+  }
+
+  #[inline]
+  pub fn sub(&self, rhs: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.x - rhs.x,
+      y: self.y - rhs.y,
+      z: self.z - rhs.z,
     };
   }
 
@@ -183,6 +192,18 @@ impl Add for Vector3 {
       x: self.x + rhs.x,
       y: self.y + rhs.y,
       z: self.z + rhs.z,
+    };
+  }
+}
+
+impl Sub for Vector3 {
+  type Output = Self;
+
+  fn sub(self, rhs: Self) -> Self {
+    return Self {
+      x: self.x - rhs.x,
+      y: self.y - rhs.y,
+      z: self.z - rhs.z,
     };
   }
 }
