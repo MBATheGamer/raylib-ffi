@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use crate::structs::Matrix;
 
@@ -328,6 +328,13 @@ impl Mul<f32> for Vector2 {
   }
 }
 
+impl MulAssign<f32> for Vector2 {
+  fn mul_assign(&mut self, rhs: f32) {
+    self.x *= rhs;
+    self.y *= rhs;
+  }
+}
+
 impl Mul for Vector2 {
   type Output = Self;
 
@@ -336,6 +343,13 @@ impl Mul for Vector2 {
       x: self.x * rhs.x,
       y: self.y * rhs.y,
     };
+  }
+}
+
+impl MulAssign for Vector2 {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
   }
 }
 
