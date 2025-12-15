@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul, Neg, Sub};
+use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub};
 
 use crate::structs::{Matrix, Quaternion};
 
@@ -732,6 +732,13 @@ impl Add for Vector3 {
   }
 }
 
+impl AddAssign for Vector3 {
+  fn add_assign(&mut self, rhs: Self) {
+    self.x += rhs.x;
+    self.y += rhs.y;
+  }
+}
+
 impl Sub for Vector3 {
   type Output = Self;
 
@@ -744,14 +751,14 @@ impl Sub for Vector3 {
   }
 }
 
-impl Mul<Vector3> for f32 {
-  type Output = Vector3;
+impl Mul for Vector3 {
+  type Output = Self;
 
-  fn mul(self, rhs: Vector3) -> Vector3 {
-    return Vector3 {
-      x: self * rhs.x,
-      y: self * rhs.y,
-      z: self * rhs.z,
+  fn mul(self, rhs: Self) -> Self {
+    return Self {
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
+      z: self.z * rhs.z,
     };
   }
 }
@@ -764,18 +771,6 @@ impl Mul<f32> for Vector3 {
       x: self.x * rhs,
       y: self.y * rhs,
       z: self.z * rhs,
-    };
-  }
-}
-
-impl Mul for Vector3 {
-  type Output = Self;
-
-  fn mul(self, rhs: Self) -> Self {
-    return Self {
-      x: self.x * rhs.x,
-      y: self.y * rhs.y,
-      z: self.z * rhs.z,
     };
   }
 }
