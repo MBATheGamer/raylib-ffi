@@ -696,6 +696,28 @@ impl Vector3 {
 
     return *self;
   }
+
+  #[inline]
+  pub fn refract(&self, n: Vector3, r: f32) -> Vector3 {
+    let dot = self.x * n.x + self.y * n.y + self.z * n.z;
+    let mut d = 1.0 - r * r * (1.0 - dot * dot);
+
+    if d >= 0.0 {
+      d = d.sqrt();
+
+      return Vector3 {
+        x: r * self.x - (r * dot + d) * n.x,
+        y: r * self.y - (r * dot + d) * n.y,
+        z: r * self.z - (r * dot + d) * n.z,
+      };
+    }
+
+    return Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
