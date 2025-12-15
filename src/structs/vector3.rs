@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Neg, Sub};
+use std::ops::{Add, Div, Mul, Neg, Sub};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -181,6 +181,15 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn divide(self, other: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.x / other.x,
+      y: self.y / other.y,
+      z: self.z / other.z,
+    };
+  }
+
+  #[inline]
   pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
     return Vector3 {
       x: self.x + amount * (other.x - self.x),
@@ -337,6 +346,18 @@ impl Neg for Vector3 {
       x: -self.x,
       y: -self.y,
       z: -self.z,
+    };
+  }
+}
+
+impl Div for Vector3 {
+  type Output = Self;
+
+  fn div(self, rhs: Self) -> Self {
+    return Self {
+      x: self.x / rhs.x,
+      y: self.y / rhs.y,
+      z: self.z / rhs.z,
     };
   }
 }
