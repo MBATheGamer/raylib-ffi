@@ -9,6 +9,16 @@ pub struct Vector3 {
 }
 
 impl Vector3 {
+  #[inline]
+  pub fn zero() -> Vector3 {
+    return Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    };
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
@@ -21,6 +31,7 @@ impl Vector3 {
     return len.atan2(dot);
   }
 
+  #[inline]
   pub fn cross_product(&self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.y * other.z - self.z * other.y,
@@ -29,14 +40,17 @@ impl Vector3 {
     };
   }
 
+  #[inline]
   pub fn dot_product(&self, other: Vector3) -> f32 {
     return self.x * other.x + self.y * other.y + self.z * other.z;
   }
 
+  #[inline]
   pub fn length(&self) -> f32 {
     return self.x * self.x + self.y * self.y + self.z * self.z;
   }
 
+  #[inline]
   pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
     return Vector3 {
       x: self.x + amount * (other.x - self.x),
@@ -45,6 +59,7 @@ impl Vector3 {
     };
   }
 
+  #[inline]
   pub fn normalize(&self) -> Vector3 {
     let length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
 
@@ -61,6 +76,7 @@ impl Vector3 {
     return *self;
   }
 
+  #[inline]
   pub fn rotate_by_axis_angle(&self, mut axis: Vector3, mut angle: f32) -> Vector3 {
     // Using Euler-Rodrigues Formula
     // Ref.: https://en.wikipedia.org/w/index.php?title=Euler%E2%80%93Rodrigues_formula
@@ -122,6 +138,7 @@ impl Vector3 {
     return result;
   }
 
+  #[inline]
   pub fn scale(&self, scalar: f32) -> Vector3 {
     return Vector3 {
       x: self.x * scalar,
