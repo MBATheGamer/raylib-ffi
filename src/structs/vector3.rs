@@ -172,6 +172,15 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn negate(&self) -> Vector3 {
+    return Vector3 {
+      x: -self.x,
+      y: -self.y,
+      z: -self.z,
+    };
+  }
+
+  #[inline]
   pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
     return Vector3 {
       x: self.x + amount * (other.x - self.x),
