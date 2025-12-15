@@ -662,6 +662,15 @@ impl Vector3 {
       z: 1.0 / self.z,
     };
   }
+
+  #[inline]
+  pub fn clamp(&self, min: Vector3, max: Vector3) -> Vector3 {
+    return Vector3 {
+      x: max.x.min(min.x.max(self.x)),
+      y: max.y.min(min.y.max(self.y)),
+      z: max.z.min(min.z.max(self.z)),
+    };
+  }
 }
 
 impl Add for Vector3 {
