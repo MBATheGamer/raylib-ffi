@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use crate::structs::{Matrix, Quaternion};
 
@@ -837,5 +837,33 @@ impl Div for Vector3 {
       y: self.y / rhs.y,
       z: self.z / rhs.z,
     };
+  }
+}
+
+impl Div<f32> for Vector3 {
+  type Output = Self;
+
+  fn div(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x / rhs,
+      y: self.y / rhs,
+      z: self.z / rhs,
+    };
+  }
+}
+
+impl DivAssign for Vector3 {
+  fn div_assign(&mut self, rhs: Self) {
+    self.x /= rhs.x;
+    self.y /= rhs.y;
+    self.z /= rhs.z;
+  }
+}
+
+impl DivAssign<f32> for Vector3 {
+  fn div_assign(&mut self, rhs: f32) {
+    self.x /= rhs;
+    self.y /= rhs;
+    self.z /= rhs;
   }
 }
