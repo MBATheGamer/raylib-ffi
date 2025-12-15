@@ -19,6 +19,15 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn one() -> Vector3 {
+    return Vector3 {
+      x: 1.0,
+      y: 1.0,
+      z: 1.0,
+    };
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
