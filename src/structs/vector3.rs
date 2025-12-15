@@ -453,6 +453,39 @@ impl Vector3 {
       z: self.z.max(other.z),
     };
   }
+
+  #[inline]
+  pub fn barycenter(&self, a: Vector3, b: Vector3, c: Vector3) -> Vector3 {
+    let v0 = Vector3 {
+      x: b.x - a.x,
+      y: b.y - a.y,
+      z: b.z - a.z,
+    }; // Vector3Subtract(b, a)
+    let v1 = Vector3 {
+      x: c.x - a.x,
+      y: c.y - a.y,
+      z: c.z - a.z,
+    }; // Vector3Subtract(c, a)
+    let v2 = Vector3 {
+      x: self.x - a.x,
+      y: self.y - a.y,
+      z: self.z - a.z,
+    }; // Vector3Subtract(p, a)
+
+    let d00 = v0.x * v0.x + v0.y * v0.y + v0.z * v0.z; // Vector3DotProduct(v0, v0)
+    let d01 = v0.x * v1.x + v0.y * v1.y + v0.z * v1.z; // Vector3DotProduct(v0, v1)
+    let d11 = v1.x * v1.x + v1.y * v1.y + v1.z * v1.z; // Vector3DotProduct(v1, v1)
+    let d20 = v2.x * v0.x + v2.y * v0.y + v2.z * v0.z; // Vector3DotProduct(v2, v0)
+    let d21 = v2.x * v1.x + v2.y * v1.y + v2.z * v1.z; // Vector3DotProduct(v2, v1)
+
+    let denom = d00 * d11 - d01 * d01;
+
+    return Vector3 {
+      y: (d11 * d20 - d01 * d21) / denom,
+      z: (d00 * d21 - d01 * d20) / denom,
+      x: 1.0 - (d00 * d21 - d01 * d20 + d11 * d20 - d01 * d21) / denom,
+    };
+  }
 }
 
 impl Add for Vector3 {
