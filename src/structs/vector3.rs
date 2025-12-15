@@ -55,6 +55,15 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn sub_value(&self, add: f32) -> Vector3 {
+    return Vector3 {
+      x: self.x - add,
+      y: self.y - add,
+      z: self.z - add,
+    };
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
