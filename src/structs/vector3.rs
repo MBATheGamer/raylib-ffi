@@ -671,6 +671,31 @@ impl Vector3 {
       z: max.z.min(min.z.max(self.z)),
     };
   }
+
+  #[inline]
+  pub fn clamp_value(&self, min: f32, max: f32) -> Vector3 {
+    let mut length = (self.x * self.x) + (self.y * self.y) + (self.z * self.z);
+
+    if length > 0.0 {
+      length = length.sqrt();
+
+      let scale = if length < min {
+        min / length
+      } else if length > max {
+        max / length
+      } else {
+        1.0
+      };
+
+      return Vector3 {
+        x: self.x * scale,
+        y: self.y * scale,
+        z: self.z * scale,
+      };
+    }
+
+    return *self;
+  }
 }
 
 impl Add for Vector3 {
