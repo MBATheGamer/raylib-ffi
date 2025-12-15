@@ -143,7 +143,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn distance(self, other: Vector3) -> f32 {
+  pub fn distance(&self, other: Vector3) -> f32 {
     let dx = other.x - self.x;
     let dy = other.y - self.y;
     let dz = other.z - self.z;
@@ -152,7 +152,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn distance_sqr(self, other: Vector3) -> f32 {
+  pub fn distance_sqr(&self, other: Vector3) -> f32 {
     let dx = other.x - self.x;
     let dy = other.y - self.y;
     let dz = other.z - self.z;
@@ -183,7 +183,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn divide(self, other: Vector3) -> Vector3 {
+  pub fn divide(&self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x / other.x,
       y: self.y / other.y,
@@ -221,7 +221,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn reject(self, other: Vector3) -> Vector3 {
+  pub fn reject(&self, other: Vector3) -> Vector3 {
     let mag = (self.x * other.x + self.y * other.y + self.z * other.z)
       / (other.x * other.x + other.y * other.y + other.z * other.z);
 
@@ -279,7 +279,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn rotate_by_quaternion(self, quaternion: Quaternion) -> Vector3 {
+  pub fn rotate_by_quaternion(&self, quaternion: Quaternion) -> Vector3 {
     return Vector3 {
       x: self.x
         * (quaternion.x * quaternion.x + quaternion.w * quaternion.w
@@ -363,6 +363,26 @@ impl Vector3 {
     result.z += w_wv.z;
 
     return result;
+  }
+
+  #[inline]
+  pub fn move_towards(&self, target: Vector3, max_distance: f32) -> Vector3 {
+    let dx = target.x - self.x;
+    let dy = target.y - self.y;
+    let dz = target.z - self.z;
+    let value = (dx * dx) + (dy * dy) + (dz * dz);
+
+    if value == 0.0 || (max_distance >= 0.0 && value <= max_distance * max_distance) {
+      return target;
+    }
+
+    let dist = value.sqrt();
+
+    return Vector3 {
+      x: self.x + dx / dist * max_distance,
+      y: self.y + dy / dist * max_distance,
+      z: self.z + dz / dist * max_distance,
+    };
   }
 
   #[inline]
