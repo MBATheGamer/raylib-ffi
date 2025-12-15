@@ -178,6 +178,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn max(&self, other: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x.max(other.x),
+      y: self.y.max(other.y),
+    };
+  }
+
+  #[inline]
   pub fn rotate(&self, angle: f32) -> Vector2 {
     let cosres = angle.cos();
     let sinres = angle.sin();
