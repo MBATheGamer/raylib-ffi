@@ -209,6 +209,18 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn project(&self, other: Vector3) -> Vector3 {
+    let mag = (self.x * other.x + self.y * other.y + self.z * other.z)
+      / (other.x * other.x + other.y * other.y + other.z * other.z);
+
+    return Vector3 {
+      x: other.x * mag,
+      y: other.y * mag,
+      z: other.z * mag,
+    };
+  }
+
+  #[inline]
   pub fn ortho_normalize(&mut self, other: &mut Vector3) {
     // Vector3Normalize(*v1);
     let mut length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
