@@ -444,6 +444,15 @@ impl Vector3 {
       z: self.z.min(other.z),
     };
   }
+
+  #[inline]
+  pub fn max(&self, other: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.x.max(other.x),
+      y: self.y.max(other.y),
+      z: self.z.max(other.z),
+    };
+  }
 }
 
 impl Add for Vector3 {
