@@ -306,13 +306,13 @@ impl SubAssign for Vector2 {
   }
 }
 
-impl Mul<Vector2> for f32 {
-  type Output = Vector2;
+impl Mul for Vector2 {
+  type Output = Self;
 
-  fn mul(self, rhs: Vector2) -> Vector2 {
+  fn mul(self, rhs: Self) -> Self {
     return Vector2 {
-      x: self * rhs.x,
-      y: self * rhs.y,
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
     };
   }
 }
@@ -328,21 +328,25 @@ impl Mul<f32> for Vector2 {
   }
 }
 
+impl Mul<Matrix> for Vector2 {
+  type Output = Self;
+
+  fn mul(self, rhs: Matrix) -> Self {
+    let x = self.x;
+    let y = self.y;
+    let z = 0.0;
+
+    return Vector2 {
+      x: x * rhs.m0 + y * rhs.m4 + z * rhs.m8 + rhs.m12,
+      y: x * rhs.m1 + y * rhs.m5 + z * rhs.m9 + rhs.m13,
+    };
+  }
+}
+
 impl MulAssign<f32> for Vector2 {
   fn mul_assign(&mut self, rhs: f32) {
     self.x *= rhs;
     self.y *= rhs;
-  }
-}
-
-impl Mul for Vector2 {
-  type Output = Self;
-
-  fn mul(self, rhs: Self) -> Self {
-    return Vector2 {
-      x: self.x * rhs.x,
-      y: self.y * rhs.y,
-    };
   }
 }
 
