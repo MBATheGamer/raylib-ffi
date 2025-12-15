@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul, Neg, Sub};
+use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub};
 
 use crate::structs::Matrix;
 
@@ -278,6 +278,13 @@ impl Add for Vector2 {
       x: self.x + rhs.x,
       y: self.y + rhs.y,
     };
+  }
+}
+
+impl AddAssign for Vector2 {
+  fn add_assign(&mut self, rhs: Self) {
+    self.x += rhs.x;
+    self.y += rhs.y;
   }
 }
 
