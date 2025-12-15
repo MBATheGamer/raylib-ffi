@@ -190,15 +190,6 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
-    return Vector3 {
-      x: self.x + amount * (other.x - self.x),
-      y: self.y + amount * (other.y - self.y),
-      z: self.z + amount * (other.z - self.z),
-    };
-  }
-
-  #[inline]
   pub fn normalize(&self) -> Vector3 {
     let length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
 
@@ -213,6 +204,52 @@ impl Vector3 {
     }
 
     return *self;
+  }
+
+  #[inline]
+  pub fn ortho_normalize(&mut self, other: &mut Vector3) {
+    // Vector3Normalize(*v1);
+    let mut length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
+    if length == 0.0 {
+      length = 1.0;
+    }
+    length = 1.0 / length;
+    self.x *= length;
+    self.y *= length;
+    self.z *= length;
+
+    // Vector3CrossProduct(*v1, *v2)
+    let mut vn1 = Vector3 {
+      x: self.y * other.z - self.z * other.y,
+      y: self.z * other.x - self.x * other.z,
+      z: self.x * other.y - self.y * other.x,
+    };
+
+    // Vector3Normalize(vn1);
+    length = (vn1.x * vn1.x + vn1.y * vn1.y + vn1.z * vn1.z).sqrt();
+    if length == 0.0 {
+      length = 1.0;
+    }
+    length = 1.0 / length;
+    vn1.x *= length;
+    vn1.y *= length;
+    vn1.z *= length;
+
+    // Vector3CrossProduct(vn1, *v1)
+    *other = Vector3 {
+      x: vn1.y * self.z - vn1.z * self.y,
+      y: vn1.z * self.x - vn1.x * self.z,
+      z: vn1.x * self.y - vn1.y * self.x,
+    };
+  }
+
+  #[inline]
+  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
+    return Vector3 {
+      x: self.x + amount * (other.x - self.x),
+      y: self.y + amount * (other.y - self.y),
+      z: self.z + amount * (other.z - self.z),
+    };
   }
 
   #[inline]
