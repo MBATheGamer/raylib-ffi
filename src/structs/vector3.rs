@@ -82,6 +82,50 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn cross_product(&self, other: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.y * other.z - self.z * other.y,
+      y: self.z * other.x - self.x * other.z,
+      z: self.x * other.y - self.y * other.x,
+    };
+  }
+
+  #[inline]
+  pub fn perpendicular(&self) -> Vector3 {
+    let mut min = self.x.abs();
+    let mut cardinal_axis = Vector3 {
+      x: 1.0,
+      y: 0.0,
+      z: 0.0,
+    };
+
+    if self.y.abs() < min {
+      min = self.y.abs();
+      let tmp = Vector3 {
+        x: 0.0,
+        y: 1.0,
+        z: 0.0,
+      };
+      cardinal_axis = tmp;
+    }
+
+    if self.z.abs() < min {
+      let tmp = Vector3 {
+        x: 0.0,
+        y: 0.0,
+        z: 1.0,
+      };
+      cardinal_axis = tmp;
+    }
+
+    return Vector3 {
+      x: self.y * cardinal_axis.z - self.z * cardinal_axis.y,
+      y: self.z * cardinal_axis.x - self.x * cardinal_axis.z,
+      z: self.x * cardinal_axis.y - self.y * cardinal_axis.x,
+    };
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
@@ -92,15 +136,6 @@ impl Vector3 {
     let dot = self.x * other.x + self.y * other.y + self.z * other.z;
 
     return len.atan2(dot);
-  }
-
-  #[inline]
-  pub fn cross_product(&self, other: Vector3) -> Vector3 {
-    return Vector3 {
-      x: self.y * other.z - self.z * other.y,
-      y: self.z * other.x - self.x * other.z,
-      z: self.x * other.y - self.y * other.x,
-    };
   }
 
   #[inline]
