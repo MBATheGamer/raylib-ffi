@@ -1,6 +1,6 @@
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
-use crate::structs::Matrix;
+use crate::structs::{Matrix, Quaternion};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -251,6 +251,31 @@ impl Vector3 {
       x: matrix.m0 * self.x + matrix.m4 * self.y + matrix.m8 * self.z + matrix.m12,
       y: matrix.m1 * self.x + matrix.m5 * self.y + matrix.m9 * self.z + matrix.m13,
       z: matrix.m2 * self.x + matrix.m6 * self.y + matrix.m10 * self.z + matrix.m14,
+    };
+  }
+
+  #[inline]
+  pub fn rotate_by_quaternion(self, quaternion: Quaternion) -> Vector3 {
+    return Vector3 {
+      x: self.x
+        * (quaternion.x * quaternion.x + quaternion.w * quaternion.w
+          - quaternion.y * quaternion.y
+          - quaternion.z * quaternion.z)
+        + self.y * (2.0 * quaternion.x * quaternion.y - 2.0 * quaternion.w * quaternion.z)
+        + self.z * (2.0 * quaternion.x * quaternion.z + 2.0 * quaternion.w * quaternion.y),
+      y: self.x * (2.0 * quaternion.w * quaternion.z + 2.0 * quaternion.x * quaternion.y)
+        + self.y
+          * (quaternion.w * quaternion.w - quaternion.x * quaternion.x
+            + quaternion.y * quaternion.y
+            - quaternion.z * quaternion.z)
+        + self.z * (-2.0 * quaternion.w * quaternion.x + 2.0 * quaternion.y * quaternion.z),
+      z: self.x * (-2.0 * quaternion.w * quaternion.y + 2.0 * quaternion.x * quaternion.z)
+        + self.y * (2.0 * quaternion.w * quaternion.x + 2.0 * quaternion.y * quaternion.z)
+        + self.z
+          * (quaternion.w * quaternion.w
+            - quaternion.x * quaternion.x
+            - quaternion.y * quaternion.y
+            + quaternion.z * quaternion.z),
     };
   }
 
