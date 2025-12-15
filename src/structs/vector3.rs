@@ -648,6 +648,11 @@ impl Vector3 {
       z: qtransformed.z / qtransformed.w,
     };
   }
+
+  #[inline]
+  pub fn to_array(&self) -> [f32; 3] {
+    return [self.x, self.y, self.z];
+  }
 }
 
 impl Add for Vector3 {
