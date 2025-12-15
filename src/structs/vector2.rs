@@ -170,6 +170,14 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn min(&self, other: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x.min(other.x),
+      y: self.y.min(other.y),
+    };
+  }
+
+  #[inline]
   pub fn rotate(&self, angle: f32) -> Vector2 {
     let cosres = angle.cos();
     let sinres = angle.sin();
