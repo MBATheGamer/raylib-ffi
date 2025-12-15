@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use crate::structs::{Matrix, Quaternion};
 
@@ -779,6 +779,20 @@ impl Mul<f32> for Vector3 {
       y: self.y * rhs,
       z: self.z * rhs,
     };
+  }
+}
+
+impl MulAssign for Vector3 {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
+  }
+}
+
+impl MulAssign<f32> for Vector3 {
+  fn mul_assign(&mut self, rhs: f32) {
+    self.x *= rhs;
+    self.y *= rhs;
   }
 }
 
