@@ -420,6 +420,21 @@ impl Vector3 {
         + (amount_pow3 - amount_pow2) * tangent2.z,
     };
   }
+
+  #[inline]
+  pub fn reflect(&self, normal: Vector3) -> Vector3 {
+    // I is the original vector
+    // N is the normal of the incident plane
+    // R = I - (2*N*(DotProduct[I, N]))
+
+    let dot_product = self.x * normal.x + self.y * normal.y + self.z * normal.z;
+
+    return Vector3 {
+      x: self.x - (2.0 * normal.x) * dot_product,
+      y: self.y - (2.0 * normal.y) * dot_product,
+      z: self.z - (2.0 * normal.z) * dot_product,
+    };
+  }
 }
 
 impl Add for Vector3 {
