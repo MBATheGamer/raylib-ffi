@@ -252,6 +252,22 @@ impl Vector2 {
 
     return self;
   }
+
+  #[inline]
+  pub fn refract(&self, normal: Vector2, ratio: f32) -> Vector2 {
+    let dot = self.x * normal.x + self.y * normal.y;
+    let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
+
+    if d >= 0.0 {
+      d = d.sqrt();
+      return Vector2 {
+        x: ratio * self.x - (ratio * dot + d) * normal.x,
+        y: ratio * self.y - (ratio * dot + d) * normal.y,
+      };
+    }
+
+    return Vector2 { x: 0.0, y: 0.0 };
+  }
 }
 
 impl Add for Vector2 {

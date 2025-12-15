@@ -698,17 +698,17 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn refract(&self, n: Vector3, r: f32) -> Vector3 {
-    let dot = self.x * n.x + self.y * n.y + self.z * n.z;
-    let mut d = 1.0 - r * r * (1.0 - dot * dot);
+  pub fn refract(&self, normal: Vector3, ratio: f32) -> Vector3 {
+    let dot = self.x * normal.x + self.y * normal.y + self.z * normal.z;
+    let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
 
     if d >= 0.0 {
       d = d.sqrt();
 
       return Vector3 {
-        x: r * self.x - (r * dot + d) * n.x,
-        y: r * self.y - (r * dot + d) * n.y,
-        z: r * self.z - (r * dot + d) * n.z,
+        x: ratio * self.x - (ratio * dot + d) * normal.x,
+        y: ratio * self.y - (ratio * dot + d) * normal.y,
+        z: ratio * self.z - (ratio * dot + d) * normal.z,
       };
     }
 
