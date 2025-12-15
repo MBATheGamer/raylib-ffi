@@ -808,6 +808,14 @@ impl MulAssign<f32> for Vector3 {
   }
 }
 
+impl MulAssign<Matrix> for Vector3 {
+  fn mul_assign(&mut self, rhs: Matrix) {
+    self.x = rhs.m0 * self.x + rhs.m4 * self.y + rhs.m8 * self.z + rhs.m12;
+    self.y = rhs.m1 * self.x + rhs.m5 * self.y + rhs.m9 * self.z + rhs.m13;
+    self.z = rhs.m2 * self.x + rhs.m6 * self.y + rhs.m10 * self.z + rhs.m14;
+  }
+}
+
 impl Neg for Vector3 {
   type Output = Self;
 
