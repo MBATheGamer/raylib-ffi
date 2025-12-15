@@ -150,6 +150,15 @@ impl Vector3 {
   }
 
   #[inline]
+  pub fn distance_sqr(self, other: Vector3) -> f32 {
+    let dx = other.x - self.x;
+    let dy = other.y - self.y;
+    let dz = other.z - self.z;
+
+    return dx * dx + dy * dy + dz * dz;
+  }
+
+  #[inline]
   pub fn angle(&self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
