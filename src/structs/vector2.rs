@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use crate::structs::Matrix;
 
@@ -364,6 +364,17 @@ impl Neg for Vector2 {
   }
 }
 
+impl Div<f32> for Vector2 {
+  type Output = Self;
+
+  fn div(self, rhs: f32) -> Self {
+    return Vector2 {
+      x: self.x / rhs,
+      y: self.y / rhs,
+    };
+  }
+}
+
 impl Div for Vector2 {
   type Output = Self;
 
@@ -372,5 +383,19 @@ impl Div for Vector2 {
       x: self.x / rhs.x,
       y: self.y / rhs.y,
     };
+  }
+}
+
+impl DivAssign<f32> for Vector2 {
+  fn div_assign(&mut self, rhs: f32) {
+    self.x /= rhs;
+    self.y /= rhs;
+  }
+}
+
+impl DivAssign for Vector2 {
+  fn div_assign(&mut self, rhs: Self) {
+    self.x /= rhs.x;
+    self.y /= rhs.y;
   }
 }
