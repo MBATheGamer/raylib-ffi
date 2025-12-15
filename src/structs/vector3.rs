@@ -782,6 +782,18 @@ impl Mul<f32> for Vector3 {
   }
 }
 
+impl Mul<Matrix> for Vector3 {
+  type Output = Self;
+
+  fn mul(self, rhs: Matrix) -> Self {
+    return Vector3 {
+      x: rhs.m0 * self.x + rhs.m4 * self.y + rhs.m8 * self.z + rhs.m12,
+      y: rhs.m1 * self.x + rhs.m5 * self.y + rhs.m9 * self.z + rhs.m13,
+      z: rhs.m2 * self.x + rhs.m6 * self.y + rhs.m10 * self.z + rhs.m14,
+    };
+  }
+}
+
 impl MulAssign for Vector3 {
   fn mul_assign(&mut self, rhs: Self) {
     self.x *= rhs.x;
