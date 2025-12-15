@@ -1,5 +1,7 @@
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
+use crate::structs::Matrix;
+
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Vector3 {
@@ -244,11 +246,11 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
+  pub fn transform(&self, matrix: Matrix) -> Vector3 {
     return Vector3 {
-      x: self.x + amount * (other.x - self.x),
-      y: self.y + amount * (other.y - self.y),
-      z: self.z + amount * (other.z - self.z),
+      x: matrix.m0 * self.x + matrix.m4 * self.y + matrix.m8 * self.z + matrix.m12,
+      y: matrix.m1 * self.x + matrix.m5 * self.y + matrix.m9 * self.z + matrix.m13,
+      z: matrix.m2 * self.x + matrix.m6 * self.y + matrix.m10 * self.z + matrix.m14,
     };
   }
 
@@ -312,6 +314,15 @@ impl Vector3 {
     result.z += w_wv.z;
 
     return result;
+  }
+
+  #[inline]
+  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
+    return Vector3 {
+      x: self.x + amount * (other.x - self.x),
+      y: self.y + amount * (other.y - self.y),
+      z: self.z + amount * (other.z - self.z),
+    };
   }
 }
 
