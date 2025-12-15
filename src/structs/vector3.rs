@@ -1,4 +1,4 @@
-use std::ops::{Add, Neg, Sub};
+use std::ops::{Add, Mul, Neg, Sub};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -60,6 +60,24 @@ impl Vector3 {
       x: self.x - add,
       y: self.y - add,
       z: self.z - add,
+    };
+  }
+
+  #[inline]
+  pub fn scale(&self, scalar: f32) -> Vector3 {
+    return Vector3 {
+      x: self.x * scalar,
+      y: self.y * scalar,
+      z: self.z * scalar,
+    };
+  }
+
+  #[inline]
+  pub fn multiply(&self, other: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.x * other.x,
+      y: self.y * other.y,
+      z: self.z * other.z,
     };
   }
 
@@ -182,15 +200,6 @@ impl Vector3 {
 
     return result;
   }
-
-  #[inline]
-  pub fn scale(&self, scalar: f32) -> Vector3 {
-    return Vector3 {
-      x: self.x * scalar,
-      y: self.y * scalar,
-      z: self.z * scalar,
-    };
-  }
 }
 
 impl Add for Vector3 {
@@ -213,6 +222,42 @@ impl Sub for Vector3 {
       x: self.x - rhs.x,
       y: self.y - rhs.y,
       z: self.z - rhs.z,
+    };
+  }
+}
+
+impl Mul<Vector3> for f32 {
+  type Output = Vector3;
+
+  fn mul(self, rhs: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self * rhs.x,
+      y: self * rhs.y,
+      z: self * rhs.z,
+    };
+  }
+}
+
+impl Mul<f32> for Vector3 {
+  type Output = Self;
+
+  fn mul(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x * rhs,
+      y: self.y * rhs,
+      z: self.z * rhs,
+    };
+  }
+}
+
+impl Mul for Vector3 {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
+    return Self {
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
+      z: self.z * rhs.z,
     };
   }
 }
