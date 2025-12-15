@@ -435,6 +435,15 @@ impl Vector3 {
       z: self.z - (2.0 * normal.z) * dot_product,
     };
   }
+
+  #[inline]
+  pub fn min(&self, other: Vector3) -> Vector3 {
+    return Vector3 {
+      x: self.x.min(other.x),
+      y: self.y.min(other.y),
+      z: self.z.min(other.z),
+    };
+  }
 }
 
 impl Add for Vector3 {
