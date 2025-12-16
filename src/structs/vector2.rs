@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul, Neg, Sub};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use crate::structs::Matrix;
 
@@ -79,11 +79,17 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn angle(v1: Vector2, v2: Vector2) -> f32 {
-    let dot = v1.x * v2.x + v1.y * v2.y;
-    let det = v1.x * v2.y - v1.y * v2.x;
+  pub fn angle(&self, other: Vector2) -> f32 {
+    let dot = self.x * other.x + self.y * other.y;
+    let det = self.x * other.y - self.y * other.x;
 
     return det.atan2(dot);
+  }
+
+  #[inline]
+  pub fn line_angle(&self, end: Vector2) -> f32 {
+    // TODO(10/9/2023): Currently angles move clockwise, determine if this is wanted behavior
+    return -(end.y - self.y).atan2(end.x - self.x);
   }
 
   #[inline]
@@ -164,6 +170,22 @@ impl Vector2 {
   }
 
   #[inline]
+  pub fn min(&self, other: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x.min(other.x),
+      y: self.y.min(other.y),
+    };
+  }
+
+  #[inline]
+  pub fn max(&self, other: Vector2) -> Vector2 {
+    return Vector2 {
+      x: self.x.max(other.x),
+      y: self.y.max(other.y),
+    };
+  }
+
+  #[inline]
   pub fn rotate(&self, angle: f32) -> Vector2 {
     let cosres = angle.cos();
     let sinres = angle.sin();
@@ -230,6 +252,22 @@ impl Vector2 {
 
     return self;
   }
+
+  #[inline]
+  pub fn refract(&self, normal: Vector2, ratio: f32) -> Vector2 {
+    let dot = self.x * normal.x + self.y * normal.y;
+    let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
+
+    if d >= 0.0 {
+      d = d.sqrt();
+      return Vector2 {
+        x: ratio * self.x - (ratio * dot + d) * normal.x,
+        y: ratio * self.y - (ratio * dot + d) * normal.y,
+      };
+    }
+
+    return Vector2 { x: 0.0, y: 0.0 };
+  }
 }
 
 impl Add for Vector2 {
@@ -240,6 +278,13 @@ impl Add for Vector2 {
       x: self.x + rhs.x,
       y: self.y + rhs.y,
     };
+  }
+}
+
+impl AddAssign for Vector2 {
+  fn add_assign(&mut self, rhs: Self) {
+    self.x += rhs.x;
+    self.y += rhs.y;
   }
 }
 
@@ -254,13 +299,20 @@ impl Sub for Vector2 {
   }
 }
 
-impl Mul<Vector2> for f32 {
-  type Output = Vector2;
+impl SubAssign for Vector2 {
+  fn sub_assign(&mut self, rhs: Self) {
+    self.x += rhs.x;
+    self.y += rhs.y;
+  }
+}
 
-  fn mul(self, rhs: Vector2) -> Vector2 {
+impl Mul for Vector2 {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
     return Vector2 {
-      x: self * rhs.x,
-      y: self * rhs.y,
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
     };
   }
 }
@@ -276,13 +328,44 @@ impl Mul<f32> for Vector2 {
   }
 }
 
-impl Mul for Vector2 {
+impl Mul<Matrix> for Vector2 {
   type Output = Self;
 
-  fn mul(self, rhs: Self) -> Self {
+  fn mul(self, rhs: Matrix) -> Self {
+    let x = self.x;
+    let y = self.y;
+    let z = 0.0;
+
     return Vector2 {
-      x: self.x * rhs.x,
-      y: self.y * rhs.y,
+      x: x * rhs.m0 + y * rhs.m4 + z * rhs.m8 + rhs.m12,
+      y: x * rhs.m1 + y * rhs.m5 + z * rhs.m9 + rhs.m13,
+    };
+  }
+}
+
+impl MulAssign for Vector2 {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
+  }
+}
+
+impl MulAssign<f32> for Vector2 {
+  fn mul_assign(&mut self, rhs: f32) {
+    self.x *= rhs;
+    self.y *= rhs;
+  }
+}
+
+impl MulAssign<Matrix> for Vector2 {
+  fn mul_assign(&mut self, rhs: Matrix) {
+    let x = self.x;
+    let y = self.y;
+    let z = 0.0;
+
+    *self = Vector2 {
+      x: x * rhs.m0 + y * rhs.m4 + z * rhs.m8 + rhs.m12,
+      y: x * rhs.m1 + y * rhs.m5 + z * rhs.m9 + rhs.m13,
     };
   }
 }
@@ -306,5 +389,30 @@ impl Div for Vector2 {
       x: self.x / rhs.x,
       y: self.y / rhs.y,
     };
+  }
+}
+
+impl Div<f32> for Vector2 {
+  type Output = Self;
+
+  fn div(self, rhs: f32) -> Self {
+    return Vector2 {
+      x: self.x / rhs,
+      y: self.y / rhs,
+    };
+  }
+}
+
+impl DivAssign for Vector2 {
+  fn div_assign(&mut self, rhs: Self) {
+    self.x /= rhs.x;
+    self.y /= rhs.y;
+  }
+}
+
+impl DivAssign<f32> for Vector2 {
+  fn div_assign(&mut self, rhs: f32) {
+    self.x /= rhs;
+    self.y /= rhs;
   }
 }

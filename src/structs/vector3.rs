@@ -1,9 +1,9 @@
-use std::ops::{Add, Div, Mul, Neg, Sub};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 use crate::structs::{Matrix, Quaternion};
 
 #[repr(C)]
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Default, PartialEq)]
 pub struct Vector3 {
   pub x: f32,
   pub y: f32,
@@ -696,6 +696,28 @@ impl Vector3 {
 
     return *self;
   }
+
+  #[inline]
+  pub fn refract(&self, normal: Vector3, ratio: f32) -> Vector3 {
+    let dot = self.x * normal.x + self.y * normal.y + self.z * normal.z;
+    let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
+
+    if d >= 0.0 {
+      d = d.sqrt();
+
+      return Vector3 {
+        x: ratio * self.x - (ratio * dot + d) * normal.x,
+        y: ratio * self.y - (ratio * dot + d) * normal.y,
+        z: ratio * self.z - (ratio * dot + d) * normal.z,
+      };
+    }
+
+    return Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
@@ -707,6 +729,13 @@ impl Add for Vector3 {
       y: self.y + rhs.y,
       z: self.z + rhs.z,
     };
+  }
+}
+
+impl AddAssign for Vector3 {
+  fn add_assign(&mut self, rhs: Self) {
+    self.x += rhs.x;
+    self.y += rhs.y;
   }
 }
 
@@ -722,14 +751,21 @@ impl Sub for Vector3 {
   }
 }
 
-impl Mul<Vector3> for f32 {
-  type Output = Vector3;
+impl SubAssign for Vector3 {
+  fn sub_assign(&mut self, rhs: Self) {
+    self.x -= rhs.x;
+    self.y -= rhs.y;
+  }
+}
 
-  fn mul(self, rhs: Vector3) -> Vector3 {
-    return Vector3 {
-      x: self * rhs.x,
-      y: self * rhs.y,
-      z: self * rhs.z,
+impl Mul for Vector3 {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
+    return Self {
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
+      z: self.z * rhs.z,
     };
   }
 }
@@ -746,15 +782,37 @@ impl Mul<f32> for Vector3 {
   }
 }
 
-impl Mul for Vector3 {
+impl Mul<Matrix> for Vector3 {
   type Output = Self;
 
-  fn mul(self, rhs: Self) -> Self {
-    return Self {
-      x: self.x * rhs.x,
-      y: self.y * rhs.y,
-      z: self.z * rhs.z,
+  fn mul(self, rhs: Matrix) -> Self {
+    return Vector3 {
+      x: rhs.m0 * self.x + rhs.m4 * self.y + rhs.m8 * self.z + rhs.m12,
+      y: rhs.m1 * self.x + rhs.m5 * self.y + rhs.m9 * self.z + rhs.m13,
+      z: rhs.m2 * self.x + rhs.m6 * self.y + rhs.m10 * self.z + rhs.m14,
     };
+  }
+}
+
+impl MulAssign for Vector3 {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
+  }
+}
+
+impl MulAssign<f32> for Vector3 {
+  fn mul_assign(&mut self, rhs: f32) {
+    self.x *= rhs;
+    self.y *= rhs;
+  }
+}
+
+impl MulAssign<Matrix> for Vector3 {
+  fn mul_assign(&mut self, rhs: Matrix) {
+    self.x = rhs.m0 * self.x + rhs.m4 * self.y + rhs.m8 * self.z + rhs.m12;
+    self.y = rhs.m1 * self.x + rhs.m5 * self.y + rhs.m9 * self.z + rhs.m13;
+    self.z = rhs.m2 * self.x + rhs.m6 * self.y + rhs.m10 * self.z + rhs.m14;
   }
 }
 
@@ -779,5 +837,33 @@ impl Div for Vector3 {
       y: self.y / rhs.y,
       z: self.z / rhs.z,
     };
+  }
+}
+
+impl Div<f32> for Vector3 {
+  type Output = Self;
+
+  fn div(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x / rhs,
+      y: self.y / rhs,
+      z: self.z / rhs,
+    };
+  }
+}
+
+impl DivAssign for Vector3 {
+  fn div_assign(&mut self, rhs: Self) {
+    self.x /= rhs.x;
+    self.y /= rhs.y;
+    self.z /= rhs.z;
+  }
+}
+
+impl DivAssign<f32> for Vector3 {
+  fn div_assign(&mut self, rhs: f32) {
+    self.x /= rhs;
+    self.y /= rhs;
+    self.z /= rhs;
   }
 }
