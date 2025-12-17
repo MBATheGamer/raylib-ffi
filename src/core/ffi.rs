@@ -98,6 +98,7 @@ unsafe extern "C" {
   // Random values generation functions
   pub fn GetRandomValue(min: i32, max: i32) -> i32;
   pub fn LoadRandomSequence(count: u32, min: i32, max: i32) -> *mut i32;
+  pub fn UnloadRandomSequence(sequence: *mut i32);
 
   // Misc. functions
   pub fn SetConfigFlags(flags: u32);
