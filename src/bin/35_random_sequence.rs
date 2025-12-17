@@ -1,3 +1,17 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_random_value, init_window,
+    keyboard::is_key_pressed, load_random_sequence, set_target_fps, unload_random_sequence,
+    window_should_close,
+  },
+  enums::KeyboardKey,
+  math::remap,
+  shape::draw_rectangle_rec,
+  structs::{Color, Rectangle},
+  text::{draw_fps, draw_text},
+};
+
 #[derive(Clone, Copy)]
 struct ColorRect {
   color: Color,
