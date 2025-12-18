@@ -10,6 +10,7 @@ unsafe extern "C" {
   pub fn InitWindow(width: i32, height: i32, title: *const i8);
   pub fn CloseWindow();
   pub fn WindowShouldClose() -> bool;
+  pub fn IsWindowResized() -> bool;
   pub fn IsWindowState(flag: u32) -> bool;
   pub fn SetWindowState(flags: u32);
   pub fn ClearWindowState(flags: u32);

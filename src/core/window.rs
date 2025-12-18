@@ -6,9 +6,9 @@ use crate::{
     GetMonitorCount, GetMonitorHeight, GetMonitorName, GetMonitorPhysicalHeight,
     GetMonitorPhysicalWidth, GetMonitorPosition, GetMonitorRefreshRate, GetMonitorWidth,
     GetRenderWidth, GetScreenHeight, GetScreenWidth, GetWindowPosition, GetWindowScaleDPI,
-    IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow, SetClipboardText,
-    SetTraceLogLevel, SetWindowMinSize, SetWindowMonitor, SetWindowState, ToggleBorderlessWindowed,
-    ToggleFullscreen, WindowShouldClose,
+    IsWindowResized, IsWindowState, MaximizeWindow, MinimizeWindow, RestoreWindow,
+    SetClipboardText, SetTraceLogLevel, SetWindowMinSize, SetWindowMonitor, SetWindowState,
+    ToggleBorderlessWindowed, ToggleFullscreen, WindowShouldClose,
   },
   enums::ConfigFlags,
   structs::{Image, Vector2},
@@ -38,6 +38,11 @@ pub fn close_window() {
 #[inline]
 pub fn window_should_close() -> bool {
   return unsafe { WindowShouldClose() };
+}
+
+#[inline]
+pub fn is_window_resized() -> bool {
+  return unsafe { IsWindowResized() };
 }
 
 #[inline]
