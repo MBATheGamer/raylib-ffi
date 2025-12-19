@@ -223,16 +223,15 @@ fn update_player(player: &mut Player, env_items: &Vec<EnvItem>, delta: f32) {
   let mut hit_obstacle = false;
   for i in 0..env_items.len() {
     let ei = &env_items[i];
-    let mut p = player.position;
     if ei.blocking
-      && ei.rect.x <= p.x
-      && ei.rect.x + ei.rect.width >= p.x
-      && ei.rect.y >= p.y
-      && ei.rect.y <= p.y + player.speed * delta
+      && ei.rect.x <= player.position.x
+      && ei.rect.x + ei.rect.width >= player.position.x
+      && ei.rect.y >= player.position.y
+      && ei.rect.y <= player.position.y + player.speed * delta
     {
       hit_obstacle = true;
       player.speed = 0.0;
-      p.y = ei.rect.y;
+      player.position.y = ei.rect.y;
       break;
     }
   }
