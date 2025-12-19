@@ -14,6 +14,14 @@ unsafe extern "C" {
     color: Color,
   );
   pub fn DrawCircle(center_x: i32, center_y: i32, radius: f32, color: Color);
+  pub fn DrawCircleSector(
+    center: Vector2,
+    radius: f32,
+    start_angle: f32,
+    end_angle: f32,
+    segments: i32,
+    color: Color,
+  );
   pub fn DrawCircleGradient(center_x: i32, center_y: i32, radius: f32, inner: Color, outer: Color);
   pub fn DrawCircleV(center: Vector2, radius: f32, color: Color);
   pub fn DrawCircleLines(center_x: i32, center_y: i32, radius: f32, color: Color);

@@ -1,10 +1,11 @@
 use crate::{
   shape::ffi::{
-    DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleLinesV, DrawCircleV, DrawEllipse,
-    DrawEllipseLines, DrawLine, DrawLineBezier, DrawLineDashed, DrawLineEx, DrawLineV, DrawPoly,
-    DrawPolyLines, DrawPolyLinesEx, DrawRectangle, DrawRectangleGradientV, DrawRectangleLines,
-    DrawRectangleLinesEx, DrawRectanglePro, DrawRectangleRec, DrawRectangleRounded, DrawRectangleV,
-    DrawRing, DrawTriangle, DrawTriangleLines,
+    DrawCircle, DrawCircleGradient, DrawCircleLines, DrawCircleLinesV, DrawCircleSector,
+    DrawCircleV, DrawEllipse, DrawEllipseLines, DrawLine, DrawLineBezier, DrawLineDashed,
+    DrawLineEx, DrawLineV, DrawPoly, DrawPolyLines, DrawPolyLinesEx, DrawRectangle,
+    DrawRectangleGradientV, DrawRectangleLines, DrawRectangleLinesEx, DrawRectanglePro,
+    DrawRectangleRec, DrawRectangleRounded, DrawRectangleV, DrawRing, DrawTriangle,
+    DrawTriangleLines,
   },
   structs::{Color, Rectangle, Vector2},
 };
@@ -43,6 +44,18 @@ pub fn draw_line_dashed(
 #[inline]
 pub fn draw_circle(center_x: i32, center_y: i32, radius: f32, color: Color) {
   unsafe { DrawCircle(center_x, center_y, radius, color) };
+}
+
+#[inline]
+pub fn draw_circle_sector(
+  center: Vector2,
+  radius: f32,
+  start_angle: f32,
+  end_angle: f32,
+  segments: i32,
+  color: Color,
+) {
+  unsafe { DrawCircleSector(center, radius, start_angle, end_angle, segments, color) };
 }
 
 #[inline]
