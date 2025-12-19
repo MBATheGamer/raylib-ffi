@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_position, is_mouse_button_down},
+    set_target_fps, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton},
+  shape::{draw_circle_sector, draw_line, draw_line_ex},
+  structs::Vector2,
+  text::draw_text,
+  texture::fade,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -12,10 +27,10 @@ fn main() {
     x: SCREEN_WIDTH as f32 / 2.0,
     y: SCREEN_HEIGHT as f32 / 2.0,
   };
-  let v1 = v0 + Vector2 { x: 100.0, y: 80.0 };
+  let mut v1 = v0 + Vector2 { x: 100.0, y: 80.0 };
 
-  let angle = 0.0;
-  let angle_mode = false;
+  let mut angle = 0.0;
+  let mut angle_mode = false;
 
   set_target_fps(60);
 
