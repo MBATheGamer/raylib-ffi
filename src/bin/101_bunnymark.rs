@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_random_value,
+    get_screen_height, get_screen_width, init_window,
+    mouse::{get_mouse_position, is_mouse_button_down},
+    set_target_fps, window_should_close,
+  },
+  enums::MouseButton,
+  shape::draw_rectangle,
+  structs::{Color, Vector2},
+  text::{draw_fps, draw_text},
+  texture::{draw_texture, load_texture, unload_texture},
+};
+
 const MAX_BUNNIES: usize = 50000;
 
 const MAX_BATCH_ELEMENTS: i32 = 8192;
@@ -20,7 +35,7 @@ fn main() {
 
   let tex_bunny = load_texture("resources/wabbit_alpha.png");
 
-  let bunnies: Vec<Bunny> = vec![];
+  let mut bunnies: Vec<Bunny> = vec![];
 
   set_target_fps(60);
 
@@ -45,7 +60,7 @@ fn main() {
       }
     }
 
-    for bunny in &bunnies {
+    for bunny in &mut bunnies {
       bunny.position.x += bunny.speed.x;
       bunny.position.y += bunny.speed.y;
 
