@@ -3,7 +3,9 @@ use std::ffi::CString;
 use crate::{
   enums::PixelFormat,
   structs::{Image, Texture},
-  texture::ffi::{IsImageValid, LoadImage, LoadImageFromTexture, LoadImageRaw, UnloadImage},
+  texture::ffi::{
+    ExportImage, IsImageValid, LoadImage, LoadImageFromTexture, LoadImageRaw, UnloadImage,
+  },
 };
 
 #[inline]
@@ -47,4 +49,11 @@ pub fn is_image_valid(image: Image) -> bool {
 #[inline]
 pub fn unload_image(image: Image) {
   unsafe { UnloadImage(image) };
+}
+
+#[inline]
+pub fn export_image(image: Image, file_name: &'static str) -> bool {
+  let file_name = CString::new(file_name).expect("Expecting file name");
+
+  return unsafe { ExportImage(image, file_name.as_ptr()) };
 }

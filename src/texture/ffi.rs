@@ -13,6 +13,7 @@ unsafe extern "C" {
   pub fn LoadImageFromTexture(texture: Texture) -> Image;
   pub fn IsImageValid(image: Image) -> bool;
   pub fn UnloadImage(image: Image);
+  pub fn ExportImage(image: Image, file_name: *const i8) -> bool;
 
   // Image generation functions
   pub fn GenImageGradientLinear(
