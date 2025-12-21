@@ -1,3 +1,30 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_texture_mode,
+    gesture::get_gesture_detected,
+    get_screen_height, get_screen_width, init_window,
+    keyboard::is_key_pressed,
+    mouse::{
+      get_mouse_position, get_mouse_wheel_move, get_mouse_x, get_mouse_y, is_mouse_button_down,
+      is_mouse_button_pressed, is_mouse_button_released,
+    },
+    set_target_fps, window_should_close,
+  },
+  enums::{Gesture, KeyboardKey, MouseButton},
+  shape::{
+    check_collision_point_rec, draw_circle, draw_circle_lines, draw_line, draw_rectangle,
+    draw_rectangle_lines, draw_rectangle_lines_ex, draw_rectangle_rec,
+  },
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::{
+    draw_texture_rec, export_image, fade, image_flip_vertical, load_image_from_texture,
+    load_render_texture, unload_image, unload_render_texture,
+  },
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -34,7 +61,7 @@ fn main() {
     colors::BLACK,
   ];
 
-  let colors_recs: Vec<Rectangle> = vec![];
+  let mut colors_recs: Vec<Rectangle> = vec![];
 
   for i in 0..colors.len() {
     colors_recs.push(Rectangle {
@@ -45,11 +72,11 @@ fn main() {
     });
   }
 
-  let color_selected = 0;
-  let color_selected_prev = color_selected;
-  let color_mouse_hover = 0;
-  let brush_size = 20.0;
-  let mouse_was_pressed = false;
+  let mut color_selected = 0;
+  let mut color_selected_prev = color_selected;
+  let mut color_mouse_hover = 0;
+  let mut brush_size = 20.0;
+  let mut mouse_was_pressed = false;
 
   let btn_save_rec = Rectangle {
     x: 750.0,
@@ -57,8 +84,8 @@ fn main() {
     width: 40.0,
     height: 30.0,
   };
-  let show_save_message = false;
-  let save_message_counter = 0;
+  let mut show_save_message = false;
+  let mut save_message_counter = 0;
 
   let target = load_render_texture(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -152,8 +179,8 @@ fn main() {
     if btn_save_mouse_hover && is_mouse_button_released(MouseButton::Left)
       || is_key_pressed(KeyboardKey::KeyS)
     {
-      let image = load_image_from_texture(target.texture);
-      image_flip_vertical(&image);
+      let mut image = load_image_from_texture(target.texture);
+      image_flip_vertical(&mut image);
       export_image(image, "my_amazing_texture_painting.png");
       unload_image(image);
       show_save_message = true;
