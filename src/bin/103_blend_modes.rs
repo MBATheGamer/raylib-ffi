@@ -1,3 +1,14 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_blend_mode, begin_drawing, clear_background, close_window, end_blend_mode, end_drawing,
+    init_window, keyboard::is_key_pressed, set_target_fps, window_should_close,
+  },
+  enums::{BlendMode, KeyboardKey},
+  text::draw_text,
+  texture::{draw_texture, load_image, load_texture_from_image, unload_image, unload_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
