@@ -26,4 +26,14 @@ impl Vector4 {
       w: 1.0,
     };
   }
+
+  #[inline]
+  pub fn add(self, v2: Vector4) -> Vector4 {
+    return Vector4 {
+      x: self.x + v2.x,
+      y: self.y + v2.y,
+      z: self.z + v2.z,
+      w: self.w + v2.w,
+    };
+  }
 }
