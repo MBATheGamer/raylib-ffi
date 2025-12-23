@@ -66,4 +66,9 @@ impl Vector4 {
       w: self.w - add,
     };
   }
+
+  #[inline]
+  pub fn length(self) -> f32 {
+    return (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt();
+  }
 }
