@@ -100,4 +100,14 @@ impl Vector4 {
       + (self.z - v2.z) * (self.z - v2.z)
       + (self.w - v2.w) * (self.w - v2.w);
   }
+
+  #[inline]
+  pub fn scale(self, scale: f32) -> Vector4 {
+    return Vector4 {
+      x: self.x * scale,
+      y: self.y * scale,
+      z: self.z * scale,
+      w: self.w * scale,
+    };
+  }
 }
