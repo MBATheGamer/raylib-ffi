@@ -121,4 +121,15 @@ impl Vector4 {
       w: self.w * v2.w,
     };
   }
+
+  // Negate vector
+  #[inline]
+  pub fn negate(self) -> Vector4 {
+    return Vector4 {
+      x: -self.x,
+      y: -self.y,
+      z: -self.z,
+      w: -self.w,
+    };
+  }
 }
