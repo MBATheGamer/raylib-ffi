@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub};
+use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub struct Vector4 {
@@ -304,5 +304,23 @@ impl Sub<f32> for Vector4 {
       z: self.z - rhs,
       w: self.w - rhs,
     };
+  }
+}
+
+impl SubAssign for Vector4 {
+  fn sub_assign(&mut self, rhs: Self) {
+    self.x -= rhs.x;
+    self.y -= rhs.y;
+    self.z -= rhs.z;
+    self.w -= rhs.w;
+  }
+}
+
+impl SubAssign<f32> for Vector4 {
+  fn sub_assign(&mut self, rhs: f32) {
+    self.x -= rhs;
+    self.y -= rhs;
+    self.z -= rhs;
+    self.w -= rhs;
   }
 }
