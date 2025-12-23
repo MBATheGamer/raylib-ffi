@@ -16,4 +16,14 @@ impl Vector4 {
       w: 0.0,
     };
   }
+
+  #[inline]
+  pub fn one() -> Vector4 {
+    return Vector4 {
+      x: 1.0,
+      y: 1.0,
+      z: 1.0,
+      w: 1.0,
+    };
+  }
 }
