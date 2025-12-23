@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub struct Vector4 {
@@ -50,22 +50,22 @@ impl Vector4 {
   }
 
   #[inline]
-  pub fn subtract(self, v2: Vector4) -> Vector4 {
+  pub fn subtract(self, rhs: Vector4) -> Vector4 {
     return Vector4 {
-      x: self.x - v2.x,
-      y: self.y - v2.y,
-      z: self.z - v2.z,
-      w: self.w - v2.w,
+      x: self.x - rhs.x,
+      y: self.y - rhs.y,
+      z: self.z - rhs.z,
+      w: self.w - rhs.w,
     };
   }
 
   #[inline]
-  pub fn subtract_value(self, add: f32) -> Vector4 {
+  pub fn subtract_value(self, rhs: f32) -> Vector4 {
     return Vector4 {
-      x: self.x - add,
-      y: self.y - add,
-      z: self.z - add,
-      w: self.w - add,
+      x: self.x - rhs,
+      y: self.y - rhs,
+      z: self.z - rhs,
+      w: self.w - rhs,
     };
   }
 
@@ -80,47 +80,47 @@ impl Vector4 {
   }
 
   #[inline]
-  pub fn dot_product(self, v2: Vector4) -> f32 {
-    return self.x * v2.x + self.y * v2.y + self.z * v2.z + self.w * v2.w;
+  pub fn dot_product(self, other: Vector4) -> f32 {
+    return self.x * other.x + self.y * other.y + self.z * other.z + self.w * other.w;
   }
 
   // Calculate distance between two vectors
   #[inline]
-  pub fn distance(self, v2: Vector4) -> f32 {
-    return ((self.x - v2.x) * (self.x - v2.x)
-      + (self.y - v2.y) * (self.y - v2.y)
-      + (self.z - v2.z) * (self.z - v2.z)
-      + (self.w - v2.w) * (self.w - v2.w))
+  pub fn distance(self, other: Vector4) -> f32 {
+    return ((self.x - other.x) * (self.x - other.x)
+      + (self.y - other.y) * (self.y - other.y)
+      + (self.z - other.z) * (self.z - other.z)
+      + (self.w - other.w) * (self.w - other.w))
       .sqrt();
   }
 
   // Calculate square distance between two vectors
   #[inline]
-  pub fn distance_sqr(self, v2: Vector4) -> f32 {
-    return (self.x - v2.x) * (self.x - v2.x)
-      + (self.y - v2.y) * (self.y - v2.y)
-      + (self.z - v2.z) * (self.z - v2.z)
-      + (self.w - v2.w) * (self.w - v2.w);
+  pub fn distance_sqr(self, other: Vector4) -> f32 {
+    return (self.x - other.x) * (self.x - other.x)
+      + (self.y - other.y) * (self.y - other.y)
+      + (self.z - other.z) * (self.z - other.z)
+      + (self.w - other.w) * (self.w - other.w);
   }
 
   #[inline]
-  pub fn scale(self, scale: f32) -> Vector4 {
+  pub fn scale(self, scaler: f32) -> Vector4 {
     return Vector4 {
-      x: self.x * scale,
-      y: self.y * scale,
-      z: self.z * scale,
-      w: self.w * scale,
+      x: self.x * scaler,
+      y: self.y * scaler,
+      z: self.z * scaler,
+      w: self.w * scaler,
     };
   }
 
   // Multiply vector by vector
   #[inline]
-  pub fn multiply(self, v2: Vector4) -> Vector4 {
+  pub fn multiply(self, rhs: Vector4) -> Vector4 {
     return Vector4 {
-      x: self.x * v2.x,
-      y: self.y * v2.y,
-      z: self.z * v2.z,
-      w: self.w * v2.w,
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
+      z: self.z * rhs.z,
+      w: self.w * rhs.w,
     };
   }
 
@@ -171,34 +171,34 @@ impl Vector4 {
 
   // Get min value for each pair of components
   #[inline]
-  pub fn min(self, v2: Vector4) -> Vector4 {
+  pub fn min(self, other: Vector4) -> Vector4 {
     return Vector4 {
-      x: self.x.min(v2.x),
-      y: self.y.min(v2.y),
-      z: self.z.min(v2.z),
-      w: self.w.min(v2.w),
+      x: self.x.min(other.x),
+      y: self.y.min(other.y),
+      z: self.z.min(other.z),
+      w: self.w.min(other.w),
     };
   }
 
   // Get max value for each pair of components
   #[inline]
-  pub fn max(self, v2: Vector4) -> Vector4 {
+  pub fn max(self, other: Vector4) -> Vector4 {
     return Vector4 {
-      x: self.x.max(v2.x),
-      y: self.y.max(v2.y),
-      z: self.z.max(v2.z),
-      w: self.w.max(v2.w),
+      x: self.x.max(other.x),
+      y: self.y.max(other.y),
+      z: self.z.max(other.z),
+      w: self.w.max(other.w),
     };
   }
 
   // Calculate linear interpolation between two vectors
   #[inline]
-  pub fn lerp(self, v2: Vector4, amount: f32) -> Vector4 {
+  pub fn lerp(self, other: Vector4, amount: f32) -> Vector4 {
     return Vector4 {
-      x: self.x + amount * (v2.x - self.x),
-      y: self.y + amount * (v2.y - self.y),
-      z: self.z + amount * (v2.z - self.z),
-      w: self.w + amount * (v2.w - self.w),
+      x: self.x + amount * (other.x - self.x),
+      y: self.y + amount * (other.y - self.y),
+      z: self.z + amount * (other.z - self.z),
+      w: self.w + amount * (other.w - self.w),
     };
   }
 
@@ -322,5 +322,31 @@ impl SubAssign<f32> for Vector4 {
     self.y -= rhs;
     self.z -= rhs;
     self.w -= rhs;
+  }
+}
+
+impl Mul for Vector4 {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
+    return Vector4 {
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
+      z: self.z * rhs.z,
+      w: self.w * rhs.w,
+    };
+  }
+}
+
+impl Mul<f32> for Vector4 {
+  type Output = Self;
+
+  fn mul(self, scaler: f32) -> Self {
+    return Vector4 {
+      x: self.x * scaler,
+      y: self.y * scaler,
+      z: self.z * scaler,
+      w: self.w * scaler,
+    };
   }
 }
