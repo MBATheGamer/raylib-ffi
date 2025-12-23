@@ -56,4 +56,14 @@ impl Vector4 {
       w: self.w - v2.w,
     };
   }
+
+  #[inline]
+  pub fn subtract_value(self, add: f32) -> Vector4 {
+    return Vector4 {
+      x: self.x - add,
+      y: self.y - add,
+      z: self.z - add,
+      w: self.w - add,
+    };
+  }
 }
