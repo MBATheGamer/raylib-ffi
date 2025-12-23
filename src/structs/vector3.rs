@@ -718,6 +718,36 @@ impl Vector3 {
       z: 0.0,
     };
   }
+
+  // Calculate quaternion based on the rotation from one vector to another
+  #[inline]
+  pub fn to_quaternion(self, to: Vector3) -> Quaternion {
+    let cos2_theta = self.x * to.x + self.y * to.y + self.z * to.z; // Vector3DotProduct(from, to)
+    let cross = Vector3 {
+      x: self.y * to.z - self.z * to.y,
+      y: self.z * to.x - self.x * to.z,
+      z: self.x * to.y - self.y * to.x,
+    }; // Vector3CrossProduct(from, to)
+
+    let q = Quaternion {
+      x: cross.x,
+      y: cross.y,
+      z: cross.z,
+      w: 1.0 + cos2_theta,
+    };
+
+    // QuaternionNormalize(q);
+    // NOTE: Normalize to essentially nlerp the original and identity to 0.5
+    let length = (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w).sqrt();
+    let length = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+    return Quaternion {
+      x: q.x * length,
+      y: q.y * length,
+      z: q.z * length,
+      w: q.w * length,
+    };
+  }
 }
 
 impl Add for Vector3 {
