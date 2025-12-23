@@ -1,3 +1,5 @@
+use std::ops::Add;
+
 #[derive(Clone, Copy)]
 pub struct Vector4 {
   pub x: f32,
@@ -28,22 +30,22 @@ impl Vector4 {
   }
 
   #[inline]
-  pub fn add(self, v2: Vector4) -> Vector4 {
+  pub fn add(self, rhs: Vector4) -> Vector4 {
     return Vector4 {
-      x: self.x + v2.x,
-      y: self.y + v2.y,
-      z: self.z + v2.z,
-      w: self.w + v2.w,
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
+      z: self.z + rhs.z,
+      w: self.w + rhs.w,
     };
   }
 
   #[inline]
-  pub fn add_value(self, add: f32) -> Vector4 {
+  pub fn add_value(self, rhs: f32) -> Vector4 {
     return Vector4 {
-      x: self.x + add,
-      y: self.y + add,
-      z: self.z + add,
-      w: self.w + add,
+      x: self.x + rhs,
+      y: self.y + rhs,
+      z: self.z + rhs,
+      w: self.w + rhs,
     };
   }
 
@@ -231,6 +233,32 @@ impl Vector4 {
       y: 1.0 / self.y,
       z: 1.0 / self.z,
       w: 1.0 / self.w,
+    };
+  }
+}
+
+impl Add for Vector4 {
+  type Output = Self;
+
+  fn add(self, rhs: Self) -> Self {
+    return Vector4 {
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
+      z: self.z + rhs.z,
+      w: self.w + rhs.w,
+    };
+  }
+}
+
+impl Add<f32> for Vector4 {
+  type Output = Self;
+
+  fn add(self, rhs: f32) -> Self {
+    return Vector4 {
+      x: self.x + rhs,
+      y: self.y + rhs,
+      z: self.z + rhs,
+      w: self.w + rhs,
     };
   }
 }
