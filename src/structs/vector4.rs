@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub struct Vector4 {
@@ -366,5 +366,18 @@ impl MulAssign<f32> for Vector4 {
     self.y *= scaler;
     self.z *= scaler;
     self.w *= scaler;
+  }
+}
+
+impl Neg for Vector4 {
+  type Output = Self;
+
+  fn neg(self) -> Self {
+    return Vector4 {
+      x: -self.x,
+      y: -self.y,
+      z: -self.z,
+      w: -self.w,
+    };
   }
 }
