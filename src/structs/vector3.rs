@@ -930,6 +930,18 @@ impl Add for Vector3 {
   }
 }
 
+impl Add<f32> for Vector3 {
+  type Output = Self;
+
+  fn add(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x + rhs,
+      y: self.y + rhs,
+      z: self.z + rhs,
+    };
+  }
+}
+
 impl AddAssign for Vector3 {
   fn add_assign(&mut self, rhs: Self) {
     self.x += rhs.x;
