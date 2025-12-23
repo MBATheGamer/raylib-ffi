@@ -852,6 +852,70 @@ impl Vector3 {
       m15: 1.0,
     };
   }
+
+  // Get camera look-at matrix (view matrix)
+  #[inline]
+  pub fn look_at(self, target: Vector3, up: Vector3) -> Matrix {
+    // Vector3Subtract(eye, target)
+    let mut vz = Vector3 {
+      x: self.x - target.x,
+      y: self.y - target.y,
+      z: self.z - target.z,
+    };
+
+    // Vector3Normalize(vz)
+    let mut length = (vz.x * vz.x + vz.y * vz.y + vz.z * vz.z).sqrt();
+    if length == 0.0 {
+      length = 1.0;
+    }
+    let ilength = 1.0 / length;
+    vz.x *= ilength;
+    vz.y *= ilength;
+    vz.z *= ilength;
+
+    // Vector3CrossProduct(up, vz)
+    let mut vx = Vector3 {
+      x: up.y * vz.z - up.z * vz.y,
+      y: up.z * vz.x - up.x * vz.z,
+      z: up.x * vz.y - up.y * vz.x,
+    };
+
+    // Vector3Normalize(x)
+    let mut length = (vx.x * vx.x + vx.y * vx.y + vx.z * vx.z).sqrt();
+    if length == 0.0 {
+      length = 1.0;
+    }
+    let ilength = 1.0 / length;
+    vx.x *= ilength;
+    vx.y *= ilength;
+    vx.z *= ilength;
+
+    // Vector3CrossProduct(vz, vx)
+    let vy = Vector3 {
+      x: vz.y * vx.z - vz.z * vx.y,
+      y: vz.z * vx.x - vz.x * vx.z,
+      z: vz.x * vx.y - vz.y * vx.x,
+    };
+
+    return Matrix {
+      m0: vx.x,
+      m1: vy.x,
+      m2: vz.x,
+      m3: 0.0,
+      m4: vx.y,
+      m5: vy.y,
+      m6: vz.y,
+      m7: 0.0,
+      m8: vx.z,
+      m9: vy.z,
+      m10: vz.z,
+      m11: 0.0,
+      m12: -(vx.x * self.x + vx.y * self.y + vx.z * self.z), // Vector3DotProduct(vx, eye)
+      m13: -(vy.x * self.x + vy.y * self.y + vy.z * self.z), // Vector3DotProduct(vy, eye)
+      m14: -(vz.x * self.x + vz.y * self.y + vz.z * self.z), // Vector3DotProduct(vz, eye)
+      m15: 1.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
