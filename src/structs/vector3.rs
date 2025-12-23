@@ -822,6 +822,36 @@ impl Vector3 {
       m15: 1.0,
     };
   }
+
+  // Get zyx-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_zyx(self) -> Matrix {
+    let (cx, cy, cz) = (self.x.cos(), self.z.cos(), self.y.cos());
+    let (sx, sy, sz) = (self.x.sin(), self.y.sin(), self.z.sin());
+
+    return Matrix {
+      m0: cz * cy,
+      m4: cz * sy * sx - cx * sz,
+      m8: sz * sx + cz * cx * sy,
+      m12: 0.0,
+
+      m1: cy * sz,
+      m5: cz * cx + sz * sy * sx,
+      m9: cx * sz * sy - cz * sx,
+      m13: 0.0,
+
+      m2: -sy,
+      m6: cy * sx,
+      m10: cy * cx,
+      m14: 0.0,
+
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
