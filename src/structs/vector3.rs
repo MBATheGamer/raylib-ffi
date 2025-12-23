@@ -748,6 +748,53 @@ impl Vector3 {
       w: q.w * length,
     };
   }
+
+  // Get rotation quaternion for an angle and axis
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn from_axis_angle_to_quaternion(mut self, mut angle: f32) -> Quaternion {
+    let axis_length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
+
+    if axis_length != 0.0 {
+      angle *= 0.5;
+
+      // Vector3Normalize(axis)
+      let length = axis_length;
+      let ilength = if length == 0.0 { 1.0 } else { 1.0 / length };
+      self.x *= ilength;
+      self.y *= ilength;
+      self.z *= ilength;
+
+      let sinres = angle.sin();
+      let cosres = angle.cos();
+
+      let q = Quaternion {
+        x: self.x * sinres,
+        y: self.y * sinres,
+        z: self.z * sinres,
+        w: cosres,
+      };
+
+      // QuaternionNormalize(q);
+      // Quaternion q = result;
+      let length = (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w).sqrt();
+      let ilength = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+      return Quaternion {
+        x: q.x * ilength,
+        y: q.y * ilength,
+        z: q.z * ilength,
+        w: q.w * ilength,
+      };
+    }
+
+    return Quaternion {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      w: 0.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
