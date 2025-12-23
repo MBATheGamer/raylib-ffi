@@ -91,4 +91,13 @@ impl Vector4 {
       + (self.w - v2.w) * (self.w - v2.w))
       .sqrt();
   }
+
+  // Calculate square distance between two vectors
+  #[inline]
+  pub fn distance_sqr(self, v2: Vector4) -> f32 {
+    return (self.x - v2.x) * (self.x - v2.x)
+      + (self.y - v2.y) * (self.y - v2.y)
+      + (self.z - v2.z) * (self.z - v2.z)
+      + (self.w - v2.w) * (self.w - v2.w);
+  }
 }
