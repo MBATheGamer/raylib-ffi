@@ -299,6 +299,13 @@ impl AddAssign for Vector2 {
   }
 }
 
+impl AddAssign<f32> for Vector2 {
+  fn add_assign(&mut self, rhs: f32) {
+    self.x += rhs;
+    self.y += rhs;
+  }
+}
+
 impl Sub for Vector2 {
   type Output = Vector2;
 
