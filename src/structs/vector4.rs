@@ -199,4 +199,27 @@ impl Vector4 {
       w: self.w + amount * (v2.w - self.w),
     };
   }
+
+  // Move Vector towards target
+  #[inline]
+  pub fn move_towards(self, target: Vector4, max_distance: f32) -> Vector4 {
+    let dx = target.x - self.x;
+    let dy = target.y - self.y;
+    let dz = target.z - self.z;
+    let dw = target.w - self.w;
+    let value = (dx * dx) + (dy * dy) + (dz * dz) + (dw * dw);
+
+    if value == 0.0 || (max_distance >= 0.0 && value <= max_distance * max_distance) {
+      return target;
+    }
+
+    let dist = value.sqrt();
+
+    return Vector4 {
+      x: self.x + dx / dist * max_distance,
+      y: self.y + dy / dist * max_distance,
+      z: self.z + dz / dist * max_distance,
+      w: self.w + dw / dist * max_distance,
+    };
+  }
 }
