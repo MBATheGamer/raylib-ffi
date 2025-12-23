@@ -19,6 +19,7 @@ mod sound;
 mod texture;
 mod vector2;
 mod vector3;
+mod vector4;
 mod vr_device_info;
 mod vr_stereo_config;
 
@@ -43,5 +44,6 @@ pub use sound::Sound;
 pub use texture::Texture;
 pub use vector2::Vector2;
 pub use vector3::Vector3;
+pub use vector4::Vector4;
 pub use vr_device_info::VrDeviceInfo;
 pub use vr_stereo_config::VrStereoConfig;

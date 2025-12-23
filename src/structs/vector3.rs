@@ -30,7 +30,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn add(&self, rhs: Vector3) -> Vector3 {
+  pub fn add(self, rhs: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x + rhs.x,
       y: self.y + rhs.y,
@@ -39,7 +39,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn add_value(&self, add: f32) -> Vector3 {
+  pub fn add_value(self, add: f32) -> Vector3 {
     return Vector3 {
       x: self.x + add,
       y: self.y + add,
@@ -48,7 +48,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn sub(&self, rhs: Vector3) -> Vector3 {
+  pub fn sub(self, rhs: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x - rhs.x,
       y: self.y - rhs.y,
@@ -57,7 +57,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn sub_value(&self, add: f32) -> Vector3 {
+  pub fn sub_value(self, add: f32) -> Vector3 {
     return Vector3 {
       x: self.x - add,
       y: self.y - add,
@@ -66,7 +66,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn scale(&self, scalar: f32) -> Vector3 {
+  pub fn scale(self, scalar: f32) -> Vector3 {
     return Vector3 {
       x: self.x * scalar,
       y: self.y * scalar,
@@ -75,7 +75,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn multiply(&self, other: Vector3) -> Vector3 {
+  pub fn multiply(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x * other.x,
       y: self.y * other.y,
@@ -84,7 +84,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn cross_product(&self, other: Vector3) -> Vector3 {
+  pub fn cross_product(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.y * other.z - self.z * other.y,
       y: self.z * other.x - self.x * other.z,
@@ -93,7 +93,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn perpendicular(&self) -> Vector3 {
+  pub fn perpendicular(self) -> Vector3 {
     let mut min = self.x.abs();
     let mut cardinal_axis = Vector3 {
       x: 1.0,
@@ -128,22 +128,22 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn length(&self) -> f32 {
+  pub fn length(self) -> f32 {
     return (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
   }
 
   #[inline]
-  pub fn length_sqr(&self) -> f32 {
+  pub fn length_sqr(self) -> f32 {
     return self.x * self.x + self.y * self.y + self.z * self.z;
   }
 
   #[inline]
-  pub fn dot_product(&self, other: Vector3) -> f32 {
+  pub fn dot_product(self, other: Vector3) -> f32 {
     return self.x * other.x + self.y * other.y + self.z * other.z;
   }
 
   #[inline]
-  pub fn distance(&self, other: Vector3) -> f32 {
+  pub fn distance(self, other: Vector3) -> f32 {
     let dx = other.x - self.x;
     let dy = other.y - self.y;
     let dz = other.z - self.z;
@@ -152,7 +152,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn distance_sqr(&self, other: Vector3) -> f32 {
+  pub fn distance_sqr(self, other: Vector3) -> f32 {
     let dx = other.x - self.x;
     let dy = other.y - self.y;
     let dz = other.z - self.z;
@@ -161,7 +161,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn angle(&self, other: Vector3) -> f32 {
+  pub fn angle(self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
       y: self.z * other.x - self.x * other.z,
@@ -174,7 +174,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn negate(&self) -> Vector3 {
+  pub fn negate(self) -> Vector3 {
     return Vector3 {
       x: -self.x,
       y: -self.y,
@@ -183,7 +183,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn divide(&self, other: Vector3) -> Vector3 {
+  pub fn divide(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x / other.x,
       y: self.y / other.y,
@@ -192,7 +192,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn normalize(&self) -> Vector3 {
+  pub fn normalize(self) -> Vector3 {
     let length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
 
     if length != 0.0 {
@@ -205,11 +205,11 @@ impl Vector3 {
       };
     }
 
-    return *self;
+    return self;
   }
 
   #[inline]
-  pub fn project(&self, other: Vector3) -> Vector3 {
+  pub fn project(self, other: Vector3) -> Vector3 {
     let mag = (self.x * other.x + self.y * other.y + self.z * other.z)
       / (other.x * other.x + other.y * other.y + other.z * other.z);
 
@@ -221,7 +221,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn reject(&self, other: Vector3) -> Vector3 {
+  pub fn reject(self, other: Vector3) -> Vector3 {
     let mag = (self.x * other.x + self.y * other.y + self.z * other.z)
       / (other.x * other.x + other.y * other.y + other.z * other.z);
 
@@ -270,7 +270,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn transform(&self, matrix: Matrix) -> Vector3 {
+  pub fn transform(self, matrix: Matrix) -> Vector3 {
     return Vector3 {
       x: matrix.m0 * self.x + matrix.m4 * self.y + matrix.m8 * self.z + matrix.m12,
       y: matrix.m1 * self.x + matrix.m5 * self.y + matrix.m9 * self.z + matrix.m13,
@@ -279,7 +279,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn rotate_by_quaternion(&self, quaternion: Quaternion) -> Vector3 {
+  pub fn rotate_by_quaternion(self, quaternion: Quaternion) -> Vector3 {
     return Vector3 {
       x: self.x
         * (quaternion.x * quaternion.x + quaternion.w * quaternion.w
@@ -304,10 +304,10 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn rotate_by_axis_angle(&self, mut axis: Vector3, mut angle: f32) -> Vector3 {
+  pub fn rotate_by_axis_angle(self, mut axis: Vector3, mut angle: f32) -> Vector3 {
     // Using Euler-Rodrigues Formula
     // Ref.: https://en.wikipedia.org/w/index.php?title=Euler%E2%80%93Rodrigues_formula
-    let mut result = *self;
+    let mut result = self;
 
     // Vector3Normalize(axis);
     let mut length = (axis.x * axis.x + axis.y * axis.y + axis.z * axis.z).sqrt();
@@ -366,7 +366,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn move_towards(&self, target: Vector3, max_distance: f32) -> Vector3 {
+  pub fn move_towards(self, target: Vector3, max_distance: f32) -> Vector3 {
     let dx = target.x - self.x;
     let dy = target.y - self.y;
     let dz = target.z - self.z;
@@ -386,7 +386,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
+  pub fn lerp(self, other: Vector3, amount: f32) -> Vector3 {
     return Vector3 {
       x: self.x + amount * (other.x - self.x),
       y: self.y + amount * (other.y - self.y),
@@ -396,7 +396,7 @@ impl Vector3 {
 
   #[inline]
   pub fn cubic_hermite(
-    &self,
+    self,
     tangent1: Vector3,
     v2: Vector3,
     tangent2: Vector3,
@@ -422,7 +422,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn reflect(&self, normal: Vector3) -> Vector3 {
+  pub fn reflect(self, normal: Vector3) -> Vector3 {
     // I is the original vector
     // N is the normal of the incident plane
     // R = I - (2*N*(DotProduct[I, N]))
@@ -437,7 +437,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn min(&self, other: Vector3) -> Vector3 {
+  pub fn min(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x.min(other.x),
       y: self.y.min(other.y),
@@ -446,7 +446,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn max(&self, other: Vector3) -> Vector3 {
+  pub fn max(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x.max(other.x),
       y: self.y.max(other.y),
@@ -455,7 +455,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn barycenter(&self, a: Vector3, b: Vector3, c: Vector3) -> Vector3 {
+  pub fn barycenter(self, a: Vector3, b: Vector3, c: Vector3) -> Vector3 {
     let v0 = Vector3 {
       x: b.x - a.x,
       y: b.y - a.y,
@@ -488,7 +488,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn unproject(&self, projection: Matrix, view: Matrix) -> Vector3 {
+  pub fn unproject(self, projection: Matrix, view: Matrix) -> Vector3 {
     // Calculate unprojected matrix (multiply view matrix by projection matrix) and invert it
     let mat_view_proj = Matrix {
       // MatrixMultiply(view, projection);
@@ -650,12 +650,12 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn to_array(&self) -> [f32; 3] {
+  pub fn to_array(self) -> [f32; 3] {
     return [self.x, self.y, self.z];
   }
 
   #[inline]
-  pub fn invert(&self) -> Vector3 {
+  pub fn invert(self) -> Vector3 {
     return Vector3 {
       x: 1.0 / self.x,
       y: 1.0 / self.y,
@@ -664,7 +664,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn clamp(&self, min: Vector3, max: Vector3) -> Vector3 {
+  pub fn clamp(self, min: Vector3, max: Vector3) -> Vector3 {
     return Vector3 {
       x: max.x.min(min.x.max(self.x)),
       y: max.y.min(min.y.max(self.y)),
@@ -673,7 +673,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn clamp_value(&self, min: f32, max: f32) -> Vector3 {
+  pub fn clamp_value(self, min: f32, max: f32) -> Vector3 {
     let mut length = (self.x * self.x) + (self.y * self.y) + (self.z * self.z);
 
     if length > 0.0 {
@@ -694,11 +694,11 @@ impl Vector3 {
       };
     }
 
-    return *self;
+    return self;
   }
 
   #[inline]
-  pub fn refract(&self, normal: Vector3, ratio: f32) -> Vector3 {
+  pub fn refract(self, normal: Vector3, ratio: f32) -> Vector3 {
     let dot = self.x * normal.x + self.y * normal.y + self.z * normal.z;
     let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
 
@@ -718,6 +718,246 @@ impl Vector3 {
       z: 0.0,
     };
   }
+
+  // Calculate quaternion based on the rotation from one vector to another
+  #[inline]
+  pub fn to_quaternion(self, to: Vector3) -> Quaternion {
+    let cos2_theta = self.x * to.x + self.y * to.y + self.z * to.z; // Vector3DotProduct(from, to)
+    let cross = Vector3 {
+      x: self.y * to.z - self.z * to.y,
+      y: self.z * to.x - self.x * to.z,
+      z: self.x * to.y - self.y * to.x,
+    }; // Vector3CrossProduct(from, to)
+
+    let q = Quaternion {
+      x: cross.x,
+      y: cross.y,
+      z: cross.z,
+      w: 1.0 + cos2_theta,
+    };
+
+    // QuaternionNormalize(q);
+    // NOTE: Normalize to essentially nlerp the original and identity to 0.5
+    let length = (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w).sqrt();
+    let length = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+    return Quaternion {
+      x: q.x * length,
+      y: q.y * length,
+      z: q.z * length,
+      w: q.w * length,
+    };
+  }
+
+  // Get rotation quaternion for an angle and axis
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn from_axis_angle_to_quaternion(mut self, mut angle: f32) -> Quaternion {
+    let axis_length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
+
+    if axis_length != 0.0 {
+      angle *= 0.5;
+
+      // Vector3Normalize(axis)
+      let length = axis_length;
+      let ilength = if length == 0.0 { 1.0 } else { 1.0 / length };
+      self.x *= ilength;
+      self.y *= ilength;
+      self.z *= ilength;
+
+      let sinres = angle.sin();
+      let cosres = angle.cos();
+
+      let q = Quaternion {
+        x: self.x * sinres,
+        y: self.y * sinres,
+        z: self.z * sinres,
+        w: cosres,
+      };
+
+      // QuaternionNormalize(q);
+      // Quaternion q = result;
+      let length = (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w).sqrt();
+      let ilength = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+      return Quaternion {
+        x: q.x * ilength,
+        y: q.y * ilength,
+        z: q.z * ilength,
+        w: q.w * ilength,
+      };
+    }
+
+    return Quaternion {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      w: 0.0,
+    };
+  }
+
+  // Create rotation matrix from axis and angle
+  // NOTE: Angle should be provided in radians
+  #[inline]
+  pub fn rotate(self, angle: f32) -> Matrix {
+    let (mut x, mut y, mut z) = (self.x, self.y, self.z);
+
+    let length_squared = x * x + y * y + z * z;
+
+    if length_squared != 1.0 && length_squared != 0.0 {
+      let length = 1.0 / length_squared.sqrt();
+      x *= length;
+      y *= length;
+      z *= length;
+    }
+
+    let sin_res = angle.sin();
+    let cos_res = angle.cos();
+    let t = 1.0 - cos_res;
+
+    return Matrix {
+      m0: x * x * t + cos_res,
+      m1: y * x * t + z * sin_res,
+      m2: z * x * t - y * sin_res,
+      m3: 0.0,
+
+      m4: x * y * t - z * sin_res,
+      m5: y * y * t + cos_res,
+      m6: z * y * t + x * sin_res,
+      m7: 0.0,
+
+      m8: x * z * t + y * sin_res,
+      m9: y * z * t - x * sin_res,
+      m10: z * z * t + cos_res,
+      m11: 0.0,
+
+      m12: 0.0,
+      m13: 0.0,
+      m14: 0.0,
+      m15: 1.0,
+    };
+  }
+
+  // Get xyz-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_xyz(self) -> Matrix {
+    let (cos_x, cos_y, cos_z) = ((-self.x).cos(), (-self.y).cos(), (-self.z).cos());
+    let (sin_x, sin_y, sin_z) = ((-self.x).sin(), (-self.y).sin(), (-self.z).sin());
+
+    return Matrix {
+      m0: cos_z * cos_y,
+      m4: sin_z * cos_y,
+      m8: -sin_y,
+      m12: 0.0,
+      m1: (cos_z * sin_y * sin_x) - (sin_z * cos_x),
+      m5: (sin_z * sin_y * sin_x) + (cos_z * cos_x),
+      m9: cos_y * sin_x,
+      m13: 0.0,
+      m2: (cos_z * sin_y * cos_x) + (sin_z * sin_x),
+      m6: (sin_z * sin_y * cos_x) - (cos_z * sin_x),
+      m10: cos_y * cos_x,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
+
+  // Get zyx-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_zyx(self) -> Matrix {
+    let (cx, cy, cz) = (self.x.cos(), self.z.cos(), self.y.cos());
+    let (sx, sy, sz) = (self.x.sin(), self.y.sin(), self.z.sin());
+
+    return Matrix {
+      m0: cz * cy,
+      m4: cz * sy * sx - cx * sz,
+      m8: sz * sx + cz * cx * sy,
+      m12: 0.0,
+
+      m1: cy * sz,
+      m5: cz * cx + sz * sy * sx,
+      m9: cx * sz * sy - cz * sx,
+      m13: 0.0,
+
+      m2: -sy,
+      m6: cy * sx,
+      m10: cy * cx,
+      m14: 0.0,
+
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
+
+  // Get camera look-at matrix (view matrix)
+  #[inline]
+  pub fn look_at(self, target: Vector3, up: Vector3) -> Matrix {
+    // Vector3Subtract(eye, target)
+    let mut vz = Vector3 {
+      x: self.x - target.x,
+      y: self.y - target.y,
+      z: self.z - target.z,
+    };
+
+    // Vector3Normalize(vz)
+    let mut length = (vz.x * vz.x + vz.y * vz.y + vz.z * vz.z).sqrt();
+    if length == 0.0 {
+      length = 1.0;
+    }
+    let ilength = 1.0 / length;
+    vz.x *= ilength;
+    vz.y *= ilength;
+    vz.z *= ilength;
+
+    // Vector3CrossProduct(up, vz)
+    let mut vx = Vector3 {
+      x: up.y * vz.z - up.z * vz.y,
+      y: up.z * vz.x - up.x * vz.z,
+      z: up.x * vz.y - up.y * vz.x,
+    };
+
+    // Vector3Normalize(x)
+    let mut length = (vx.x * vx.x + vx.y * vx.y + vx.z * vx.z).sqrt();
+    if length == 0.0 {
+      length = 1.0;
+    }
+    let ilength = 1.0 / length;
+    vx.x *= ilength;
+    vx.y *= ilength;
+    vx.z *= ilength;
+
+    // Vector3CrossProduct(vz, vx)
+    let vy = Vector3 {
+      x: vz.y * vx.z - vz.z * vx.y,
+      y: vz.z * vx.x - vz.x * vx.z,
+      z: vz.x * vx.y - vz.y * vx.x,
+    };
+
+    return Matrix {
+      m0: vx.x,
+      m1: vy.x,
+      m2: vz.x,
+      m3: 0.0,
+      m4: vx.y,
+      m5: vy.y,
+      m6: vz.y,
+      m7: 0.0,
+      m8: vx.z,
+      m9: vy.z,
+      m10: vz.z,
+      m11: 0.0,
+      m12: -(vx.x * self.x + vx.y * self.y + vx.z * self.z), // Vector3DotProduct(vx, eye)
+      m13: -(vy.x * self.x + vy.y * self.y + vy.z * self.z), // Vector3DotProduct(vy, eye)
+      m14: -(vz.x * self.x + vz.y * self.y + vz.z * self.z), // Vector3DotProduct(vz, eye)
+      m15: 1.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
@@ -732,10 +972,29 @@ impl Add for Vector3 {
   }
 }
 
+impl Add<f32> for Vector3 {
+  type Output = Self;
+
+  fn add(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x + rhs,
+      y: self.y + rhs,
+      z: self.z + rhs,
+    };
+  }
+}
+
 impl AddAssign for Vector3 {
   fn add_assign(&mut self, rhs: Self) {
     self.x += rhs.x;
     self.y += rhs.y;
+  }
+}
+
+impl AddAssign<f32> for Vector3 {
+  fn add_assign(&mut self, rhs: f32) {
+    self.x += rhs;
+    self.y += rhs;
   }
 }
 
@@ -751,10 +1010,29 @@ impl Sub for Vector3 {
   }
 }
 
+impl Sub<f32> for Vector3 {
+  type Output = Self;
+
+  fn sub(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x - rhs,
+      y: self.y - rhs,
+      z: self.z - rhs,
+    };
+  }
+}
+
 impl SubAssign for Vector3 {
   fn sub_assign(&mut self, rhs: Self) {
     self.x -= rhs.x;
     self.y -= rhs.y;
+  }
+}
+
+impl SubAssign<f32> for Vector3 {
+  fn sub_assign(&mut self, rhs: f32) {
+    self.x -= rhs;
+    self.y -= rhs;
   }
 }
 
