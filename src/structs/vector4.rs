@@ -177,4 +177,15 @@ impl Vector4 {
       w: self.w.min(v2.w),
     };
   }
+
+  // Get max value for each pair of components
+  #[inline]
+  pub fn max(self, v2: Vector4) -> Vector4 {
+    return Vector4 {
+      x: self.x.max(v2.x),
+      y: self.y.max(v2.y),
+      z: self.z.max(v2.z),
+      w: self.w.max(v2.w),
+    };
+  }
 }
