@@ -143,4 +143,27 @@ impl Vector4 {
       w: self.w / v2.w,
     };
   }
+
+  // Normalize provided vector
+  #[inline]
+  pub fn normalize(self) -> Vector4 {
+    let length = (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt();
+
+    if length > 0.0 {
+      let length = 1.0 / length;
+      return Vector4 {
+        x: self.x * length,
+        y: self.y * length,
+        z: self.z * length,
+        w: self.w * length,
+      };
+    }
+
+    return Vector4 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      w: 0.0,
+    };
+  }
 }
