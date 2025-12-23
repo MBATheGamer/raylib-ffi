@@ -795,6 +795,33 @@ impl Vector3 {
       w: 0.0,
     };
   }
+
+  // Get xyz-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_xyz(self) -> Matrix {
+    let (cos_x, cos_y, cos_z) = ((-self.x).cos(), (-self.y).cos(), (-self.z).cos());
+    let (sin_x, sin_y, sin_z) = ((-self.x).sin(), (-self.y).sin(), (-self.z).sin());
+
+    return Matrix {
+      m0: cos_z * cos_y,
+      m4: sin_z * cos_y,
+      m8: -sin_y,
+      m12: 0.0,
+      m1: (cos_z * sin_y * sin_x) - (sin_z * cos_x),
+      m5: (sin_z * sin_y * sin_x) + (cos_z * cos_x),
+      m9: cos_y * sin_x,
+      m13: 0.0,
+      m2: (cos_z * sin_y * cos_x) + (sin_z * sin_x),
+      m6: (sin_z * sin_y * cos_x) - (cos_z * sin_x),
+      m10: cos_y * cos_x,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
 
 impl Add for Vector3 {
