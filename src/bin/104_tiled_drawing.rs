@@ -1,3 +1,21 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_fps, get_screen_height,
+    get_screen_width, init_window,
+    keyboard::is_key_pressed,
+    mouse::{get_mouse_position, is_mouse_button_pressed},
+    set_config_flags, set_target_fps, window_should_close,
+  },
+  enums::{ConfigFlags, KeyboardKey, MouseButton, TextureFilter},
+  shape::{check_collision_point_rec, draw_rectangle, draw_rectangle_lines_ex, draw_rectangle_rec},
+  structs::{Color, Rectangle, Texture, Vector2},
+  text::draw_text,
+  texture::{
+    color_alpha, draw_texture, draw_texture_pro, load_texture, set_texture_filter, unload_texture,
+  },
+};
+
 const OPT_WIDTH: i32 = 220;
 const MARGIN_SIZE: i32 = 8;
 const COLOR_SIZE: i32 = 16;
@@ -67,10 +85,10 @@ fn main() {
     colors::DARKGRAY,
     colors::SKYBLUE,
   ];
-  let color_rec: Vec<Rectangle> = vec![];
+  let mut color_rec: Vec<Rectangle> = vec![];
 
-  let x = 0;
-  let y = 0;
+  let mut x = 0;
+  let mut y = 0;
   for i in 0..colors.len() {
     color_rec.push(Rectangle {
       x: (2 + MARGIN_SIZE + x) as f32,
@@ -86,10 +104,10 @@ fn main() {
     }
   }
 
-  let active_pattern = 0;
-  let active_col = 0;
-  let scale = 1.0;
-  let rotation = 0.0;
+  let mut active_pattern = 0;
+  let mut active_col = 0;
+  let mut scale = 1.0;
+  let mut rotation = 0.0;
 
   set_target_fps(60);
 
@@ -296,7 +314,7 @@ fn draw_texture_tiled(
       tint,
     );
   } else if dest.width <= tile_width as f32 {
-    let dy = 0;
+    let mut dy = 0;
     while dy + tile_height < dest.height as i32 {
       draw_texture_pro(
         texture,
@@ -340,7 +358,7 @@ fn draw_texture_tiled(
       );
     }
   } else if dest.height <= tile_height as f32 {
-    let dx = 0;
+    let mut dx = 0;
     while dx + tile_width < dest.width as i32 {
       draw_texture_pro(
         texture,
@@ -384,9 +402,9 @@ fn draw_texture_tiled(
       );
     }
   } else {
-    let dx = 0;
+    let mut dx = 0;
     while dx + tile_width < dest.width as i32 {
-      let dy = 0;
+      let mut dy = 0;
       while dy + tile_height < dest.height as i32 {
         draw_texture_pro(
           texture,
@@ -429,7 +447,7 @@ fn draw_texture_tiled(
     }
 
     if dx < dest.width as i32 {
-      let dy = 0;
+      let mut dy = 0;
       while dy + tile_height < dest.height as i32 {
         draw_texture_pro(
           texture,
