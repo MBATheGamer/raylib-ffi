@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub struct Vector4 {
@@ -348,5 +348,23 @@ impl Mul<f32> for Vector4 {
       z: self.z * scaler,
       w: self.w * scaler,
     };
+  }
+}
+
+impl MulAssign for Vector4 {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
+    self.z *= rhs.z;
+    self.w *= rhs.w;
+  }
+}
+
+impl MulAssign<f32> for Vector4 {
+  fn mul_assign(&mut self, scaler: f32) {
+    self.x *= scaler;
+    self.y *= scaler;
+    self.z *= scaler;
+    self.w *= scaler;
   }
 }
