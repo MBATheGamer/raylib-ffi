@@ -21,7 +21,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn add(&self, rhs: Vector2) -> Vector2 {
+  pub fn add(self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x + rhs.x,
       y: self.y + rhs.y,
@@ -29,7 +29,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn add_value(&self, add: f32) -> Vector2 {
+  pub fn add_value(self, add: f32) -> Vector2 {
     return Vector2 {
       x: self.x + add,
       y: self.y + add,
@@ -37,7 +37,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn sub(&self, rhs: Vector2) -> Vector2 {
+  pub fn sub(self, rhs: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x - rhs.x,
       y: self.y - rhs.y,
@@ -45,7 +45,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn sub_value(&self, sub: f32) -> Vector2 {
+  pub fn sub_value(self, sub: f32) -> Vector2 {
     return Vector2 {
       x: self.x - sub,
       y: self.y - sub,
@@ -53,33 +53,33 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn length(&self) -> f32 {
+  pub fn length(self) -> f32 {
     return (self.x * self.x + self.y * self.y).sqrt();
   }
 
   #[inline]
-  pub fn length_sqr(&self) -> f32 {
+  pub fn length_sqr(self) -> f32 {
     return self.x * self.x + self.y * self.y;
   }
 
   #[inline]
-  pub fn dot_product(&self, other: Vector2) -> f32 {
+  pub fn dot_product(self, other: Vector2) -> f32 {
     return self.x * other.x + self.y * other.y;
   }
 
   #[inline]
-  pub fn distance(&self, other: Vector2) -> f32 {
+  pub fn distance(self, other: Vector2) -> f32 {
     return ((self.x - other.x) * (self.x - other.x) + (self.y - other.y) * (self.y - other.y))
       .sqrt();
   }
 
   #[inline]
-  pub fn distance_sqr(&self, other: Vector2) -> f32 {
+  pub fn distance_sqr(self, other: Vector2) -> f32 {
     return (self.x - other.x) * (self.x - other.x) + (self.y - other.y) * (self.y - other.y);
   }
 
   #[inline]
-  pub fn angle(&self, other: Vector2) -> f32 {
+  pub fn angle(self, other: Vector2) -> f32 {
     let dot = self.x * other.x + self.y * other.y;
     let det = self.x * other.y - self.y * other.x;
 
@@ -87,13 +87,13 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn line_angle(&self, end: Vector2) -> f32 {
+  pub fn line_angle(self, end: Vector2) -> f32 {
     // TODO(10/9/2023): Currently angles move clockwise, determine if this is wanted behavior
     return -(end.y - self.y).atan2(end.x - self.x);
   }
 
   #[inline]
-  pub fn scale(&self, scaler: f32) -> Self {
+  pub fn scale(self, scaler: f32) -> Self {
     return Vector2 {
       x: self.x * scaler,
       y: self.y * scaler,
@@ -101,7 +101,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn multiply(&self, other: Vector2) -> Vector2 {
+  pub fn multiply(self, other: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x * other.x,
       y: self.y * other.y,
@@ -109,7 +109,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn negate(&self) -> Vector2 {
+  pub fn negate(self) -> Vector2 {
     return Vector2 {
       x: -self.x,
       y: -self.y,
@@ -125,7 +125,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn normalize(&self) -> Vector2 {
+  pub fn normalize(self) -> Vector2 {
     let length = (self.x * self.x + self.y * self.y).sqrt();
 
     if length > 0.0 {
@@ -140,7 +140,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn transform(&self, matrix: Matrix) -> Vector2 {
+  pub fn transform(self, matrix: Matrix) -> Vector2 {
     let x = self.x;
     let y = self.y;
     let z = 0.0;
@@ -152,7 +152,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn lerp(&self, other: Vector2, amount: f32) -> Vector2 {
+  pub fn lerp(self, other: Vector2, amount: f32) -> Vector2 {
     return Vector2 {
       x: self.x + amount * (other.x - self.x),
       y: self.y + amount * (other.y - self.y),
@@ -160,7 +160,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn reflect(&self, normal: Vector2) -> Vector2 {
+  pub fn reflect(self, normal: Vector2) -> Vector2 {
     let dot_product = self.x * normal.x + self.y * normal.y; // Dot product
 
     return Vector2 {
@@ -170,7 +170,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn min(&self, other: Vector2) -> Vector2 {
+  pub fn min(self, other: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x.min(other.x),
       y: self.y.min(other.y),
@@ -178,7 +178,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn max(&self, other: Vector2) -> Vector2 {
+  pub fn max(self, other: Vector2) -> Vector2 {
     return Vector2 {
       x: self.x.max(other.x),
       y: self.y.max(other.y),
@@ -186,7 +186,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn rotate(&self, angle: f32) -> Vector2 {
+  pub fn rotate(self, angle: f32) -> Vector2 {
     let cosres = angle.cos();
     let sinres = angle.sin();
 
@@ -197,7 +197,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn move_towards(&self, target: Vector2, max_distance: f32) -> Vector2 {
+  pub fn move_towards(self, target: Vector2, max_distance: f32) -> Vector2 {
     let dx = target.x - self.x;
     let dy = target.y - self.y;
     let value = (dx * dx) + (dy * dy);
@@ -215,7 +215,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn invert(&self) -> Vector2 {
+  pub fn invert(self) -> Vector2 {
     return Vector2 {
       x: 1.0 / self.x,
       y: 1.0 / self.y,
@@ -223,7 +223,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn clamp(&self, min: Vector2, max: Vector2) -> Vector2 {
+  pub fn clamp(self, min: Vector2, max: Vector2) -> Vector2 {
     return Vector2 {
       x: max.x.min(min.x.max(self.x)),
       y: max.y.min(min.y.max(self.y)),
@@ -254,7 +254,7 @@ impl Vector2 {
   }
 
   #[inline]
-  pub fn refract(&self, normal: Vector2, ratio: f32) -> Vector2 {
+  pub fn refract(self, normal: Vector2, ratio: f32) -> Vector2 {
     let dot = self.x * normal.x + self.y * normal.y;
     let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
 
