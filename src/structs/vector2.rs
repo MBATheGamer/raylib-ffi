@@ -330,8 +330,15 @@ impl Sub<f32> for Vector2 {
 
 impl SubAssign for Vector2 {
   fn sub_assign(&mut self, rhs: Self) {
-    self.x += rhs.x;
-    self.y += rhs.y;
+    self.x -= rhs.x;
+    self.y -= rhs.y;
+  }
+}
+
+impl SubAssign<f32> for Vector2 {
+  fn sub_assign(&mut self, rhs: f32) {
+    self.x -= rhs;
+    self.y -= rhs;
   }
 }
 
