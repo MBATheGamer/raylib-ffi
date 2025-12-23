@@ -30,7 +30,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn add(&self, rhs: Vector3) -> Vector3 {
+  pub fn add(self, rhs: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x + rhs.x,
       y: self.y + rhs.y,
@@ -39,7 +39,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn add_value(&self, add: f32) -> Vector3 {
+  pub fn add_value(self, add: f32) -> Vector3 {
     return Vector3 {
       x: self.x + add,
       y: self.y + add,
@@ -48,7 +48,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn sub(&self, rhs: Vector3) -> Vector3 {
+  pub fn sub(self, rhs: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x - rhs.x,
       y: self.y - rhs.y,
@@ -57,7 +57,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn sub_value(&self, add: f32) -> Vector3 {
+  pub fn sub_value(self, add: f32) -> Vector3 {
     return Vector3 {
       x: self.x - add,
       y: self.y - add,
@@ -66,7 +66,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn scale(&self, scalar: f32) -> Vector3 {
+  pub fn scale(self, scalar: f32) -> Vector3 {
     return Vector3 {
       x: self.x * scalar,
       y: self.y * scalar,
@@ -75,7 +75,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn multiply(&self, other: Vector3) -> Vector3 {
+  pub fn multiply(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x * other.x,
       y: self.y * other.y,
@@ -84,7 +84,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn cross_product(&self, other: Vector3) -> Vector3 {
+  pub fn cross_product(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.y * other.z - self.z * other.y,
       y: self.z * other.x - self.x * other.z,
@@ -93,7 +93,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn perpendicular(&self) -> Vector3 {
+  pub fn perpendicular(self) -> Vector3 {
     let mut min = self.x.abs();
     let mut cardinal_axis = Vector3 {
       x: 1.0,
@@ -128,22 +128,22 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn length(&self) -> f32 {
+  pub fn length(self) -> f32 {
     return (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
   }
 
   #[inline]
-  pub fn length_sqr(&self) -> f32 {
+  pub fn length_sqr(self) -> f32 {
     return self.x * self.x + self.y * self.y + self.z * self.z;
   }
 
   #[inline]
-  pub fn dot_product(&self, other: Vector3) -> f32 {
+  pub fn dot_product(self, other: Vector3) -> f32 {
     return self.x * other.x + self.y * other.y + self.z * other.z;
   }
 
   #[inline]
-  pub fn distance(&self, other: Vector3) -> f32 {
+  pub fn distance(self, other: Vector3) -> f32 {
     let dx = other.x - self.x;
     let dy = other.y - self.y;
     let dz = other.z - self.z;
@@ -152,7 +152,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn distance_sqr(&self, other: Vector3) -> f32 {
+  pub fn distance_sqr(self, other: Vector3) -> f32 {
     let dx = other.x - self.x;
     let dy = other.y - self.y;
     let dz = other.z - self.z;
@@ -161,7 +161,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn angle(&self, other: Vector3) -> f32 {
+  pub fn angle(self, other: Vector3) -> f32 {
     let cross = Vector3 {
       x: self.y * other.z - self.z * other.y,
       y: self.z * other.x - self.x * other.z,
@@ -174,7 +174,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn negate(&self) -> Vector3 {
+  pub fn negate(self) -> Vector3 {
     return Vector3 {
       x: -self.x,
       y: -self.y,
@@ -183,7 +183,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn divide(&self, other: Vector3) -> Vector3 {
+  pub fn divide(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x / other.x,
       y: self.y / other.y,
@@ -192,7 +192,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn normalize(&self) -> Vector3 {
+  pub fn normalize(self) -> Vector3 {
     let length = (self.x * self.x + self.y * self.y + self.z * self.z).sqrt();
 
     if length != 0.0 {
@@ -205,11 +205,11 @@ impl Vector3 {
       };
     }
 
-    return *self;
+    return self;
   }
 
   #[inline]
-  pub fn project(&self, other: Vector3) -> Vector3 {
+  pub fn project(self, other: Vector3) -> Vector3 {
     let mag = (self.x * other.x + self.y * other.y + self.z * other.z)
       / (other.x * other.x + other.y * other.y + other.z * other.z);
 
@@ -221,7 +221,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn reject(&self, other: Vector3) -> Vector3 {
+  pub fn reject(self, other: Vector3) -> Vector3 {
     let mag = (self.x * other.x + self.y * other.y + self.z * other.z)
       / (other.x * other.x + other.y * other.y + other.z * other.z);
 
@@ -270,7 +270,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn transform(&self, matrix: Matrix) -> Vector3 {
+  pub fn transform(self, matrix: Matrix) -> Vector3 {
     return Vector3 {
       x: matrix.m0 * self.x + matrix.m4 * self.y + matrix.m8 * self.z + matrix.m12,
       y: matrix.m1 * self.x + matrix.m5 * self.y + matrix.m9 * self.z + matrix.m13,
@@ -279,7 +279,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn rotate_by_quaternion(&self, quaternion: Quaternion) -> Vector3 {
+  pub fn rotate_by_quaternion(self, quaternion: Quaternion) -> Vector3 {
     return Vector3 {
       x: self.x
         * (quaternion.x * quaternion.x + quaternion.w * quaternion.w
@@ -304,10 +304,10 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn rotate_by_axis_angle(&self, mut axis: Vector3, mut angle: f32) -> Vector3 {
+  pub fn rotate_by_axis_angle(self, mut axis: Vector3, mut angle: f32) -> Vector3 {
     // Using Euler-Rodrigues Formula
     // Ref.: https://en.wikipedia.org/w/index.php?title=Euler%E2%80%93Rodrigues_formula
-    let mut result = *self;
+    let mut result = self;
 
     // Vector3Normalize(axis);
     let mut length = (axis.x * axis.x + axis.y * axis.y + axis.z * axis.z).sqrt();
@@ -366,7 +366,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn move_towards(&self, target: Vector3, max_distance: f32) -> Vector3 {
+  pub fn move_towards(self, target: Vector3, max_distance: f32) -> Vector3 {
     let dx = target.x - self.x;
     let dy = target.y - self.y;
     let dz = target.z - self.z;
@@ -386,7 +386,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn lerp(&self, other: Vector3, amount: f32) -> Vector3 {
+  pub fn lerp(self, other: Vector3, amount: f32) -> Vector3 {
     return Vector3 {
       x: self.x + amount * (other.x - self.x),
       y: self.y + amount * (other.y - self.y),
@@ -396,7 +396,7 @@ impl Vector3 {
 
   #[inline]
   pub fn cubic_hermite(
-    &self,
+    self,
     tangent1: Vector3,
     v2: Vector3,
     tangent2: Vector3,
@@ -422,7 +422,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn reflect(&self, normal: Vector3) -> Vector3 {
+  pub fn reflect(self, normal: Vector3) -> Vector3 {
     // I is the original vector
     // N is the normal of the incident plane
     // R = I - (2*N*(DotProduct[I, N]))
@@ -437,7 +437,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn min(&self, other: Vector3) -> Vector3 {
+  pub fn min(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x.min(other.x),
       y: self.y.min(other.y),
@@ -446,7 +446,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn max(&self, other: Vector3) -> Vector3 {
+  pub fn max(self, other: Vector3) -> Vector3 {
     return Vector3 {
       x: self.x.max(other.x),
       y: self.y.max(other.y),
@@ -455,7 +455,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn barycenter(&self, a: Vector3, b: Vector3, c: Vector3) -> Vector3 {
+  pub fn barycenter(self, a: Vector3, b: Vector3, c: Vector3) -> Vector3 {
     let v0 = Vector3 {
       x: b.x - a.x,
       y: b.y - a.y,
@@ -488,7 +488,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn unproject(&self, projection: Matrix, view: Matrix) -> Vector3 {
+  pub fn unproject(self, projection: Matrix, view: Matrix) -> Vector3 {
     // Calculate unprojected matrix (multiply view matrix by projection matrix) and invert it
     let mat_view_proj = Matrix {
       // MatrixMultiply(view, projection);
@@ -650,12 +650,12 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn to_array(&self) -> [f32; 3] {
+  pub fn to_array(self) -> [f32; 3] {
     return [self.x, self.y, self.z];
   }
 
   #[inline]
-  pub fn invert(&self) -> Vector3 {
+  pub fn invert(self) -> Vector3 {
     return Vector3 {
       x: 1.0 / self.x,
       y: 1.0 / self.y,
@@ -664,7 +664,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn clamp(&self, min: Vector3, max: Vector3) -> Vector3 {
+  pub fn clamp(self, min: Vector3, max: Vector3) -> Vector3 {
     return Vector3 {
       x: max.x.min(min.x.max(self.x)),
       y: max.y.min(min.y.max(self.y)),
@@ -673,7 +673,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn clamp_value(&self, min: f32, max: f32) -> Vector3 {
+  pub fn clamp_value(self, min: f32, max: f32) -> Vector3 {
     let mut length = (self.x * self.x) + (self.y * self.y) + (self.z * self.z);
 
     if length > 0.0 {
@@ -694,11 +694,11 @@ impl Vector3 {
       };
     }
 
-    return *self;
+    return self;
   }
 
   #[inline]
-  pub fn refract(&self, normal: Vector3, ratio: f32) -> Vector3 {
+  pub fn refract(self, normal: Vector3, ratio: f32) -> Vector3 {
     let dot = self.x * normal.x + self.y * normal.y + self.z * normal.z;
     let mut d = 1.0 - ratio * ratio * (1.0 - dot * dot);
 
