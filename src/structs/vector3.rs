@@ -987,6 +987,13 @@ impl SubAssign for Vector3 {
   }
 }
 
+impl SubAssign<f32> for Vector3 {
+  fn sub_assign(&mut self, rhs: f32) {
+    self.x -= rhs;
+    self.y -= rhs;
+  }
+}
+
 impl Mul for Vector3 {
   type Output = Self;
 
