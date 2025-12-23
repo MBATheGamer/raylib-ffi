@@ -222,4 +222,15 @@ impl Vector4 {
       w: self.w + dw / dist * max_distance,
     };
   }
+
+  // Invert the given vector
+  #[inline]
+  pub fn invert(self) -> Vector4 {
+    return Vector4 {
+      x: 1.0 / self.x,
+      y: 1.0 / self.y,
+      z: 1.0 / self.z,
+      w: 1.0 / self.w,
+    };
+  }
 }
