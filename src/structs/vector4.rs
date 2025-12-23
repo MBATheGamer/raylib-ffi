@@ -76,4 +76,9 @@ impl Vector4 {
   pub fn length_sqr(self) -> f32 {
     return self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w;
   }
+
+  #[inline]
+  pub fn dot_product(self, v2: Vector4) -> f32 {
+    return self.x * v2.x + self.y * v2.y + self.z * v2.z + self.w * v2.w;
+  }
 }
