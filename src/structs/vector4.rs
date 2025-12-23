@@ -188,4 +188,15 @@ impl Vector4 {
       w: self.w.max(v2.w),
     };
   }
+
+  // Calculate linear interpolation between two vectors
+  #[inline]
+  pub fn lerp(self, v2: Vector4, amount: f32) -> Vector4 {
+    return Vector4 {
+      x: self.x + amount * (v2.x - self.x),
+      y: self.y + amount * (v2.y - self.y),
+      z: self.z + amount * (v2.z - self.z),
+      w: self.w + amount * (v2.w - self.w),
+    };
+  }
 }
