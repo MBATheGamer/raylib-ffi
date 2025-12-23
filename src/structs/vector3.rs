@@ -968,6 +968,18 @@ impl Sub for Vector3 {
   }
 }
 
+impl Sub<f32> for Vector3 {
+  type Output = Self;
+
+  fn sub(self, rhs: f32) -> Self {
+    return Self {
+      x: self.x - rhs,
+      y: self.y - rhs,
+      z: self.z - rhs,
+    };
+  }
+}
+
 impl SubAssign for Vector3 {
   fn sub_assign(&mut self, rhs: Self) {
     self.x -= rhs.x;
