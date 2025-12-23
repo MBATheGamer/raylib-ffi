@@ -166,4 +166,15 @@ impl Vector4 {
       w: 0.0,
     };
   }
+
+  // Get min value for each pair of components
+  #[inline]
+  pub fn min(self, v2: Vector4) -> Vector4 {
+    return Vector4 {
+      x: self.x.min(v2.x),
+      y: self.y.min(v2.y),
+      z: self.z.min(v2.z),
+      w: self.w.min(v2.w),
+    };
+  }
 }
