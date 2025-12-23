@@ -317,6 +317,17 @@ impl Sub for Vector2 {
   }
 }
 
+impl Sub<f32> for Vector2 {
+  type Output = Vector2;
+
+  fn sub(self, rhs: f32) -> Vector2 {
+    return Vector2 {
+      x: self.x - rhs,
+      y: self.y - rhs,
+    };
+  }
+}
+
 impl SubAssign for Vector2 {
   fn sub_assign(&mut self, rhs: Self) {
     self.x += rhs.x;
