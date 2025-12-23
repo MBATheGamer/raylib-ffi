@@ -796,6 +796,48 @@ impl Vector3 {
     };
   }
 
+  // Create rotation matrix from axis and angle
+  // NOTE: Angle should be provided in radians
+  #[inline]
+  pub fn rotate(self, angle: f32) -> Matrix {
+    let (mut x, mut y, mut z) = (self.x, self.y, self.z);
+
+    let length_squared = x * x + y * y + z * z;
+
+    if length_squared != 1.0 && length_squared != 0.0 {
+      let length = 1.0 / length_squared.sqrt();
+      x *= length;
+      y *= length;
+      z *= length;
+    }
+
+    let sin_res = angle.sin();
+    let cos_res = angle.cos();
+    let t = 1.0 - cos_res;
+
+    return Matrix {
+      m0: x * x * t + cos_res,
+      m1: y * x * t + z * sin_res,
+      m2: z * x * t - y * sin_res,
+      m3: 0.0,
+
+      m4: x * y * t - z * sin_res,
+      m5: y * y * t + cos_res,
+      m6: z * y * t + x * sin_res,
+      m7: 0.0,
+
+      m8: x * z * t + y * sin_res,
+      m9: y * z * t - x * sin_res,
+      m10: z * z * t + cos_res,
+      m11: 0.0,
+
+      m12: 0.0,
+      m13: 0.0,
+      m14: 0.0,
+      m15: 1.0,
+    };
+  }
+
   // Get xyz-rotation matrix
   // NOTE: Angle must be provided in radians
   #[inline]
