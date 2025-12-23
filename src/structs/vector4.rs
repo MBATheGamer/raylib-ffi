@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Div, Mul, MulAssign, Neg, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 #[derive(Clone, Copy)]
 pub struct Vector4 {
@@ -392,5 +392,14 @@ impl Div for Vector4 {
       z: self.z / rhs.z,
       w: self.w / rhs.w,
     };
+  }
+}
+
+impl DivAssign for Vector4 {
+  fn div_assign(&mut self, rhs: Self) {
+    self.x /= rhs.x;
+    self.y /= rhs.y;
+    self.z /= rhs.z;
+    self.w /= rhs.w;
   }
 }
