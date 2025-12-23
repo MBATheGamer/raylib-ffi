@@ -110,4 +110,15 @@ impl Vector4 {
       w: self.w * scale,
     };
   }
+
+  // Multiply vector by vector
+  #[inline]
+  pub fn multiply(self, v2: Vector4) -> Vector4 {
+    return Vector4 {
+      x: self.x * v2.x,
+      y: self.y * v2.y,
+      z: self.z * v2.z,
+      w: self.w * v2.w,
+    };
+  }
 }
