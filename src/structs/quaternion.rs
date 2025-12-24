@@ -28,4 +28,15 @@ impl Quaternion {
       w: self.w + add,
     };
   }
+
+  // Subtract two quaternions
+  #[inline]
+  pub fn subtract(self, q2: Quaternion) -> Quaternion {
+    return Quaternion {
+      x: self.x - q2.x,
+      y: self.y - q2.y,
+      z: self.z - q2.z,
+      w: self.w - q2.w,
+    };
+  }
 }
