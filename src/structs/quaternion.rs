@@ -1,6 +1,6 @@
 use std::{
   f32::EPSILON,
-  ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign},
+  ops::{Add, AddAssign, Div, Mul, MulAssign, Sub, SubAssign},
 };
 
 use crate::structs::{Matrix, Vector3};
@@ -135,12 +135,12 @@ impl Quaternion {
 
   // Divide two quaternions
   #[inline]
-  pub fn divide(self, q2: Quaternion) -> Quaternion {
+  pub fn divide(self, rhs: Quaternion) -> Quaternion {
     return Quaternion {
-      x: self.x / q2.x,
-      y: self.y / q2.y,
-      z: self.z / q2.z,
-      w: self.w / q2.w,
+      x: self.x / rhs.x,
+      y: self.y / rhs.y,
+      z: self.z / rhs.z,
+      w: self.w / rhs.w,
     };
   }
 
@@ -575,5 +575,18 @@ impl MulAssign<f32> for Quaternion {
     self.y *= rhs;
     self.z *= rhs;
     self.w *= rhs;
+  }
+}
+
+impl Div for Quaternion {
+  type Output = Self;
+
+  fn div(self, rhs: Self) -> Self {
+    return Quaternion {
+      x: self.x / rhs.x,
+      y: self.y / rhs.y,
+      z: self.z / rhs.z,
+      w: self.w / rhs.w,
+    };
   }
 }
