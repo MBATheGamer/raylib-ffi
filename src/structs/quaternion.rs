@@ -1,4 +1,4 @@
-use std::f32::EPSILON;
+use std::{f32::EPSILON, ops::Add};
 
 use crate::structs::{Matrix, Vector3};
 
@@ -13,23 +13,23 @@ pub struct Quaternion {
 impl Quaternion {
   // Add two quaternions
   #[inline]
-  pub fn add(self, q2: Quaternion) -> Quaternion {
+  pub fn add(self, rhs: Quaternion) -> Quaternion {
     return Quaternion {
-      x: self.x + q2.x,
-      y: self.y + q2.y,
-      z: self.z + q2.z,
-      w: self.w + q2.w,
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
+      z: self.z + rhs.z,
+      w: self.w + rhs.w,
     };
   }
 
   // Add quaternion and float value
   #[inline]
-  pub fn add_value(self, add: f32) -> Quaternion {
+  pub fn add_value(self, rhs: f32) -> Quaternion {
     return Quaternion {
-      x: self.x + add,
-      y: self.y + add,
-      z: self.z + add,
-      w: self.w + add,
+      x: self.x + rhs,
+      y: self.y + rhs,
+      z: self.z + rhs,
+      w: self.w + rhs,
     };
   }
 
@@ -439,6 +439,32 @@ impl Quaternion {
       y: mat.m1 * self.x + mat.m5 * self.y + mat.m9 * self.z + mat.m13 * self.w,
       z: mat.m2 * self.x + mat.m6 * self.y + mat.m10 * self.z + mat.m14 * self.w,
       w: mat.m3 * self.x + mat.m7 * self.y + mat.m11 * self.z + mat.m15 * self.w,
+    };
+  }
+}
+
+impl Add for Quaternion {
+  type Output = Self;
+
+  fn add(self, rhs: Self) -> Self {
+    return Quaternion {
+      x: self.x + rhs.x,
+      y: self.y + rhs.y,
+      z: self.z + rhs.z,
+      w: self.w + rhs.w,
+    };
+  }
+}
+
+impl Add<f32> for Quaternion {
+  type Output = Self;
+
+  fn add(self, rhs: f32) -> Self {
+    return Quaternion {
+      x: self.x + rhs,
+      y: self.y + rhs,
+      z: self.z + rhs,
+      w: self.w + rhs,
     };
   }
 }
