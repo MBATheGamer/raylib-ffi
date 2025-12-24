@@ -136,4 +136,15 @@ impl Quaternion {
       w: self.w / q2.w,
     };
   }
+
+  // Calculate linear interpolation between two quaternions
+  #[inline]
+  pub fn lerp(self, q2: Quaternion, amount: f32) -> Quaternion {
+    return Quaternion {
+      x: self.x + amount * (q2.x - self.x),
+      y: self.y + amount * (q2.y - self.y),
+      z: self.z + amount * (q2.z - self.z),
+      w: self.w + amount * (q2.w - self.w),
+    };
+  }
 }
