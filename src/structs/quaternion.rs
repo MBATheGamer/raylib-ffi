@@ -114,4 +114,15 @@ impl Quaternion {
       w: qaw * qbw - qax * qbx - qay * qby - qaz * qbz,
     };
   }
+
+  // Scale quaternion by float value
+  #[inline]
+  pub fn scale(self, scaler: f32) -> Quaternion {
+    return Quaternion {
+      x: self.x * scaler,
+      y: self.y * scaler,
+      z: self.z * scaler,
+      w: self.w * scaler,
+    };
+  }
 }
