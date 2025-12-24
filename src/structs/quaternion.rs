@@ -1,3 +1,5 @@
+use std::f32::EPSILON;
+
 #[derive(Clone, Copy)]
 pub struct Quaternion {
   pub x: f32,
@@ -169,5 +171,47 @@ impl Quaternion {
       z: q.z * length,
       w: q.w * length,
     };
+  }
+
+  // Calculates spherical linear interpolation between two quaternions
+  #[inline]
+  pub fn slerp(self, mut q2: Quaternion, amount: f32) -> Quaternion {
+    let mut cos_half_theta = self.x * q2.x + self.y * q2.y + self.z * q2.z + self.w * q2.w;
+
+    if cos_half_theta < 0.0 {
+      q2.x = -q2.x;
+      q2.y = -q2.y;
+      q2.z = -q2.z;
+      q2.w = -q2.w;
+      cos_half_theta = -cos_half_theta;
+    }
+
+    if cos_half_theta.abs() >= 1.0 {
+      return self;
+    } else if cos_half_theta > 0.95 {
+      return self.nlerp(q2, amount);
+    } else {
+      let half_theta = cos_half_theta.acos();
+      let sin_half_theta = (1.0 - cos_half_theta * cos_half_theta).sqrt();
+
+      if sin_half_theta.abs() < EPSILON {
+        return Quaternion {
+          x: self.x * 0.5 + q2.x * 0.5,
+          y: self.y * 0.5 + q2.y * 0.5,
+          z: self.z * 0.5 + q2.z * 0.5,
+          w: self.w * 0.5 + q2.w * 0.5,
+        };
+      } else {
+        let ratio_a = ((1.0 - amount) * half_theta).sin() / sin_half_theta;
+        let ratio_b = (amount * half_theta).sin() / sin_half_theta;
+
+        return Quaternion {
+          x: self.x * ratio_a + q2.x * ratio_b,
+          y: self.y * ratio_a + q2.y * ratio_b,
+          z: self.z * ratio_a + q2.z * ratio_b,
+          w: self.w * ratio_a + q2.w * ratio_b,
+        };
+      }
+    }
   }
 }
