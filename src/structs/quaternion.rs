@@ -1,6 +1,6 @@
 use std::{
   f32::EPSILON,
-  ops::{Add, AddAssign, Sub},
+  ops::{Add, AddAssign, Sub, SubAssign},
 };
 
 use crate::structs::{Matrix, Vector3};
@@ -513,5 +513,23 @@ impl Sub<f32> for Quaternion {
       z: self.z - rhs,
       w: self.w - rhs,
     };
+  }
+}
+
+impl SubAssign for Quaternion {
+  fn sub_assign(&mut self, rhs: Self) {
+    self.x -= rhs.x;
+    self.y -= rhs.y;
+    self.z -= rhs.z;
+    self.w -= rhs.w;
+  }
+}
+
+impl SubAssign<f32> for Quaternion {
+  fn sub_assign(&mut self, rhs: f32) {
+    self.x -= rhs;
+    self.y -= rhs;
+    self.z -= rhs;
+    self.w -= rhs;
   }
 }
