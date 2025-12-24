@@ -1,3 +1,18 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_frame_time, get_random_value,
+    init_window, keyboard::is_key_pressed, mouse::get_mouse_wheel_move, set_target_fps,
+    window_should_close,
+  },
+  enums::KeyboardKey,
+  math::lerp,
+  shape::{draw_circle_v, draw_line_v},
+  structs::{Vector2, Vector3},
+  text::{draw_fps, draw_text},
+  texture::color_lerp,
+};
+
 const STAR_COUNT: usize = 420;
 
 fn main() {
@@ -12,12 +27,12 @@ fn main() {
 
   let bg_color = color_lerp(colors::DARKBLUE, colors::BLACK, 0.69);
 
-  let speed = 10.0 / 9.0;
+  let mut speed = 10.0 / 9.0;
 
-  let draw_lines = true;
+  let mut draw_lines = true;
 
-  let stars: Vec<Vector3> = vec![];
-  let stars_screen_pos: Vec<Vector2> = vec![];
+  let mut stars: Vec<Vector3> = vec![];
+  let mut stars_screen_pos: Vec<Vector2> = vec![];
 
   for _ in 0..STAR_COUNT {
     stars.push(Vector3 {
