@@ -1,5 +1,7 @@
 use std::f32::EPSILON;
 
+use crate::structs::Vector3;
+
 #[derive(Clone, Copy)]
 pub struct Quaternion {
   pub x: f32,
@@ -238,5 +240,35 @@ impl Quaternion {
     let m1 = in_tangent2.scale(h11);
 
     return p0.add(m0).add(p1).add(m1).normalize();
+  }
+
+  // Calculate quaternion based on the rotation from one vector to another
+  #[inline]
+  pub fn from_vector3_to_vector3(from: Vector3, to: Vector3) -> Quaternion {
+    let cos2_theta = from.x * to.x + from.y * to.y + from.z * to.z; // Vector3DotProduct(from, to)
+    let cross = Vector3 {
+      x: from.y * to.z - from.z * to.y,
+      y: from.z * to.x - from.x * to.z,
+      z: from.x * to.y - from.y * to.x,
+    }; // Vector3CrossProduct(from, to)
+
+    let q = Quaternion {
+      x: cross.x,
+      y: cross.y,
+      z: cross.z,
+      w: 1.0 + cos2_theta,
+    };
+
+    // QuaternionNormalize(q);
+    // NOTE: Normalize to essentially nlerp the original and identity to 0.5
+    let length = (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w).sqrt();
+    let length = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+    return Quaternion {
+      x: q.x * length,
+      y: q.y * length,
+      z: q.z * length,
+      w: q.w * length,
+    };
   }
 }
