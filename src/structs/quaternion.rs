@@ -406,4 +406,28 @@ impl Quaternion {
       w: x0 * y0 * z0 + x1 * y1 * z1,
     };
   }
+
+  // Get the Euler angles equivalent to quaternion (roll, pitch, yaw)
+  // NOTE: Angles are returned in a Vector3 struct in radians
+  #[inline]
+  pub fn to_euler(self) -> Vector3 {
+    // Roll (x-axis rotation)
+    let x0 = 2.0 * (self.w * self.x + self.y * self.z);
+    let x1 = 1.0 - 2.0 * (self.x * self.x + self.y * self.y);
+
+    // Pitch (y-axis rotation)
+    let mut y = 2.0 * (self.w * self.y - self.z * self.x);
+    y = if y > 1.0 { 1.0 } else { y };
+    y = if y < -1.0 { -1.0 } else { y };
+
+    // Yaw (z-axis rotation)
+    let z0 = 2.0 * (self.w * self.z + self.x * self.y);
+    let z1 = 1.0 - 2.0 * (self.y * self.y + self.z * self.z);
+
+    return Vector3 {
+      x: x0.atan2(x1),
+      y: y.asin(),
+      z: z0.atan2(z1),
+    };
+  }
 }
