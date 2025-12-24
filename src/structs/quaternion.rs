@@ -100,4 +100,18 @@ impl Quaternion {
 
     return self;
   }
+
+  // Calculate two quaternion multiplication
+  #[inline]
+  pub fn multiply(self, q2: Quaternion) -> Quaternion {
+    let (qax, qay, qaz, qaw) = (self.x, self.y, self.z, self.w);
+    let (qbx, qby, qbz, qbw) = (q2.x, q2.y, q2.z, q2.w);
+
+    return Quaternion {
+      x: qax * qbw + qaw * qbx + qay * qbz - qaz * qby,
+      y: qay * qbw + qaw * qby + qaz * qbx - qax * qbz,
+      z: qaz * qbw + qaw * qbz + qax * qby - qay * qbx,
+      w: qaw * qbw - qax * qbx - qay * qby - qaz * qbz,
+    };
+  }
 }
