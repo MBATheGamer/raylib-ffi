@@ -351,4 +351,40 @@ impl Quaternion {
       w: 0.0,
     };
   }
+
+  // Get the rotation angle and axis for a given quaternion
+  #[inline]
+  pub fn to_axis_angle(mut self, out_axis: &mut Vector3, out_angle: &mut f32) {
+    if self.w.abs() > 1.0 {
+      // QuaternionNormalize(q);
+      let length = (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt();
+      let length = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+      self.x = self.x * length;
+      self.y = self.y * length;
+      self.z = self.z * length;
+      self.w = self.w * length;
+    }
+
+    let mut res_axis = Vector3 {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+    };
+    let res_angle = 2.0 * self.w.acos();
+    let den = (1.0 - self.w * self.w).sqrt();
+
+    if den > EPSILON {
+      res_axis.x = self.x / den;
+      res_axis.y = self.y / den;
+      res_axis.z = self.z / den;
+    } else {
+      // This occurs when the angle is zero.
+      // Not a problem: just set an arbitrary normalized axis.
+      res_axis.x = 1.0;
+    }
+
+    *out_axis = res_axis;
+    *out_angle = res_angle;
+  }
 }
