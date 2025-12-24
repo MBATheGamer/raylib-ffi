@@ -67,4 +67,18 @@ impl Quaternion {
   pub fn length(self) -> f32 {
     return (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt();
   }
+
+  // Normalize provided quaternion
+  #[inline]
+  pub fn normalize(self) -> Quaternion {
+    let length = (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt();
+    let length = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+    return Quaternion {
+      x: self.x * length,
+      y: self.y * length,
+      z: self.z * length,
+      w: self.w * length,
+    };
+  }
 }
