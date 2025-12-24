@@ -430,4 +430,15 @@ impl Quaternion {
       z: z0.atan2(z1),
     };
   }
+
+  // Transform a quaternion given a transformation matrix
+  #[inline]
+  pub fn transform(self, mat: Matrix) -> Quaternion {
+    return Quaternion {
+      x: mat.m0 * self.x + mat.m4 * self.y + mat.m8 * self.z + mat.m12 * self.w,
+      y: mat.m1 * self.x + mat.m5 * self.y + mat.m9 * self.z + mat.m13 * self.w,
+      z: mat.m2 * self.x + mat.m6 * self.y + mat.m10 * self.z + mat.m14 * self.w,
+      w: mat.m3 * self.x + mat.m7 * self.y + mat.m11 * self.z + mat.m15 * self.w,
+    };
+  }
 }
