@@ -147,4 +147,27 @@ impl Quaternion {
       w: self.w + amount * (q2.w - self.w),
     };
   }
+
+  // Calculate slerp-optimized interpolation between two quaternions
+  #[inline]
+  pub fn nlerp(self, q2: Quaternion, amount: f32) -> Quaternion {
+    // QuaternionLerp(q1, q2, amount)
+    let q = Quaternion {
+      x: self.x + amount * (q2.x - self.x),
+      y: self.y + amount * (q2.y - self.y),
+      z: self.z + amount * (q2.z - self.z),
+      w: self.w + amount * (q2.w - self.w),
+    };
+
+    // QuaternionNormalize(q);
+    let length = (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w).sqrt();
+    let length = if length == 0.0 { 1.0 } else { 1.0 / length };
+
+    return Quaternion {
+      x: q.x * length,
+      y: q.y * length,
+      z: q.z * length,
+      w: q.w * length,
+    };
+  }
 }
