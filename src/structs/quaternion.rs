@@ -17,4 +17,15 @@ impl Quaternion {
       w: self.w + q2.w,
     };
   }
+
+  // Add quaternion and float value
+  #[inline]
+  pub fn add_value(self, add: f32) -> Quaternion {
+    return Quaternion {
+      x: self.x + add,
+      y: self.y + add,
+      z: self.z + add,
+      w: self.w + add,
+    };
+  }
 }
