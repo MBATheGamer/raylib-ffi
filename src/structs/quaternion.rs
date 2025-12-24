@@ -61,4 +61,10 @@ impl Quaternion {
       w: 1.0,
     };
   }
+
+  // Computes the length of a quaternion
+  #[inline]
+  pub fn length(self) -> f32 {
+    return (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt();
+  }
 }
