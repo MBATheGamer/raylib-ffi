@@ -214,4 +214,29 @@ impl Quaternion {
       }
     }
   }
+
+  // Calculate quaternion cubic spline interpolation using Cubic Hermite Spline algorithm
+  // as described in the GLTF 2.0 specification: https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#interpolation-cubic
+  #[inline]
+  pub fn cubic_hermite_spline(
+    self,
+    out_tangent1: Quaternion,
+    q2: Quaternion,
+    in_tangent2: Quaternion,
+    t: f32,
+  ) -> Quaternion {
+    let t2 = t * t;
+    let t3 = t2 * t;
+    let h00 = 2.0 * t3 - 3.0 * t2 + 1.0;
+    let h10 = t3 - 2.0 * t2 + t;
+    let h01 = -2.0 * t3 + 3.0 * t2;
+    let h11 = t3 - t2;
+
+    let p0 = self.scale(h00);
+    let m0 = out_tangent1.scale(h10);
+    let p1 = q2.scale(h01);
+    let m1 = in_tangent2.scale(h11);
+
+    return p0.add(m0).add(p1).add(m1).normalize();
+  }
 }
