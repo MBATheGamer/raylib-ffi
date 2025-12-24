@@ -1,6 +1,6 @@
 use std::{
   f32::EPSILON,
-  ops::{Add, AddAssign},
+  ops::{Add, AddAssign, Sub},
 };
 
 use crate::structs::{Matrix, Vector3};
@@ -38,12 +38,12 @@ impl Quaternion {
 
   // Subtract two quaternions
   #[inline]
-  pub fn subtract(self, q2: Quaternion) -> Quaternion {
+  pub fn subtract(self, rhs: Quaternion) -> Quaternion {
     return Quaternion {
-      x: self.x - q2.x,
-      y: self.y - q2.y,
-      z: self.z - q2.z,
-      w: self.w - q2.w,
+      x: self.x - rhs.x,
+      y: self.y - rhs.y,
+      z: self.z - rhs.z,
+      w: self.w - rhs.w,
     };
   }
 
@@ -487,5 +487,31 @@ impl AddAssign<f32> for Quaternion {
     self.y += rhs;
     self.z += rhs;
     self.w += rhs;
+  }
+}
+
+impl Sub for Quaternion {
+  type Output = Self;
+
+  fn sub(self, rhs: Self) -> Self {
+    return Quaternion {
+      x: self.x - rhs.x,
+      y: self.y - rhs.y,
+      z: self.z - rhs.z,
+      w: self.w - rhs.w,
+    };
+  }
+}
+
+impl Sub<f32> for Quaternion {
+  type Output = Self;
+
+  fn sub(self, rhs: f32) -> Self {
+    return Quaternion {
+      x: self.x - rhs,
+      y: self.y - rhs,
+      z: self.z - rhs,
+      w: self.w - rhs,
+    };
   }
 }
