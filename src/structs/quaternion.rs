@@ -1,4 +1,7 @@
-use std::{f32::EPSILON, ops::Add};
+use std::{
+  f32::EPSILON,
+  ops::{Add, AddAssign},
+};
 
 use crate::structs::{Matrix, Vector3};
 
@@ -466,5 +469,23 @@ impl Add<f32> for Quaternion {
       z: self.z + rhs,
       w: self.w + rhs,
     };
+  }
+}
+
+impl AddAssign for Quaternion {
+  fn add_assign(&mut self, rhs: Self) {
+    self.x += rhs.x;
+    self.y += rhs.y;
+    self.z += rhs.z;
+    self.w += rhs.w;
+  }
+}
+
+impl AddAssign<f32> for Quaternion {
+  fn add_assign(&mut self, rhs: f32) {
+    self.x += rhs;
+    self.y += rhs;
+    self.z += rhs;
+    self.w += rhs;
   }
 }
