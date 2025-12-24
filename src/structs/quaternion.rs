@@ -387,4 +387,23 @@ impl Quaternion {
     *out_axis = res_axis;
     *out_angle = res_angle;
   }
+
+  // Get the quaternion equivalent to Euler angles
+  // NOTE: Rotation order is ZYX
+  #[inline]
+  pub fn from_euler(pitch: f32, yaw: f32, roll: f32) -> Quaternion {
+    let x0 = (pitch * 0.5).cos();
+    let x1 = (pitch * 0.5).sin();
+    let y0 = (yaw * 0.5).cos();
+    let y1 = (yaw * 0.5).sin();
+    let z0 = (roll * 0.5).cos();
+    let z1 = (roll * 0.5).sin();
+
+    return Quaternion {
+      x: x1 * y0 * z0 - x0 * y1 * z1,
+      y: x0 * y1 * z0 + x1 * y0 * z1,
+      z: x0 * y0 * z1 - x1 * y1 * z0,
+      w: x0 * y0 * z0 + x1 * y1 * z1,
+    };
+  }
 }
