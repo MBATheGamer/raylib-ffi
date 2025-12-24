@@ -50,4 +50,15 @@ impl Quaternion {
       w: self.w - sub,
     };
   }
+
+  // Get identity quaternion
+  #[inline]
+  pub fn identity() -> Quaternion {
+    return Quaternion {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      w: 1.0,
+    };
+  }
 }
