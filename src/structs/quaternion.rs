@@ -39,4 +39,15 @@ impl Quaternion {
       w: self.w - q2.w,
     };
   }
+
+  // Subtract quaternion and float value
+  #[inline]
+  pub fn subtract_value(self, sub: f32) -> Quaternion {
+    return Quaternion {
+      x: self.x - sub,
+      y: self.y - sub,
+      z: self.z - sub,
+      w: self.w - sub,
+    };
+  }
 }
