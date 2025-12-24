@@ -1,6 +1,6 @@
 use std::f32::EPSILON;
 
-use crate::structs::Vector3;
+use crate::structs::{Matrix, Vector3};
 
 #[derive(Clone, Copy)]
 pub struct Quaternion {
@@ -269,6 +269,39 @@ impl Quaternion {
       y: q.y * length,
       z: q.z * length,
       w: q.w * length,
+    };
+  }
+
+  // Get a matrix for a given quaternion
+  #[inline]
+  pub fn to_matrix(self) -> Matrix {
+    let a2 = self.x * self.x;
+    let b2 = self.y * self.y;
+    let c2 = self.z * self.z;
+    let ac = self.x * self.z;
+    let ab = self.x * self.y;
+    let bc = self.y * self.z;
+    let ad = self.w * self.x;
+    let bd = self.w * self.y;
+    let cd = self.w * self.z;
+
+    return Matrix {
+      m0: 1.0 - 2.0 * (b2 + c2),
+      m1: 2.0 * (ab + cd),
+      m2: 2.0 * (ac - bd),
+      m3: 0.0,
+      m4: 2.0 * (ab - cd),
+      m5: 1.0 - 2.0 * (a2 + c2),
+      m6: 2.0 * (bc + ad),
+      m7: 0.0,
+      m8: 2.0 * (ac + bd),
+      m9: 2.0 * (bc - ad),
+      m10: 1.0 - 2.0 * (a2 + b2),
+      m11: 0.0,
+      m12: 0.0,
+      m13: 0.0,
+      m14: 0.0,
+      m15: 1.0,
     };
   }
 }
