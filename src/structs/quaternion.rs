@@ -125,4 +125,15 @@ impl Quaternion {
       w: self.w * scaler,
     };
   }
+
+  // Divide two quaternions
+  #[inline]
+  pub fn divide(self, q2: Quaternion) -> Quaternion {
+    return Quaternion {
+      x: self.x / q2.x,
+      y: self.y / q2.y,
+      z: self.z / q2.z,
+      w: self.w / q2.w,
+    };
+  }
 }
