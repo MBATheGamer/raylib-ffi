@@ -1,6 +1,6 @@
 use std::{
   f32::EPSILON,
-  ops::{Add, AddAssign, Sub, SubAssign},
+  ops::{Add, AddAssign, Mul, Sub, SubAssign},
 };
 
 use crate::structs::{Matrix, Vector3};
@@ -49,12 +49,12 @@ impl Quaternion {
 
   // Subtract quaternion and float value
   #[inline]
-  pub fn subtract_value(self, sub: f32) -> Quaternion {
+  pub fn subtract_value(self, rhs: f32) -> Quaternion {
     return Quaternion {
-      x: self.x - sub,
-      y: self.y - sub,
-      z: self.z - sub,
-      w: self.w - sub,
+      x: self.x - rhs,
+      y: self.y - rhs,
+      z: self.z - rhs,
+      w: self.w - rhs,
     };
   }
 
@@ -110,9 +110,9 @@ impl Quaternion {
 
   // Calculate two quaternion multiplication
   #[inline]
-  pub fn multiply(self, q2: Quaternion) -> Quaternion {
+  pub fn multiply(self, rhs: Quaternion) -> Quaternion {
     let (qax, qay, qaz, qaw) = (self.x, self.y, self.z, self.w);
-    let (qbx, qby, qbz, qbw) = (q2.x, q2.y, q2.z, q2.w);
+    let (qbx, qby, qbz, qbw) = (rhs.x, rhs.y, rhs.z, rhs.w);
 
     return Quaternion {
       x: qax * qbw + qaw * qbx + qay * qbz - qaz * qby,
@@ -531,5 +531,31 @@ impl SubAssign<f32> for Quaternion {
     self.y -= rhs;
     self.z -= rhs;
     self.w -= rhs;
+  }
+}
+
+impl Mul for Quaternion {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
+    return Quaternion {
+      x: self.x * rhs.x,
+      y: self.y * rhs.y,
+      z: self.z * rhs.z,
+      w: self.w * rhs.w,
+    };
+  }
+}
+
+impl Mul<f32> for Quaternion {
+  type Output = Self;
+
+  fn mul(self, scaler: f32) -> Self {
+    return Quaternion {
+      x: self.x * scaler,
+      y: self.y * scaler,
+      z: self.z * scaler,
+      w: self.w * scaler,
+    };
   }
 }
