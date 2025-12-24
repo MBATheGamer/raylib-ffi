@@ -1,6 +1,6 @@
 use std::{
   f32::EPSILON,
-  ops::{Add, AddAssign, Mul, Sub, SubAssign},
+  ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign},
 };
 
 use crate::structs::{Matrix, Vector3};
@@ -557,5 +557,23 @@ impl Mul<f32> for Quaternion {
       z: self.z * scaler,
       w: self.w * scaler,
     };
+  }
+}
+
+impl MulAssign for Quaternion {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.x *= rhs.x;
+    self.y *= rhs.y;
+    self.z *= rhs.z;
+    self.w *= rhs.w;
+  }
+}
+
+impl MulAssign<f32> for Quaternion {
+  fn mul_assign(&mut self, rhs: f32) {
+    self.x *= rhs;
+    self.y *= rhs;
+    self.z *= rhs;
+    self.w *= rhs;
   }
 }
