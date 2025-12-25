@@ -140,6 +140,7 @@ unsafe extern "C" {
 
   // Color/pixel related functions
   pub fn Fade(color: Color, alpha: f32) -> Color;
+  pub fn ColorFromHSV(hue: f32, saturation: f32, value: f32) -> Color;
   pub fn ColorAlpha(color: Color, alpha: f32) -> Color;
   pub fn ColorLerp(color1: Color, color2: Color, factor: f32) -> Color;
   pub fn GetColor(hex_value: u32) -> Color;

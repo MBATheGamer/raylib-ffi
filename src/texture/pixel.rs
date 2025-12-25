@@ -1,11 +1,16 @@
 use crate::{
   structs::Color,
-  texture::ffi::{ColorAlpha, ColorLerp, Fade, GetColor},
+  texture::ffi::{ColorAlpha, ColorFromHSV, ColorLerp, Fade, GetColor},
 };
 
 #[inline]
 pub fn fade(color: Color, alpha: f32) -> Color {
   return unsafe { Fade(color, alpha) };
+}
+
+#[inline]
+pub fn color_from_hsv(hue: f32, saturation: f32, value: f32) -> Color {
+  return unsafe { ColorFromHSV(hue, saturation, value) };
 }
 
 #[inline]
