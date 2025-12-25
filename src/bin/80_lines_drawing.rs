@@ -1,3 +1,20 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_texture_mode, init_window,
+    mouse::{
+      get_mouse_position, get_mouse_wheel_move, is_mouse_button_down, is_mouse_button_pressed,
+    },
+    set_target_fps, window_should_close,
+  },
+  enums::MouseButton,
+  shape::{draw_circle_lines_v, draw_circle_v, draw_line_ex},
+  structs::{Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::{color_from_hsv, draw_texture_rec, load_render_texture, unload_render_texture},
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -8,15 +25,15 @@ fn main() {
     "raylib [shapes] example - lines drawing",
   );
 
-  let start_text = true;
+  let mut start_text = true;
 
-  let mouse_position_previous = get_mouse_position();
+  let mut mouse_position_previous = get_mouse_position();
 
   let canvas = load_render_texture(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-  let line_thickness = 8.0;
+  let mut line_thickness = 8.0;
 
-  let line_hue = 0.0;
+  let mut line_hue = 0.0;
 
   begin_texture_mode(canvas);
   clear_background(colors::RAYWHITE);
@@ -39,7 +56,7 @@ fn main() {
     let right_button_down = is_mouse_button_down(MouseButton::Right);
 
     if left_button_down || right_button_down {
-      let draw_color = colors::WHITE;
+      let mut draw_color = colors::WHITE;
 
       if left_button_down {
         line_hue += mouse_position_previous.distance(get_mouse_position()) / 3.0;
