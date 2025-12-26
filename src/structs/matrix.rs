@@ -417,4 +417,38 @@ impl Matrix {
       m15: 0.0,
     };
   }
+
+  // Get orthographic projection matrix
+  #[inline]
+  pub fn orthographic(
+    left: f64,
+    right: f64,
+    bottom: f64,
+    top: f64,
+    near_plane: f64,
+    far_plane: f64,
+  ) -> Matrix {
+    let rl = (right - left) as f32;
+    let tb = (top - bottom) as f32;
+    let fnp = (far_plane - near_plane) as f32;
+
+    return Matrix {
+      m0: 2.0 / rl,
+      m1: 0.0,
+      m2: 0.0,
+      m3: 0.0,
+      m4: 0.0,
+      m5: 2.0 / tb,
+      m6: 0.0,
+      m7: 0.0,
+      m8: 0.0,
+      m9: 0.0,
+      m10: -2.0 / fnp,
+      m11: 0.0,
+      m12: -(left + right) as f32 / rl,
+      m13: -(top + bottom) as f32 / tb,
+      m14: -(far_plane + near_plane) as f32 / fnp,
+      m15: 1.0,
+    };
+  }
 }
