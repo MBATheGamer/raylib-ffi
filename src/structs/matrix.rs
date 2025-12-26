@@ -172,4 +172,27 @@ impl Matrix {
       m15: self.m15 + right.m15,
     };
   }
+
+  // Subtract two matrices (left - right)
+  #[inline]
+  pub fn subtract(self, right: Matrix) -> Matrix {
+    return Matrix {
+      m0: self.m0 - right.m0,
+      m1: self.m1 - right.m1,
+      m2: self.m2 - right.m2,
+      m3: self.m3 - right.m3,
+      m4: self.m4 - right.m4,
+      m5: self.m5 - right.m5,
+      m6: self.m6 - right.m6,
+      m7: self.m7 - right.m7,
+      m8: self.m8 - right.m8,
+      m9: self.m9 - right.m9,
+      m10: self.m10 - right.m10,
+      m11: self.m11 - right.m11,
+      m12: self.m12 - right.m12,
+      m13: self.m13 - right.m13,
+      m14: self.m14 - right.m14,
+      m15: self.m15 - right.m15,
+    };
+  }
 }
