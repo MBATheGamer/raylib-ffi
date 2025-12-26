@@ -383,4 +383,38 @@ impl Matrix {
       m15: 0.0,
     };
   }
+
+  // Get perspective projection matrix
+  // NOTE: Fovy angle must be provided in radians
+  #[inline]
+  pub fn perspective(fov_y: f64, aspect: f64, near_plane: f64, far_plane: f64) -> Matrix {
+    let top = near_plane * (fov_y * 0.5).tan();
+    let bottom = -top;
+    let right = top * aspect;
+    let left = -right;
+
+    // MatrixFrustum(-right, right, -top, top, near, far);
+    let rl = (right - left) as f32;
+    let tb = (top - bottom) as f32;
+    let fnp = (far_plane - near_plane) as f32;
+
+    return Matrix {
+      m0: (near_plane * 2.0) as f32 / rl,
+      m1: 0.0,
+      m2: 0.0,
+      m3: 0.0,
+      m4: 0.0,
+      m5: (near_plane * 2.0) as f32 / tb,
+      m6: 0.0,
+      m7: 0.0,
+      m8: (right + left) as f32 / rl,
+      m9: (top + bottom) as f32 / tb,
+      m10: -(far_plane + near_plane) as f32 / fnp,
+      m11: -1.0,
+      m12: 0.0,
+      m13: 0.0,
+      m14: -(far_plane * near_plane * 2.0) as f32 / fnp,
+      m15: 0.0,
+    };
+  }
 }
