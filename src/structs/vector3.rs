@@ -12,7 +12,12 @@ pub struct Vector3 {
 
 impl Vector3 {
   #[inline]
-  pub fn zero() -> Vector3 {
+  pub const fn new(x: f32, y: f32, z: f32) -> Vector3 {
+    return Vector3 { x, y, z };
+  }
+
+  #[inline]
+  pub const fn zero() -> Vector3 {
     return Vector3 {
       x: 0.0,
       y: 0.0,
@@ -21,7 +26,7 @@ impl Vector3 {
   }
 
   #[inline]
-  pub fn one() -> Vector3 {
+  pub const fn one() -> Vector3 {
     return Vector3 {
       x: 1.0,
       y: 1.0,
