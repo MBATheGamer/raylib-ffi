@@ -1,4 +1,4 @@
-use crate::structs::Quaternion;
+use crate::structs::{Quaternion, Vector3};
 
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
@@ -523,5 +523,74 @@ impl Matrix {
     };
 
     return Quaternion { x, y, z, w };
+  }
+
+  // Decompose a transformation matrix into its rotational, translational and scaling components
+  #[inline]
+  pub fn decompose(self) -> (Vector3, Quaternion, Vector3) {
+    let translate = Vector3 {
+      x: self.m12,
+      y: self.m13,
+      z: self.m14,
+    };
+
+    // Extract upper-left for determinant computation
+    let a = self.m0;
+    let b = self.m4;
+    let c = self.m8;
+    let d = self.m1;
+    let e = self.m5;
+    let f = self.m9;
+    let g = self.m2;
+    let h = self.m6;
+    let i = self.m10;
+    let ei_fh = e * i - f * h;
+    let fg_di = f * g - d * i;
+    let dh_eg = d * h - e * g;
+
+    // Extract scale
+    let det = a * ei_fh + b * fg_di + c * dh_eg;
+    let abc = Vector3 { x: a, y: b, z: c };
+    let def = Vector3 { x: d, y: e, z: f };
+    let ghi = Vector3 { x: g, y: h, z: i };
+
+    let scalex = abc.length();
+    let scaley = def.length();
+    let scalez = ghi.length();
+    let mut scale = Vector3 {
+      x: scalex,
+      y: scaley,
+      z: scalez,
+    };
+
+    if det < 0.0 {
+      scale = -scale;
+    }
+
+    // Remove scale from the matrix if it is not close to zero
+    let mut clone = self;
+    let rotation = if det != 0.0 {
+      clone.m0 /= scale.x;
+      clone.m4 /= scale.x;
+      clone.m8 /= scale.x;
+      clone.m1 /= scale.y;
+      clone.m5 /= scale.y;
+      clone.m9 /= scale.y;
+      clone.m2 /= scale.z;
+      clone.m6 /= scale.z;
+      clone.m10 /= scale.z;
+
+      clone.to_quaternion()
+    } else {
+      // Set to identity if close to zero
+      Quaternion {
+        x: 0.0,
+        y: 0.0,
+        z: 0.0,
+        w: 0.0,
+      }
+    };
+
+    return (translate, rotation, scale);
   }
 }
