@@ -52,4 +52,10 @@ impl Matrix {
       - a10 * a01 * a22 * a33
       + a00 * a11 * a22 * a33;
   }
+
+  // Get the trace of the matrix (sum of the values along the diagonal)
+  #[inline]
+  pub fn trace(self) -> f32 {
+    return self.m0 + self.m5 + self.m10 + self.m15;
+  }
 }
