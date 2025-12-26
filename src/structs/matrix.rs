@@ -126,4 +126,27 @@ impl Matrix {
       m15: (a20 * b03 - a21 * b01 + a22 * b00) * inv_det,
     };
   }
+
+  // Get identity matrix
+  #[inline]
+  pub fn identity() -> Matrix {
+    return Matrix {
+      m0: 1.0,
+      m4: 0.0,
+      m8: 0.0,
+      m12: 0.0,
+      m1: 0.0,
+      m5: 1.0,
+      m9: 0.0,
+      m13: 0.0,
+      m2: 0.0,
+      m6: 0.0,
+      m10: 1.0,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
