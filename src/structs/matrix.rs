@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
 
 use crate::structs::{Quaternion, Vector3};
 
@@ -711,5 +711,26 @@ impl Mul for Matrix {
       m14: self.m12 * rhs.m2 + self.m13 * rhs.m6 + self.m14 * rhs.m10 + self.m15 * rhs.m14,
       m15: self.m12 * rhs.m3 + self.m13 * rhs.m7 + self.m14 * rhs.m11 + self.m15 * rhs.m15,
     };
+  }
+}
+
+impl MulAssign for Matrix {
+  fn mul_assign(&mut self, rhs: Self) {
+    self.m0 = self.m0 * rhs.m0 + self.m1 * rhs.m4 + self.m2 * rhs.m8 + self.m3 * rhs.m12;
+    self.m1 = self.m0 * rhs.m1 + self.m1 * rhs.m5 + self.m2 * rhs.m9 + self.m3 * rhs.m13;
+    self.m2 = self.m0 * rhs.m2 + self.m1 * rhs.m6 + self.m2 * rhs.m10 + self.m3 * rhs.m14;
+    self.m3 = self.m0 * rhs.m3 + self.m1 * rhs.m7 + self.m2 * rhs.m11 + self.m3 * rhs.m15;
+    self.m4 = self.m4 * rhs.m0 + self.m5 * rhs.m4 + self.m6 * rhs.m8 + self.m7 * rhs.m12;
+    self.m5 = self.m4 * rhs.m1 + self.m5 * rhs.m5 + self.m6 * rhs.m9 + self.m7 * rhs.m13;
+    self.m6 = self.m4 * rhs.m2 + self.m5 * rhs.m6 + self.m6 * rhs.m10 + self.m7 * rhs.m14;
+    self.m7 = self.m4 * rhs.m3 + self.m5 * rhs.m7 + self.m6 * rhs.m11 + self.m7 * rhs.m15;
+    self.m8 = self.m8 * rhs.m0 + self.m9 * rhs.m4 + self.m10 * rhs.m8 + self.m11 * rhs.m12;
+    self.m9 = self.m8 * rhs.m1 + self.m9 * rhs.m5 + self.m10 * rhs.m9 + self.m11 * rhs.m13;
+    self.m10 = self.m8 * rhs.m2 + self.m9 * rhs.m6 + self.m10 * rhs.m10 + self.m11 * rhs.m14;
+    self.m11 = self.m8 * rhs.m3 + self.m9 * rhs.m7 + self.m10 * rhs.m11 + self.m11 * rhs.m15;
+    self.m12 = self.m12 * rhs.m0 + self.m13 * rhs.m4 + self.m14 * rhs.m8 + self.m15 * rhs.m12;
+    self.m13 = self.m12 * rhs.m1 + self.m13 * rhs.m5 + self.m14 * rhs.m9 + self.m15 * rhs.m13;
+    self.m14 = self.m12 * rhs.m2 + self.m13 * rhs.m6 + self.m14 * rhs.m10 + self.m15 * rhs.m14;
+    self.m15 = self.m12 * rhs.m3 + self.m13 * rhs.m7 + self.m14 * rhs.m11 + self.m15 * rhs.m15;
   }
 }
