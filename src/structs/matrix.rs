@@ -346,4 +346,41 @@ impl Matrix {
       m15: 1.0,
     };
   }
+
+  // Get perspective projection matrix
+  #[inline]
+  pub fn frustum(
+    left: f64,
+    right: f64,
+    bottom: f64,
+    top: f64,
+    near_plane: f64,
+    far_plane: f64,
+  ) -> Matrix {
+    let rl = right - left;
+    let tb = top - bottom;
+    let fnp = far_plane - near_plane;
+
+    return Matrix {
+      m0: ((near_plane * 2.0) / rl) as f32,
+      m1: 0.0,
+      m2: 0.0,
+      m3: 0.0,
+
+      m4: 0.0,
+      m5: ((near_plane * 2.0) / tb) as f32,
+      m6: 0.0,
+      m7: 0.0,
+
+      m8: ((right + left) / rl) as f32,
+      m9: ((top + bottom) / tb) as f32,
+      m10: -((far_plane + near_plane) / fnp) as f32,
+      m11: -1.0,
+
+      m12: 0.0,
+      m13: 0.0,
+      m14: -((far_plane * near_plane * 2.0) / fnp) as f32,
+      m15: 0.0,
+    };
+  }
 }
