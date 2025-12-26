@@ -242,4 +242,31 @@ impl Matrix {
       m15: 1.0,
     };
   }
+
+  // Get x-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_x(angle: f32) -> Matrix {
+    let cos_res = angle.cos();
+    let sin_res = angle.sin();
+
+    return Matrix {
+      m0: 1.0,
+      m4: 0.0,
+      m8: 0.0,
+      m12: 0.0,
+      m1: 0.0,
+      m5: cos_res,
+      m9: -sin_res,
+      m13: 0.0,
+      m2: 0.0,
+      m6: sin_res,
+      m10: cos_res,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
