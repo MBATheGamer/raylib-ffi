@@ -296,4 +296,31 @@ impl Matrix {
       m15: 1.0,
     };
   }
+
+  // Get z-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_z(angle: f32) -> Matrix {
+    let cos_res = angle.cos();
+    let sin_res = angle.sin();
+
+    return Matrix {
+      m0: cos_res,
+      m4: -sin_res,
+      m8: 0.0,
+      m12: 0.0,
+      m1: sin_res,
+      m5: cos_res,
+      m9: 0.0,
+      m13: 0.0,
+      m2: 0.0,
+      m6: 0.0,
+      m10: 1.0,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
