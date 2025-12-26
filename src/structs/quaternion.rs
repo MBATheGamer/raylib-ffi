@@ -14,6 +14,22 @@ pub struct Quaternion {
 }
 
 impl Quaternion {
+  #[inline]
+  pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Quaternion {
+    return Quaternion { x, y, z, w };
+  }
+
+  // Get identity quaternion
+  #[inline]
+  pub const fn identity() -> Quaternion {
+    return Quaternion {
+      x: 0.0,
+      y: 0.0,
+      z: 0.0,
+      w: 1.0,
+    };
+  }
+
   // Add two quaternions
   #[inline]
   pub fn add(self, rhs: Quaternion) -> Quaternion {
@@ -55,17 +71,6 @@ impl Quaternion {
       y: self.y - rhs,
       z: self.z - rhs,
       w: self.w - rhs,
-    };
-  }
-
-  // Get identity quaternion
-  #[inline]
-  pub fn identity() -> Quaternion {
-    return Quaternion {
-      x: 0.0,
-      y: 0.0,
-      z: 0.0,
-      w: 1.0,
     };
   }
 
@@ -538,11 +543,14 @@ impl Mul for Quaternion {
   type Output = Self;
 
   fn mul(self, rhs: Self) -> Self {
+    let (qax, qay, qaz, qaw) = (self.x, self.y, self.z, self.w);
+    let (qbx, qby, qbz, qbw) = (rhs.x, rhs.y, rhs.z, rhs.w);
+
     return Quaternion {
-      x: self.x * rhs.x,
-      y: self.y * rhs.y,
-      z: self.z * rhs.z,
-      w: self.w * rhs.w,
+      x: qax * qbw + qaw * qbx + qay * qbz - qaz * qby,
+      y: qay * qbw + qaw * qby + qaz * qbx - qax * qbz,
+      z: qaz * qbw + qaw * qbz + qax * qby - qay * qbx,
+      w: qaw * qbw - qax * qbx - qay * qby - qaz * qbz,
     };
   }
 }
@@ -562,10 +570,13 @@ impl Mul<f32> for Quaternion {
 
 impl MulAssign for Quaternion {
   fn mul_assign(&mut self, rhs: Self) {
-    self.x *= rhs.x;
-    self.y *= rhs.y;
-    self.z *= rhs.z;
-    self.w *= rhs.w;
+    let (qax, qay, qaz, qaw) = (self.x, self.y, self.z, self.w);
+    let (qbx, qby, qbz, qbw) = (rhs.x, rhs.y, rhs.z, rhs.w);
+
+    self.x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
+    self.y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+    self.z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
+    self.w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
   }
 }
 
