@@ -81,4 +81,49 @@ impl Matrix {
       m15: self.m15,
     };
   }
+
+  // Invert provided matrix
+  #[inline]
+  pub fn invert(self) -> Matrix {
+    // Cache the matrix values (speed optimization)
+    let (a00, a01, a02, a03) = (self.m0, self.m1, self.m2, self.m3);
+    let (a10, a11, a12, a13) = (self.m4, self.m5, self.m6, self.m7);
+    let (a20, a21, a22, a23) = (self.m8, self.m9, self.m10, self.m11);
+    let (a30, a31, a32, a33) = (self.m12, self.m13, self.m14, self.m15);
+
+    let b00 = a00 * a11 - a01 * a10;
+    let b01 = a00 * a12 - a02 * a10;
+    let b02 = a00 * a13 - a03 * a10;
+    let b03 = a01 * a12 - a02 * a11;
+    let b04 = a01 * a13 - a03 * a11;
+    let b05 = a02 * a13 - a03 * a12;
+    let b06 = a20 * a31 - a21 * a30;
+    let b07 = a20 * a32 - a22 * a30;
+    let b08 = a20 * a33 - a23 * a30;
+    let b09 = a21 * a32 - a22 * a31;
+    let b10 = a21 * a33 - a23 * a31;
+    let b11 = a22 * a33 - a23 * a32;
+
+    // Calculate the invert determinant (inlined to avoid double-caching)
+    let inv_det = 1.0 / (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06);
+
+    return Matrix {
+      m0: (a11 * b11 - a12 * b10 + a13 * b09) * inv_det,
+      m1: (-a01 * b11 + a02 * b10 - a03 * b09) * inv_det,
+      m2: (a31 * b05 - a32 * b04 + a33 * b03) * inv_det,
+      m3: (-a21 * b05 + a22 * b04 - a23 * b03) * inv_det,
+      m4: (-a10 * b11 + a12 * b08 - a13 * b07) * inv_det,
+      m5: (a00 * b11 - a02 * b08 + a03 * b07) * inv_det,
+      m6: (-a30 * b05 + a32 * b02 - a33 * b01) * inv_det,
+      m7: (a20 * b05 - a22 * b02 + a23 * b01) * inv_det,
+      m8: (a10 * b10 - a11 * b08 + a13 * b06) * inv_det,
+      m9: (-a00 * b10 + a01 * b08 - a03 * b06) * inv_det,
+      m10: (a30 * b04 - a31 * b02 + a33 * b00) * inv_det,
+      m11: (-a20 * b04 + a21 * b02 - a23 * b00) * inv_det,
+      m12: (-a10 * b09 + a11 * b07 - a12 * b06) * inv_det,
+      m13: (a00 * b09 - a01 * b07 + a02 * b06) * inv_det,
+      m14: (-a30 * b03 + a31 * b01 - a32 * b00) * inv_det,
+      m15: (a20 * b03 - a21 * b01 + a22 * b00) * inv_det,
+    };
+  }
 }
