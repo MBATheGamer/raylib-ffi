@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
 
 use crate::structs::{Quaternion, Vector3};
 
@@ -203,24 +203,24 @@ impl Matrix {
   // Get two matrix multiplication
   // NOTE: When multiplying matrices... the order matters!
   #[inline]
-  pub fn multiply(self, right: Matrix) -> Matrix {
+  pub fn multiply(self, rhs: Matrix) -> Matrix {
     return Matrix {
-      m0: self.m0 * right.m0 + self.m1 * right.m4 + self.m2 * right.m8 + self.m3 * right.m12,
-      m1: self.m0 * right.m1 + self.m1 * right.m5 + self.m2 * right.m9 + self.m3 * right.m13,
-      m2: self.m0 * right.m2 + self.m1 * right.m6 + self.m2 * right.m10 + self.m3 * right.m14,
-      m3: self.m0 * right.m3 + self.m1 * right.m7 + self.m2 * right.m11 + self.m3 * right.m15,
-      m4: self.m4 * right.m0 + self.m5 * right.m4 + self.m6 * right.m8 + self.m7 * right.m12,
-      m5: self.m4 * right.m1 + self.m5 * right.m5 + self.m6 * right.m9 + self.m7 * right.m13,
-      m6: self.m4 * right.m2 + self.m5 * right.m6 + self.m6 * right.m10 + self.m7 * right.m14,
-      m7: self.m4 * right.m3 + self.m5 * right.m7 + self.m6 * right.m11 + self.m7 * right.m15,
-      m8: self.m8 * right.m0 + self.m9 * right.m4 + self.m10 * right.m8 + self.m11 * right.m12,
-      m9: self.m8 * right.m1 + self.m9 * right.m5 + self.m10 * right.m9 + self.m11 * right.m13,
-      m10: self.m8 * right.m2 + self.m9 * right.m6 + self.m10 * right.m10 + self.m11 * right.m14,
-      m11: self.m8 * right.m3 + self.m9 * right.m7 + self.m10 * right.m11 + self.m11 * right.m15,
-      m12: self.m12 * right.m0 + self.m13 * right.m4 + self.m14 * right.m8 + self.m15 * right.m12,
-      m13: self.m12 * right.m1 + self.m13 * right.m5 + self.m14 * right.m9 + self.m15 * right.m13,
-      m14: self.m12 * right.m2 + self.m13 * right.m6 + self.m14 * right.m10 + self.m15 * right.m14,
-      m15: self.m12 * right.m3 + self.m13 * right.m7 + self.m14 * right.m11 + self.m15 * right.m15,
+      m0: self.m0 * rhs.m0 + self.m1 * rhs.m4 + self.m2 * rhs.m8 + self.m3 * rhs.m12,
+      m1: self.m0 * rhs.m1 + self.m1 * rhs.m5 + self.m2 * rhs.m9 + self.m3 * rhs.m13,
+      m2: self.m0 * rhs.m2 + self.m1 * rhs.m6 + self.m2 * rhs.m10 + self.m3 * rhs.m14,
+      m3: self.m0 * rhs.m3 + self.m1 * rhs.m7 + self.m2 * rhs.m11 + self.m3 * rhs.m15,
+      m4: self.m4 * rhs.m0 + self.m5 * rhs.m4 + self.m6 * rhs.m8 + self.m7 * rhs.m12,
+      m5: self.m4 * rhs.m1 + self.m5 * rhs.m5 + self.m6 * rhs.m9 + self.m7 * rhs.m13,
+      m6: self.m4 * rhs.m2 + self.m5 * rhs.m6 + self.m6 * rhs.m10 + self.m7 * rhs.m14,
+      m7: self.m4 * rhs.m3 + self.m5 * rhs.m7 + self.m6 * rhs.m11 + self.m7 * rhs.m15,
+      m8: self.m8 * rhs.m0 + self.m9 * rhs.m4 + self.m10 * rhs.m8 + self.m11 * rhs.m12,
+      m9: self.m8 * rhs.m1 + self.m9 * rhs.m5 + self.m10 * rhs.m9 + self.m11 * rhs.m13,
+      m10: self.m8 * rhs.m2 + self.m9 * rhs.m6 + self.m10 * rhs.m10 + self.m11 * rhs.m14,
+      m11: self.m8 * rhs.m3 + self.m9 * rhs.m7 + self.m10 * rhs.m11 + self.m11 * rhs.m15,
+      m12: self.m12 * rhs.m0 + self.m13 * rhs.m4 + self.m14 * rhs.m8 + self.m15 * rhs.m12,
+      m13: self.m12 * rhs.m1 + self.m13 * rhs.m5 + self.m14 * rhs.m9 + self.m15 * rhs.m13,
+      m14: self.m12 * rhs.m2 + self.m13 * rhs.m6 + self.m14 * rhs.m10 + self.m15 * rhs.m14,
+      m15: self.m12 * rhs.m3 + self.m13 * rhs.m7 + self.m14 * rhs.m11 + self.m15 * rhs.m15,
     };
   }
 
@@ -686,5 +686,30 @@ impl SubAssign for Matrix {
     self.m13 -= rhs.m13;
     self.m14 -= rhs.m14;
     self.m15 -= rhs.m15;
+  }
+}
+
+impl Mul for Matrix {
+  type Output = Self;
+
+  fn mul(self, rhs: Self) -> Self {
+    return Self {
+      m0: self.m0 * rhs.m0 + self.m1 * rhs.m4 + self.m2 * rhs.m8 + self.m3 * rhs.m12,
+      m1: self.m0 * rhs.m1 + self.m1 * rhs.m5 + self.m2 * rhs.m9 + self.m3 * rhs.m13,
+      m2: self.m0 * rhs.m2 + self.m1 * rhs.m6 + self.m2 * rhs.m10 + self.m3 * rhs.m14,
+      m3: self.m0 * rhs.m3 + self.m1 * rhs.m7 + self.m2 * rhs.m11 + self.m3 * rhs.m15,
+      m4: self.m4 * rhs.m0 + self.m5 * rhs.m4 + self.m6 * rhs.m8 + self.m7 * rhs.m12,
+      m5: self.m4 * rhs.m1 + self.m5 * rhs.m5 + self.m6 * rhs.m9 + self.m7 * rhs.m13,
+      m6: self.m4 * rhs.m2 + self.m5 * rhs.m6 + self.m6 * rhs.m10 + self.m7 * rhs.m14,
+      m7: self.m4 * rhs.m3 + self.m5 * rhs.m7 + self.m6 * rhs.m11 + self.m7 * rhs.m15,
+      m8: self.m8 * rhs.m0 + self.m9 * rhs.m4 + self.m10 * rhs.m8 + self.m11 * rhs.m12,
+      m9: self.m8 * rhs.m1 + self.m9 * rhs.m5 + self.m10 * rhs.m9 + self.m11 * rhs.m13,
+      m10: self.m8 * rhs.m2 + self.m9 * rhs.m6 + self.m10 * rhs.m10 + self.m11 * rhs.m14,
+      m11: self.m8 * rhs.m3 + self.m9 * rhs.m7 + self.m10 * rhs.m11 + self.m11 * rhs.m15,
+      m12: self.m12 * rhs.m0 + self.m13 * rhs.m4 + self.m14 * rhs.m8 + self.m15 * rhs.m12,
+      m13: self.m12 * rhs.m1 + self.m13 * rhs.m5 + self.m14 * rhs.m9 + self.m15 * rhs.m13,
+      m14: self.m12 * rhs.m2 + self.m13 * rhs.m6 + self.m14 * rhs.m10 + self.m15 * rhs.m14,
+      m15: self.m12 * rhs.m3 + self.m13 * rhs.m7 + self.m14 * rhs.m11 + self.m15 * rhs.m15,
+    };
   }
 }
