@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub};
+use std::ops::{Add, AddAssign, Sub, SubAssign};
 
 use crate::structs::{Quaternion, Vector3};
 
@@ -665,5 +665,26 @@ impl Sub for Matrix {
       m14: self.m14 - rhs.m14,
       m15: self.m15 - rhs.m15,
     };
+  }
+}
+
+impl SubAssign for Matrix {
+  fn sub_assign(&mut self, rhs: Self) {
+    self.m0 -= rhs.m0;
+    self.m1 -= rhs.m1;
+    self.m2 -= rhs.m2;
+    self.m3 -= rhs.m3;
+    self.m4 -= rhs.m4;
+    self.m5 -= rhs.m5;
+    self.m6 -= rhs.m6;
+    self.m7 -= rhs.m7;
+    self.m8 -= rhs.m8;
+    self.m9 -= rhs.m9;
+    self.m10 -= rhs.m10;
+    self.m11 -= rhs.m11;
+    self.m12 -= rhs.m12;
+    self.m13 -= rhs.m13;
+    self.m14 -= rhs.m14;
+    self.m15 -= rhs.m15;
   }
 }
