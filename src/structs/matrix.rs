@@ -451,4 +451,13 @@ impl Matrix {
       m15: 1.0,
     };
   }
+
+  // Get float array of matrix data
+  #[inline]
+  pub fn to_float_array(self) -> [f32; 16] {
+    return [
+      self.m0, self.m1, self.m2, self.m3, self.m4, self.m5, self.m6, self.m7, self.m8, self.m9,
+      self.m10, self.m11, self.m12, self.m13, self.m14, self.m15,
+    ];
+  }
 }
