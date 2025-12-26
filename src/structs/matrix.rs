@@ -269,4 +269,31 @@ impl Matrix {
       m15: 1.0,
     };
   }
+
+  // Get y-rotation matrix
+  // NOTE: Angle must be provided in radians
+  #[inline]
+  pub fn rotate_y(angle: f32) -> Matrix {
+    let cos_res = angle.cos();
+    let sin_res = angle.sin();
+
+    return Matrix {
+      m0: cos_res,
+      m4: 0.0,
+      m8: sin_res,
+      m12: 0.0,
+      m1: 0.0,
+      m5: 1.0,
+      m9: 0.0,
+      m13: 0.0,
+      m2: -sin_res,
+      m6: 0.0,
+      m10: cos_res,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
