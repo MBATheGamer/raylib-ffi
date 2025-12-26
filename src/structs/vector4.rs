@@ -1,6 +1,6 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct Vector4 {
   pub x: f32,
   pub y: f32,
@@ -10,7 +10,12 @@ pub struct Vector4 {
 
 impl Vector4 {
   #[inline]
-  pub fn zero() -> Vector4 {
+  pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Vector4 {
+    return Vector4 { x, y, z, w };
+  }
+
+  #[inline]
+  pub const fn zero() -> Vector4 {
     return Vector4 {
       x: 0.0,
       y: 0.0,
@@ -20,7 +25,7 @@ impl Vector4 {
   }
 
   #[inline]
-  pub fn one() -> Vector4 {
+  pub const fn one() -> Vector4 {
     return Vector4 {
       x: 1.0,
       y: 1.0,
