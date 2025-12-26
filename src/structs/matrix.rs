@@ -58,4 +58,27 @@ impl Matrix {
   pub fn trace(self) -> f32 {
     return self.m0 + self.m5 + self.m10 + self.m15;
   }
+
+  // Transposes provided matrix
+  #[inline]
+  pub fn transpose(self) -> Matrix {
+    return Matrix {
+      m0: self.m0,
+      m1: self.m4,
+      m2: self.m8,
+      m3: self.m12,
+      m4: self.m1,
+      m5: self.m5,
+      m6: self.m9,
+      m7: self.m13,
+      m8: self.m2,
+      m9: self.m6,
+      m10: self.m10,
+      m11: self.m14,
+      m12: self.m3,
+      m13: self.m7,
+      m14: self.m11,
+      m15: self.m15,
+    };
+  }
 }
