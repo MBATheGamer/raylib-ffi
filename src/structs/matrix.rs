@@ -24,6 +24,126 @@ pub struct Matrix {
 }
 
 impl Matrix {
+  #[inline]
+  pub const fn new(
+    row0: (f32, f32, f32, f32),
+    row1: (f32, f32, f32, f32),
+    row2: (f32, f32, f32, f32),
+    row3: (f32, f32, f32, f32),
+  ) -> Matrix {
+    return Matrix {
+      m0: row0.0,
+      m4: row0.1,
+      m8: row0.2,
+      m12: row0.3,
+      m1: row1.0,
+      m5: row1.1,
+      m9: row1.2,
+      m13: row1.3,
+      m2: row2.0,
+      m6: row2.1,
+      m10: row2.2,
+      m14: row2.3,
+      m3: row3.0,
+      m7: row3.1,
+      m11: row3.2,
+      m15: row3.3,
+    };
+  }
+
+  // Get identity matrix
+  #[inline]
+  pub const fn identity() -> Matrix {
+    return Matrix {
+      m0: 1.0,
+      m4: 0.0,
+      m8: 0.0,
+      m12: 0.0,
+      m1: 0.0,
+      m5: 1.0,
+      m9: 0.0,
+      m13: 0.0,
+      m2: 0.0,
+      m6: 0.0,
+      m10: 1.0,
+      m14: 0.0,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
+
+  // Add two matrices
+  #[inline]
+  pub fn add(self, rhs: Matrix) -> Matrix {
+    return Matrix {
+      m0: self.m0 + rhs.m0,
+      m1: self.m1 + rhs.m1,
+      m2: self.m2 + rhs.m2,
+      m3: self.m3 + rhs.m3,
+      m4: self.m4 + rhs.m4,
+      m5: self.m5 + rhs.m5,
+      m6: self.m6 + rhs.m6,
+      m7: self.m7 + rhs.m7,
+      m8: self.m8 + rhs.m8,
+      m9: self.m9 + rhs.m9,
+      m10: self.m10 + rhs.m10,
+      m11: self.m11 + rhs.m11,
+      m12: self.m12 + rhs.m12,
+      m13: self.m13 + rhs.m13,
+      m14: self.m14 + rhs.m14,
+      m15: self.m15 + rhs.m15,
+    };
+  }
+
+  // Subtract two matrices (left - right)
+  #[inline]
+  pub fn subtract(self, rhs: Matrix) -> Matrix {
+    return Matrix {
+      m0: self.m0 - rhs.m0,
+      m1: self.m1 - rhs.m1,
+      m2: self.m2 - rhs.m2,
+      m3: self.m3 - rhs.m3,
+      m4: self.m4 - rhs.m4,
+      m5: self.m5 - rhs.m5,
+      m6: self.m6 - rhs.m6,
+      m7: self.m7 - rhs.m7,
+      m8: self.m8 - rhs.m8,
+      m9: self.m9 - rhs.m9,
+      m10: self.m10 - rhs.m10,
+      m11: self.m11 - rhs.m11,
+      m12: self.m12 - rhs.m12,
+      m13: self.m13 - rhs.m13,
+      m14: self.m14 - rhs.m14,
+      m15: self.m15 - rhs.m15,
+    };
+  }
+
+  // Get two matrix multiplication
+  // NOTE: When multiplying matrices... the order matters!
+  #[inline]
+  pub fn multiply(self, rhs: Matrix) -> Matrix {
+    return Matrix {
+      m0: self.m0 * rhs.m0 + self.m1 * rhs.m4 + self.m2 * rhs.m8 + self.m3 * rhs.m12,
+      m1: self.m0 * rhs.m1 + self.m1 * rhs.m5 + self.m2 * rhs.m9 + self.m3 * rhs.m13,
+      m2: self.m0 * rhs.m2 + self.m1 * rhs.m6 + self.m2 * rhs.m10 + self.m3 * rhs.m14,
+      m3: self.m0 * rhs.m3 + self.m1 * rhs.m7 + self.m2 * rhs.m11 + self.m3 * rhs.m15,
+      m4: self.m4 * rhs.m0 + self.m5 * rhs.m4 + self.m6 * rhs.m8 + self.m7 * rhs.m12,
+      m5: self.m4 * rhs.m1 + self.m5 * rhs.m5 + self.m6 * rhs.m9 + self.m7 * rhs.m13,
+      m6: self.m4 * rhs.m2 + self.m5 * rhs.m6 + self.m6 * rhs.m10 + self.m7 * rhs.m14,
+      m7: self.m4 * rhs.m3 + self.m5 * rhs.m7 + self.m6 * rhs.m11 + self.m7 * rhs.m15,
+      m8: self.m8 * rhs.m0 + self.m9 * rhs.m4 + self.m10 * rhs.m8 + self.m11 * rhs.m12,
+      m9: self.m8 * rhs.m1 + self.m9 * rhs.m5 + self.m10 * rhs.m9 + self.m11 * rhs.m13,
+      m10: self.m8 * rhs.m2 + self.m9 * rhs.m6 + self.m10 * rhs.m10 + self.m11 * rhs.m14,
+      m11: self.m8 * rhs.m3 + self.m9 * rhs.m7 + self.m10 * rhs.m11 + self.m11 * rhs.m15,
+      m12: self.m12 * rhs.m0 + self.m13 * rhs.m4 + self.m14 * rhs.m8 + self.m15 * rhs.m12,
+      m13: self.m12 * rhs.m1 + self.m13 * rhs.m5 + self.m14 * rhs.m9 + self.m15 * rhs.m13,
+      m14: self.m12 * rhs.m2 + self.m13 * rhs.m6 + self.m14 * rhs.m10 + self.m15 * rhs.m14,
+      m15: self.m12 * rhs.m3 + self.m13 * rhs.m7 + self.m14 * rhs.m11 + self.m15 * rhs.m15,
+    };
+  }
+
   // Compute matrix determinant
   #[inline]
   pub fn determinant(self) -> f32 {
@@ -128,99 +248,6 @@ impl Matrix {
       m13: (a00 * b09 - a01 * b07 + a02 * b06) * inv_det,
       m14: (-a30 * b03 + a31 * b01 - a32 * b00) * inv_det,
       m15: (a20 * b03 - a21 * b01 + a22 * b00) * inv_det,
-    };
-  }
-
-  // Get identity matrix
-  #[inline]
-  pub fn identity() -> Matrix {
-    return Matrix {
-      m0: 1.0,
-      m4: 0.0,
-      m8: 0.0,
-      m12: 0.0,
-      m1: 0.0,
-      m5: 1.0,
-      m9: 0.0,
-      m13: 0.0,
-      m2: 0.0,
-      m6: 0.0,
-      m10: 1.0,
-      m14: 0.0,
-      m3: 0.0,
-      m7: 0.0,
-      m11: 0.0,
-      m15: 1.0,
-    };
-  }
-
-  // Add two matrices
-  #[inline]
-  pub fn add(self, rhs: Matrix) -> Matrix {
-    return Matrix {
-      m0: self.m0 + rhs.m0,
-      m1: self.m1 + rhs.m1,
-      m2: self.m2 + rhs.m2,
-      m3: self.m3 + rhs.m3,
-      m4: self.m4 + rhs.m4,
-      m5: self.m5 + rhs.m5,
-      m6: self.m6 + rhs.m6,
-      m7: self.m7 + rhs.m7,
-      m8: self.m8 + rhs.m8,
-      m9: self.m9 + rhs.m9,
-      m10: self.m10 + rhs.m10,
-      m11: self.m11 + rhs.m11,
-      m12: self.m12 + rhs.m12,
-      m13: self.m13 + rhs.m13,
-      m14: self.m14 + rhs.m14,
-      m15: self.m15 + rhs.m15,
-    };
-  }
-
-  // Subtract two matrices (left - right)
-  #[inline]
-  pub fn subtract(self, rhs: Matrix) -> Matrix {
-    return Matrix {
-      m0: self.m0 - rhs.m0,
-      m1: self.m1 - rhs.m1,
-      m2: self.m2 - rhs.m2,
-      m3: self.m3 - rhs.m3,
-      m4: self.m4 - rhs.m4,
-      m5: self.m5 - rhs.m5,
-      m6: self.m6 - rhs.m6,
-      m7: self.m7 - rhs.m7,
-      m8: self.m8 - rhs.m8,
-      m9: self.m9 - rhs.m9,
-      m10: self.m10 - rhs.m10,
-      m11: self.m11 - rhs.m11,
-      m12: self.m12 - rhs.m12,
-      m13: self.m13 - rhs.m13,
-      m14: self.m14 - rhs.m14,
-      m15: self.m15 - rhs.m15,
-    };
-  }
-
-  // Get two matrix multiplication
-  // NOTE: When multiplying matrices... the order matters!
-  #[inline]
-  pub fn multiply(self, rhs: Matrix) -> Matrix {
-    return Matrix {
-      m0: self.m0 * rhs.m0 + self.m1 * rhs.m4 + self.m2 * rhs.m8 + self.m3 * rhs.m12,
-      m1: self.m0 * rhs.m1 + self.m1 * rhs.m5 + self.m2 * rhs.m9 + self.m3 * rhs.m13,
-      m2: self.m0 * rhs.m2 + self.m1 * rhs.m6 + self.m2 * rhs.m10 + self.m3 * rhs.m14,
-      m3: self.m0 * rhs.m3 + self.m1 * rhs.m7 + self.m2 * rhs.m11 + self.m3 * rhs.m15,
-      m4: self.m4 * rhs.m0 + self.m5 * rhs.m4 + self.m6 * rhs.m8 + self.m7 * rhs.m12,
-      m5: self.m4 * rhs.m1 + self.m5 * rhs.m5 + self.m6 * rhs.m9 + self.m7 * rhs.m13,
-      m6: self.m4 * rhs.m2 + self.m5 * rhs.m6 + self.m6 * rhs.m10 + self.m7 * rhs.m14,
-      m7: self.m4 * rhs.m3 + self.m5 * rhs.m7 + self.m6 * rhs.m11 + self.m7 * rhs.m15,
-      m8: self.m8 * rhs.m0 + self.m9 * rhs.m4 + self.m10 * rhs.m8 + self.m11 * rhs.m12,
-      m9: self.m8 * rhs.m1 + self.m9 * rhs.m5 + self.m10 * rhs.m9 + self.m11 * rhs.m13,
-      m10: self.m8 * rhs.m2 + self.m9 * rhs.m6 + self.m10 * rhs.m10 + self.m11 * rhs.m14,
-      m11: self.m8 * rhs.m3 + self.m9 * rhs.m7 + self.m10 * rhs.m11 + self.m11 * rhs.m15,
-      m12: self.m12 * rhs.m0 + self.m13 * rhs.m4 + self.m14 * rhs.m8 + self.m15 * rhs.m12,
-      m13: self.m12 * rhs.m1 + self.m13 * rhs.m5 + self.m14 * rhs.m9 + self.m15 * rhs.m13,
-      m14: self.m12 * rhs.m2 + self.m13 * rhs.m6 + self.m14 * rhs.m10 + self.m15 * rhs.m14,
-      m15: self.m12 * rhs.m3 + self.m13 * rhs.m7 + self.m14 * rhs.m11 + self.m15 * rhs.m15,
     };
   }
 
