@@ -1,3 +1,5 @@
+use crate::structs::Quaternion;
+
 #[repr(C)]
 #[derive(Clone, Copy, Default)]
 pub struct Matrix {
@@ -459,5 +461,67 @@ impl Matrix {
       self.m0, self.m1, self.m2, self.m3, self.m4, self.m5, self.m6, self.m7, self.m8, self.m9,
       self.m10, self.m11, self.m12, self.m13, self.m14, self.m15,
     ];
+  }
+
+  // Get a quaternion for a given rotation matrix
+  #[inline]
+  pub fn to_quaternion(self) -> Quaternion {
+    let four_wsquared_minus1 = self.m0 + self.m5 + self.m10;
+    let four_xsquared_minus1 = self.m0 - self.m5 - self.m10;
+    let four_ysquared_minus1 = self.m5 - self.m0 - self.m10;
+    let four_zsquared_minus1 = self.m10 - self.m0 - self.m5;
+
+    let mut biggest_index = 0;
+    let mut four_biggest_squared_minus1 = four_wsquared_minus1;
+    if four_xsquared_minus1 > four_biggest_squared_minus1 {
+      four_biggest_squared_minus1 = four_xsquared_minus1;
+      biggest_index = 1;
+    }
+
+    if four_ysquared_minus1 > four_biggest_squared_minus1 {
+      four_biggest_squared_minus1 = four_ysquared_minus1;
+      biggest_index = 2;
+    }
+
+    if four_zsquared_minus1 > four_biggest_squared_minus1 {
+      four_biggest_squared_minus1 = four_zsquared_minus1;
+      biggest_index = 3;
+    }
+
+    let biggest_val = (four_biggest_squared_minus1 + 1.0).sqrt() * 0.5;
+    let mult = 0.25 / biggest_val;
+
+    let x = match biggest_index {
+      0 => (self.m6 - self.m9) * mult,
+      1 => biggest_val,
+      2 => (self.m1 + self.m4) * mult,
+      3 => (self.m8 + self.m2) * mult,
+      _ => 0.0,
+    };
+
+    let y = match biggest_index {
+      0 => (self.m8 - self.m2) * mult,
+      1 => (self.m1 + self.m4) * mult,
+      2 => biggest_val,
+      3 => (self.m6 + self.m9) * mult,
+      _ => 0.0,
+    };
+
+    let z = match biggest_index {
+      0 => (self.m1 - self.m4) * mult,
+      1 => (self.m8 + self.m2) * mult,
+      2 => (self.m6 + self.m9) * mult,
+      3 => biggest_val,
+      _ => 0.0,
+    };
+    let w = match biggest_index {
+      0 => biggest_val,
+      1 => (self.m6 - self.m9) * mult,
+      2 => (self.m8 - self.m2) * mult,
+      3 => (self.m1 - self.m4) * mult,
+      _ => 0.0,
+    };
+
+    return Quaternion { x, y, z, w };
   }
 }
