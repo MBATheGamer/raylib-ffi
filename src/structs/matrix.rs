@@ -219,4 +219,27 @@ impl Matrix {
       m15: self.m12 * right.m3 + self.m13 * right.m7 + self.m14 * right.m11 + self.m15 * right.m15,
     };
   }
+
+  // Get translation matrix
+  #[inline]
+  pub fn translate(x: f32, y: f32, z: f32) -> Matrix {
+    return Matrix {
+      m0: 1.0,
+      m4: 0.0,
+      m8: 0.0,
+      m12: x,
+      m1: 0.0,
+      m5: 1.0,
+      m9: 0.0,
+      m13: y,
+      m2: 0.0,
+      m6: 0.0,
+      m10: 1.0,
+      m14: z,
+      m3: 0.0,
+      m7: 0.0,
+      m11: 0.0,
+      m15: 1.0,
+    };
+  }
 }
