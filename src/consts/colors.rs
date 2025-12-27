@@ -168,6 +168,13 @@ pub const BLANK: Color = Color {
   alpha: 0,
 };
 
+pub const MAGENTA: Color = Color {
+  red: 255,
+  green: 0,
+  blue: 255,
+  alpha: 255,
+};
+
 pub const RAYWHITE: Color = Color {
   red: 245,
   green: 245,
