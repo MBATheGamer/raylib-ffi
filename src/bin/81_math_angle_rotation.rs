@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window, set_target_fps,
+    window_should_close,
+  },
+  shape::draw_line_ex,
+  structs::Vector2,
+  text::draw_text,
+  texture::color_from_hsv,
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 720;
   const SCREEN_HEIGHT: i32 = 400;
@@ -17,7 +29,7 @@ fn main() {
 
   let angles: [f32; 4] = [0.0, 30.0, 60.0, 90.0];
 
-  let total_angle: f32 = 0.0;
+  let mut total_angle: f32 = 0.0;
 
   while !window_should_close() {
     total_angle += 1.0;
