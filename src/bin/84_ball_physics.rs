@@ -1,3 +1,21 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_frame_time, get_random_value,
+    get_screen_height, get_screen_width, init_window,
+    keyboard::is_key_down,
+    mouse::{
+      get_mouse_position, get_mouse_wheel_move, is_mouse_button_down, is_mouse_button_pressed,
+      is_mouse_button_released,
+    },
+    set_target_fps, window_should_close,
+  },
+  enums::{KeyboardKey, MouseButton},
+  shape::{draw_circle_lines_v, draw_circle_v},
+  structs::{Color, Vector2},
+  text::draw_text,
+};
+
 const MAX_BALLS: usize = 5000;
 
 struct Ball {
@@ -21,7 +39,7 @@ fn main() {
     "raylib [shapes] example - ball physics",
   );
 
-  let balls = vec![Ball {
+  let mut balls = vec![Ball {
     pos: Vector2::new(
       get_screen_width() as f32 / 2.0,
       get_screen_height() as f32 / 2.0,
@@ -35,10 +53,10 @@ fn main() {
     grabbed: false,
   }];
 
-  let grabbed_ball_index = -1;
-  let press_offset = Vector2::zero();
+  let mut grabbed_ball_index = -1;
+  let mut press_offset = Vector2::zero();
 
-  let gravity = 100.0;
+  let mut gravity = 100.0;
 
   set_target_fps(60);
 
@@ -92,7 +110,7 @@ fn main() {
     }
 
     if is_mouse_button_pressed(MouseButton::Middle) {
-      for ball in &balls {
+      for ball in &mut balls {
         if !ball.grabbed {
           ball.vel = Vector2::new(
             get_random_value(-2000, 2000) as f32,
@@ -104,7 +122,7 @@ fn main() {
 
     gravity += get_mouse_wheel_move() * 5.0;
 
-    for ball in &balls {
+    for ball in &mut balls {
       if !ball.grabbed {
         ball.pos.x += ball.vel.x * delta;
         ball.pos.y += ball.vel.y * delta;
@@ -142,7 +160,7 @@ fn main() {
 
     clear_background(colors::RAYWHITE);
 
-    for ball in &balls {
+    for ball in &mut balls {
       draw_circle_v(ball.pos, ball.radius, ball.color);
       draw_circle_lines_v(ball.pos, ball.radius, colors::BLACK);
     }
