@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    mouse::get_mouse_position, set_target_fps, window_should_close,
+  },
+  shape::draw_circle_v,
+  structs::Vector2,
+  text::draw_text,
+  texture::fade,
+};
+
 const MAX_TRAIL_LENGTH: usize = 30;
 
 fn main() {
@@ -10,7 +22,7 @@ fn main() {
     "raylib [shapes] example - mouse trail",
   );
 
-  let trail_positions: Vec<Vector2> = vec![];
+  let mut trail_positions: Vec<Vector2> = vec![];
 
   for _ in 0..MAX_TRAIL_LENGTH {
     trail_positions.push(Vector2::zero());
