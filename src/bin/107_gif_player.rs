@@ -1,3 +1,19 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, get_screen_width, init_window,
+    keyboard::is_key_pressed, set_target_fps, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_rectangle, draw_rectangle_lines},
+  structs::Color,
+  text::draw_text,
+  texture::{
+    draw_texture, load_image_anim, load_texture_from_image, unload_image, unload_texture,
+    update_texture,
+  },
+};
+
 const MAX_FRAME_DELAY: usize = 20;
 const MIN_FRAME_DELAY: usize = 1;
 
@@ -11,17 +27,17 @@ fn main() {
     "raylib [textures] example - gif player",
   );
 
-  let anim_frames = 0;
+  let mut anim_frames = 0;
 
-  let im_scarfy_anim = load_image_anim("resources/scarfy_run.gif", &anim_frames);
+  let im_scarfy_anim = load_image_anim("resources/scarfy_run.gif", &mut anim_frames);
 
   let tex_scarfy_anim = load_texture_from_image(im_scarfy_anim);
 
-  let next_frame_data_offset = 0;
+  let mut next_frame_data_offset = 0;
 
-  let current_anim_frame = 0;
-  let frame_delay = 8;
-  let frame_counter = 0;
+  let mut current_anim_frame = 0;
+  let mut frame_delay = 8;
+  let mut frame_counter = 0;
 
   set_target_fps(60);
 
