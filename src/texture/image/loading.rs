@@ -4,7 +4,8 @@ use crate::{
   enums::PixelFormat,
   structs::{Image, Texture},
   texture::ffi::{
-    ExportImage, IsImageValid, LoadImage, LoadImageFromTexture, LoadImageRaw, UnloadImage,
+    ExportImage, IsImageValid, LoadImage, LoadImageAnim, LoadImageFromTexture, LoadImageRaw,
+    UnloadImage,
   },
 };
 
@@ -34,6 +35,13 @@ pub fn load_image_raw(
       header_size,
     )
   };
+}
+
+#[inline]
+pub fn load_image_anim(file_name: &str, frames: &mut i32) -> Image {
+  let file_name = CString::new(file_name).expect("[ERROR] Expecting image path!");
+
+  return unsafe { LoadImageAnim(file_name.as_ptr(), frames) };
 }
 
 #[inline]

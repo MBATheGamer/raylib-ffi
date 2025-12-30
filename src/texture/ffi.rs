@@ -10,6 +10,7 @@ unsafe extern "C" {
     format: i32,
     header_size: i32,
   ) -> Image;
+  pub fn LoadImageAnim(file_name: *const i8, frames: *mut i32) -> Image;
   pub fn LoadImageFromTexture(texture: Texture) -> Image;
   pub fn IsImageValid(image: Image) -> bool;
   pub fn UnloadImage(image: Image);
