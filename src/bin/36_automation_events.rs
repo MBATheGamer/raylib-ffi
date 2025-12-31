@@ -1,3 +1,23 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_mode_2d, clear_background, close_window, end_drawing, end_mode_2d,
+    export_automation_event_list, get_world_to_screen_2d, init_window, is_file_dropped,
+    is_file_extension,
+    keyboard::{is_key_down, is_key_pressed},
+    load_automation_event_list, load_dropped_files,
+    mouse::get_mouse_wheel_move,
+    play_automation_event, set_automation_event_base_frame, set_automation_event_list,
+    set_target_fps, start_automation_event_recording, stop_automation_event_recording,
+    unload_automation_event_list, unload_dropped_files, window_should_close,
+  },
+  enums::KeyboardKey,
+  shape::{draw_circle, draw_rectangle, draw_rectangle_lines, draw_rectangle_rec, draw_triangle},
+  structs::{Camera2D, Color, Rectangle, Vector2},
+  text::draw_text,
+  texture::fade,
+};
+
 const GRAVITY: f32 = 400.0;
 const PLAYER_JUMP_SPD: f32 = 350.0;
 const PLAYER_HOR_SPD: f32 = 200.0;
@@ -26,7 +46,7 @@ fn main() {
     "raylib [core] example - automation events",
   );
 
-  let player = Player {
+  let mut player = Player {
     position: Vector2 { x: 400.0, y: 280.0 },
     speed: 0.0,
     can_jump: false,
@@ -85,7 +105,7 @@ fn main() {
     },
   ];
 
-  let camera = Camera2D {
+  let mut camera = Camera2D {
     target: player.position,
     offset: Vector2 {
       x: SCREEN_WIDTH as f32 / 2.0,
@@ -95,14 +115,14 @@ fn main() {
     zoom: 1.0,
   };
 
-  let automation_event_list = load_automation_event_list("");
-  set_automation_event_list(&automation_event_list);
-  let event_recording = false;
-  let event_playing = false;
+  let mut automation_event_list = load_automation_event_list("");
+  set_automation_event_list(&mut automation_event_list);
+  let mut event_recording = false;
+  let mut event_playing = false;
 
-  let frame_counter: u32 = 0;
-  let play_frame_counter: u32 = 0;
-  let current_play_frame: u32 = 0;
+  let mut frame_counter: u32 = 0;
+  let mut play_frame_counter: u32 = 0;
+  let mut current_play_frame: u32 = 0;
 
   set_target_fps(60);
 
@@ -151,10 +171,10 @@ fn main() {
       player.can_jump = false;
     }
 
-    let hit_obstacle = false;
+    let mut hit_obstacle = false;
     for i in 0..MAX_ENVIRONMENT_ELEMENTS {
       let element = &env_elements[i];
-      let p = &player.position;
+      let p = &mut player.position;
       if element.blocking
         && element.rect.x <= p.x
         && element.rect.x + element.rect.width >= p.x
@@ -190,7 +210,7 @@ fn main() {
     }
 
     if event_playing {
-      let automation_event = automation_event_list
+      let mut automation_event = automation_event_list
         .get(current_play_frame as usize)
         .unwrap();
       while play_frame_counter == automation_event.frame {
@@ -220,10 +240,10 @@ fn main() {
       x: SCREEN_WIDTH as f32 / 2.0,
       y: SCREEN_HEIGHT as f32 / 2.0,
     };
-    let min_x = 1000.0;
-    let min_y = 1000.0;
-    let max_x = -1000.0;
-    let max_y = -1000.0;
+    let mut min_x = 1000.0;
+    let mut min_y = 1000.0;
+    let mut max_x = -1000.0;
+    let mut max_y = -1000.0;
 
     camera.zoom += get_mouse_wheel_move() * 0.05;
     if camera.zoom > 3.0 {
