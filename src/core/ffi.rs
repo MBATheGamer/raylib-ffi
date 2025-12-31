@@ -115,6 +115,7 @@ unsafe extern "C" {
 
   // Automation events functionality
   pub fn LoadAutomationEventList(file_name: *const i8) -> AutomationEventList;
+  pub fn UnloadAutomationEventList(list: AutomationEventList);
   pub fn PlayAutomationEvent(event: AutomationEvent);
 
   // Input-related functions: Keyboard
