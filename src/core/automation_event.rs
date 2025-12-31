@@ -3,7 +3,8 @@ use std::ffi::CString;
 use crate::{
   core::ffi::{
     ExportAutomationEventList, LoadAutomationEventList, PlayAutomationEvent,
-    SetAutomationEventBaseFrame, SetAutomationEventList, UnloadAutomationEventList,
+    SetAutomationEventBaseFrame, SetAutomationEventList, StartAutomationEventRecording,
+    UnloadAutomationEventList,
   },
   structs::{AutomationEvent, AutomationEventList},
 };
@@ -35,6 +36,11 @@ pub fn set_automation_event_list(list: &mut AutomationEventList) {
 #[inline]
 pub fn set_automation_event_base_frame(frame: i32) {
   unsafe { SetAutomationEventBaseFrame(frame) };
+}
+
+#[inline]
+pub fn start_automation_event_recording() {
+  unsafe { StartAutomationEventRecording() };
 }
 
 #[inline]

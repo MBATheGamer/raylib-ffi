@@ -119,6 +119,7 @@ unsafe extern "C" {
   pub fn ExportAutomationEventList(list: AutomationEventList, file_name: *const i8) -> bool;
   pub fn SetAutomationEventList(list: *mut AutomationEventList);
   pub fn SetAutomationEventBaseFrame(frame: i32);
+  pub fn StartAutomationEventRecording();
   pub fn PlayAutomationEvent(event: AutomationEvent);
 
   // Input-related functions: Keyboard
