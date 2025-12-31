@@ -1,7 +1,16 @@
+use std::ffi::CString;
+
 use crate::{
-  core::ffi::{IsFileDropped, LoadDroppedFiles, UnloadDroppedFiles},
+  core::ffi::{IsFileDropped, IsFileExtension, LoadDroppedFiles, UnloadDroppedFiles},
   structs::FilePathList,
 };
+
+pub fn is_file_extension(file_name: &str, extension: &str) -> bool {
+  let file_name = CString::new(file_name).expect("[ERROR] Expecting valid file name");
+  let extension = CString::new(extension).expect("[ERROR] Expecting valid extensions");
+
+  return unsafe { IsFileExtension(file_name.as_ptr(), extension.as_ptr()) };
+}
 
 pub fn is_file_dropped() -> bool {
   return unsafe { IsFileDropped() };

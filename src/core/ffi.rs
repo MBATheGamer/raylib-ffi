@@ -108,6 +108,7 @@ unsafe extern "C" {
   pub fn SetTraceLogLevel(log_level: i32);
 
   // File system functions
+  pub fn IsFileExtension(file_name: *const i8, ext: *const i8) -> bool;
   pub fn IsFileDropped() -> bool;
   pub fn LoadDroppedFiles() -> FilePathList;
   pub fn UnloadDroppedFiles(files: FilePathList);
