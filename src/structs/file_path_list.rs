@@ -9,6 +9,7 @@ pub struct FilePathList {
 }
 
 impl FilePathList {
+  #[inline]
   pub fn get(&self, index: usize) -> Option<&str> {
     if index >= self.count as usize {
       return None;
@@ -24,5 +25,22 @@ impl FilePathList {
       Ok(path) => Some(path),
       Err(_) => None,
     };
+  }
+
+  #[inline]
+  pub fn get_paths(&self) -> Vec<String> {
+    let mut out = Vec::with_capacity(self.count as usize);
+
+    for i in 0..self.count as usize {
+      let c_ptr = unsafe { *self.paths.add(i) };
+
+      if !c_ptr.is_null() {
+        if let Ok(s) = unsafe { CStr::from_ptr(c_ptr).to_str() } {
+          out.push(s.to_string());
+        }
+      }
+    }
+
+    return out;
   }
 }

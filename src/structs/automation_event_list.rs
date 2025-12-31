@@ -9,6 +9,7 @@ pub struct AutomationEventList {
 }
 
 impl AutomationEventList {
+  #[inline]
   pub fn get(&self, index: usize) -> Option<&AutomationEvent> {
     if index >= self.count as usize {
       return None;

@@ -43,6 +43,7 @@ pub fn draw_texture_pro(
   unsafe { DrawTexturePro(texture, source, dest, origin, rotation, tint) };
 }
 
+#[inline]
 pub fn draw_texture_n_patch(
   texture: Texture,
   n_patch_info: NPatchInfo,
