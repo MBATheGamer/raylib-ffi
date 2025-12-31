@@ -1,8 +1,8 @@
 use std::ffi::c_void;
 
 use crate::structs::{
-  Camera2D, Camera3D, Color, FilePathList, Image, Ray, RenderTexture, Shader, Vector2, Vector3,
-  VrDeviceInfo, VrStereoConfig,
+  AutomationEvent, Camera2D, Camera3D, Color, FilePathList, Image, Ray, RenderTexture, Shader,
+  Vector2, Vector3, VrDeviceInfo, VrStereoConfig,
 };
 
 unsafe extern "C" {
@@ -112,6 +112,9 @@ unsafe extern "C" {
   pub fn IsFileDropped() -> bool;
   pub fn LoadDroppedFiles() -> FilePathList;
   pub fn UnloadDroppedFiles(files: FilePathList);
+
+  // Automation events functionality
+  pub fn PlayAutomationEvent(event: AutomationEvent);
 
   // Input-related functions: Keyboard
   pub fn IsKeyPressed(key: i32) -> bool;

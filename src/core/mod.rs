@@ -1,3 +1,4 @@
+mod automation_event;
 mod camera;
 mod cursor;
 mod draw;
@@ -13,6 +14,7 @@ mod time;
 mod vr;
 mod window;
 
+pub use automation_event::*;
 pub use camera::*;
 pub use cursor::*;
 pub use draw::*;
