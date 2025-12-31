@@ -4,7 +4,7 @@ use crate::{
   core::ffi::{
     ExportAutomationEventList, LoadAutomationEventList, PlayAutomationEvent,
     SetAutomationEventBaseFrame, SetAutomationEventList, StartAutomationEventRecording,
-    UnloadAutomationEventList,
+    StopAutomationEventRecording, UnloadAutomationEventList,
   },
   structs::{AutomationEvent, AutomationEventList},
 };
@@ -41,6 +41,11 @@ pub fn set_automation_event_base_frame(frame: i32) {
 #[inline]
 pub fn start_automation_event_recording() {
   unsafe { StartAutomationEventRecording() };
+}
+
+#[inline]
+pub fn stop_automation_event_recording() {
+  unsafe { StopAutomationEventRecording() };
 }
 
 #[inline]

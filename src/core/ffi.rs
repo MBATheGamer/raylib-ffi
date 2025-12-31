@@ -120,6 +120,7 @@ unsafe extern "C" {
   pub fn SetAutomationEventList(list: *mut AutomationEventList);
   pub fn SetAutomationEventBaseFrame(frame: i32);
   pub fn StartAutomationEventRecording();
+  pub fn StopAutomationEventRecording();
   pub fn PlayAutomationEvent(event: AutomationEvent);
 
   // Input-related functions: Keyboard
