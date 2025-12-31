@@ -1,7 +1,10 @@
 use std::ffi::CString;
 
 use crate::{
-  core::ffi::{LoadAutomationEventList, PlayAutomationEvent, UnloadAutomationEventList},
+  core::ffi::{
+    ExportAutomationEventList, LoadAutomationEventList, PlayAutomationEvent,
+    UnloadAutomationEventList,
+  },
   structs::{AutomationEvent, AutomationEventList},
 };
 
@@ -15,6 +18,13 @@ pub fn load_automation_event_list(file_name: &str) -> AutomationEventList {
 #[inline]
 pub fn unload_automation_event_list(list: AutomationEventList) {
   unsafe { UnloadAutomationEventList(list) };
+}
+
+#[inline]
+pub fn export_automation_event_list(list: AutomationEventList, file_name: &str) -> bool {
+  let file_name = CString::new(file_name).expect("[Error] Expecting a valid file name");
+
+  return unsafe { ExportAutomationEventList(list, file_name.as_ptr()) };
 }
 
 #[inline]
