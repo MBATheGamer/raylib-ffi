@@ -1,5 +1,6 @@
 mod audio_stream;
 mod automation_event;
+mod automation_event_list;
 mod bounding_box;
 mod camera2d;
 mod camera3d;
@@ -26,6 +27,7 @@ mod vr_stereo_config;
 
 pub use audio_stream::AudioStream;
 pub use automation_event::AutomationEvent;
+pub use automation_event_list::AutomationEventList;
 pub use bounding_box::BoundingBox;
 pub use camera2d::Camera2D;
 pub use camera3d::Camera3D;
