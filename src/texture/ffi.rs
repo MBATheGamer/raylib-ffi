@@ -61,6 +61,7 @@ unsafe extern "C" {
   pub fn ImageFormat(image: *mut Image, new_format: i32);
   pub fn ImageCrop(image: *mut Image, crop: Rectangle);
   pub fn ImageBlurGaussian(image: *mut Image, blur_size: i32);
+  pub fn ImageKernelConvolution(image: *mut Image, kernel: *const f32, kernel_size: i32);
   pub fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
   pub fn ImageFlipVertical(image: *mut Image);
   pub fn ImageFlipHorizontal(image: *mut Image);

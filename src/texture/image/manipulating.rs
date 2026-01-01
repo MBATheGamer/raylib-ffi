@@ -4,7 +4,7 @@ use crate::{
   texture::ffi::{
     ImageBlurGaussian, ImageColorBrightness, ImageColorContrast, ImageColorGrayscale,
     ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFlipVertical,
-    ImageFormat, ImageResize, LoadImageColors, UnloadImageColors,
+    ImageFormat, ImageKernelConvolution, ImageResize, LoadImageColors, UnloadImageColors,
   },
 };
 
@@ -26,6 +26,11 @@ pub fn image_crop(image: &mut Image, crop: Rectangle) {
 #[inline]
 pub fn image_blur_gaussian(image: &mut Image, blur_size: i32) {
   unsafe { ImageBlurGaussian(image, blur_size) };
+}
+
+#[inline]
+pub fn image_kernel_convolution(image: &mut Image, kernel: &[f32], kernel_size: i32) {
+  unsafe { ImageKernelConvolution(image, kernel.as_ptr(), kernel_size) };
 }
 
 #[inline]
