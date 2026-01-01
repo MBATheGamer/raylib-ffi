@@ -6,3 +6,15 @@ pub struct Rectangle {
   pub width: f32,  // Rectangle width
   pub height: f32, // Rectangle height
 }
+
+impl Rectangle {
+  #[inline]
+  pub const fn new(x: f32, y: f32, width: f32, height: f32) -> Rectangle {
+    return Rectangle {
+      x,
+      y,
+      width,
+      height,
+    };
+  }
+}
