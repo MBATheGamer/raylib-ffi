@@ -2,10 +2,10 @@ use crate::{
   enums::PixelFormat,
   structs::{Color, Image, Rectangle},
   texture::ffi::{
-    ImageBlurGaussian, ImageColorBrightness, ImageColorContrast, ImageColorGrayscale,
-    ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFlipVertical,
-    ImageFormat, ImageFromChannel, ImageKernelConvolution, ImageResize, LoadImageColors,
-    UnloadImageColors,
+    ImageAlphaMask, ImageBlurGaussian, ImageColorBrightness, ImageColorContrast,
+    ImageColorGrayscale, ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop,
+    ImageFlipHorizontal, ImageFlipVertical, ImageFormat, ImageFromChannel, ImageKernelConvolution,
+    ImageResize, LoadImageColors, UnloadImageColors,
   },
 };
 
@@ -27,6 +27,11 @@ pub fn image_format(image: &mut Image, new_format: PixelFormat) {
 #[inline]
 pub fn image_crop(image: &mut Image, crop: Rectangle) {
   unsafe { ImageCrop(image, crop) };
+}
+
+#[inline]
+pub fn image_alpha_mask(image: *mut Image, alpha_mask: Image) {
+  unsafe { ImageAlphaMask(image, alpha_mask) };
 }
 
 #[inline]
