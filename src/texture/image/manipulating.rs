@@ -4,13 +4,19 @@ use crate::{
   texture::ffi::{
     ImageBlurGaussian, ImageColorBrightness, ImageColorContrast, ImageColorGrayscale,
     ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop, ImageFlipHorizontal, ImageFlipVertical,
-    ImageFormat, ImageKernelConvolution, ImageResize, LoadImageColors, UnloadImageColors,
+    ImageFormat, ImageFromChannel, ImageKernelConvolution, ImageResize, LoadImageColors,
+    UnloadImageColors,
   },
 };
 
 #[inline]
 pub fn image_copy(image: Image) -> Image {
   return unsafe { ImageCopy(image) };
+}
+
+#[inline]
+pub fn image_from_channel(image: Image, selected_channel: i32) -> Image {
+  return unsafe { ImageFromChannel(image, selected_channel) };
 }
 
 #[inline]

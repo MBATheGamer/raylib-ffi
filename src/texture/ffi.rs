@@ -58,6 +58,7 @@ unsafe extern "C" {
 
   // Image manipulation functions
   pub fn ImageCopy(image: Image) -> Image;
+  pub fn ImageFromChannel(image: Image, selected_channel: i32) -> Image;
   pub fn ImageFormat(image: *mut Image, new_format: i32);
   pub fn ImageCrop(image: *mut Image, crop: Rectangle);
   pub fn ImageBlurGaussian(image: *mut Image, blur_size: i32);
