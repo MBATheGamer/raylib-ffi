@@ -1,3 +1,15 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, close_window, end_drawing, init_window, set_target_fps, window_should_close,
+  },
+  structs::{Rectangle, Vector2},
+  texture::{
+    draw_texture, draw_texture_pro, gen_image_checked, image_alpha_mask, image_from_channel,
+    load_image, load_texture_from_image, unload_image, unload_texture,
+  },
+};
+
 fn main() {
   const SCREEN_WIDTH: i32 = 800;
   const SCREEN_HEIGHT: i32 = 450;
@@ -10,17 +22,17 @@ fn main() {
 
   let fudesumi_image = load_image("resources/fudesumi.png");
 
-  let image_alpha = image_from_channel(fudesumi_image, 3);
-  image_alpha_mask(&image_alpha, image_alpha);
+  let mut image_alpha = image_from_channel(fudesumi_image, 3);
+  image_alpha_mask(&mut image_alpha, image_alpha);
 
-  let image_red = image_from_channel(fudesumi_image, 0);
-  image_alpha_mask(&image_red, image_alpha);
+  let mut image_red = image_from_channel(fudesumi_image, 0);
+  image_alpha_mask(&mut image_red, image_alpha);
 
-  let image_green = image_from_channel(fudesumi_image, 1);
-  image_alpha_mask(&image_green, image_alpha);
+  let mut image_green = image_from_channel(fudesumi_image, 1);
+  image_alpha_mask(&mut image_green, image_alpha);
 
-  let image_blue = image_from_channel(fudesumi_image, 2);
-  image_alpha_mask(&image_blue, image_alpha);
+  let mut image_blue = image_from_channel(fudesumi_image, 2);
+  image_alpha_mask(&mut image_blue, image_alpha);
 
   let background_image = gen_image_checked(
     SCREEN_WIDTH,
