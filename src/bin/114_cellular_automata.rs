@@ -1,3 +1,20 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, clear_background, close_window, end_drawing, init_window,
+    mouse::{get_mouse_position, is_mouse_button_pressed},
+    set_target_fps, window_should_close,
+  },
+  enums::MouseButton,
+  shape::{draw_rectangle, draw_rectangle_lines, draw_rectangle_lines_ex},
+  structs::{Color, Image, Rectangle},
+  text::draw_text,
+  texture::{
+    draw_texture, gen_image_color, get_image_color, image_clear_background, image_draw_pixel,
+    load_texture_from_image, unload_image, unload_texture, update_texture,
+  },
+};
+
 const SCREEN_WIDTH: i32 = 800;
 const SCREEN_HEIGHT: i32 = 450;
 const IMAGE_WIDTH: i32 = 800;
@@ -15,7 +32,7 @@ const PRESETS_SIZE_Y: i32 = 22;
 
 const LINES_UPDATED_PER_FRAME: i32 = 4;
 
-fn compute_line(image: Image, line: i32, rule: i32) {
+fn compute_line(image: &mut Image, line: i32, rule: i32) {
   for i in 1..(IMAGE_WIDTH - 1) {
     let prev_value = (if get_image_color(*image, i - 1, line - 1).red < 5 {
       4
@@ -53,22 +70,22 @@ fn main() {
     "raylib [textures] example - cellular automata",
   );
 
-  let image = gen_image_color(IMAGE_WIDTH, IMAGE_HEIGHT, colors::RAYWHITE);
+  let mut image = gen_image_color(IMAGE_WIDTH, IMAGE_HEIGHT, colors::RAYWHITE);
 
-  image_draw_pixel(&image, IMAGE_WIDTH / 2, 0, colors::BLACK);
+  image_draw_pixel(&mut image, IMAGE_WIDTH / 2, 0, colors::BLACK);
 
   let texture = load_texture_from_image(image);
 
   let preset_values: Vec<i32> = vec![18, 30, 60, 86, 102, 124, 126, 150, 182, 225];
 
-  let rule = 30;
-  let line = 1;
+  let mut rule = 30;
+  let mut line = 1;
 
   set_target_fps(60);
 
   while !window_should_close() {
     let mouse = get_mouse_position();
-    let mouse_in_cell = -1;
+    let mut mouse_in_cell = -1;
 
     for i in 0..8 {
       let cell_x = DRAW_RULE_START_X - DRAW_RULE_GROUP_SPACING * i + DRAW_RULE_SPACING;
@@ -105,20 +122,20 @@ fn main() {
         rule = preset_values[mouse_in_cell as usize - 8];
       }
 
-      image_clear_background(&image, colors::RAYWHITE);
-      image_draw_pixel(&image, IMAGE_WIDTH / 2, 0, colors::BLACK);
+      image_clear_background(&mut image, colors::RAYWHITE);
+      image_draw_pixel(&mut image, IMAGE_WIDTH / 2, 0, colors::BLACK);
       line = 1;
     }
 
     if line < IMAGE_HEIGHT {
-      let i = 0;
+      let mut i = 0;
       while i < LINES_UPDATED_PER_FRAME && line + i < IMAGE_HEIGHT {
-        compute_line(&image, line + i, rule);
+        compute_line(&mut image, line + i, rule);
         i += 1;
       }
       line += LINES_UPDATED_PER_FRAME;
 
-      update_texture(texture, image.data);
+      update_texture(texture, image.data as *mut Color);
     }
 
     begin_drawing();
