@@ -2,7 +2,7 @@ use crate::{
   enums::PixelFormat,
   structs::{Color, Image, Rectangle},
   texture::ffi::{
-    ImageAlphaMask, ImageBlurGaussian, ImageColorBrightness, ImageColorContrast,
+    GetImageColor, ImageAlphaMask, ImageBlurGaussian, ImageColorBrightness, ImageColorContrast,
     ImageColorGrayscale, ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop,
     ImageFlipHorizontal, ImageFlipVertical, ImageFormat, ImageFromChannel, ImageKernelConvolution,
     ImageResize, LoadImageColors, UnloadImageColors,
@@ -92,4 +92,9 @@ pub fn load_image_colors(image: Image) -> *mut Color {
 #[inline]
 pub fn unload_image_colors(colors: *mut Color) {
   unsafe { UnloadImageColors(colors) };
+}
+
+#[inline]
+pub fn get_image_color(image: Image, x: i32, y: i32) -> Color {
+  return unsafe { GetImageColor(image, x, y) };
 }

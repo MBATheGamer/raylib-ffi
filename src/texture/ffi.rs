@@ -74,6 +74,7 @@ unsafe extern "C" {
   pub fn ImageColorBrightness(image: *mut Image, brightness: i32);
   pub fn LoadImageColors(image: Image) -> *mut Color;
   pub fn UnloadImageColors(colors: *mut Color);
+  pub fn GetImageColor(image: Image, x: i32, y: i32) -> Color;
 
   // Image drawing functions
   pub fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
