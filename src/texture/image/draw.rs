@@ -3,9 +3,15 @@ use std::ffi::CString;
 use crate::{
   structs::{Color, Font, Image, Rectangle, Vector2},
   texture::ffi::{
-    ImageDraw, ImageDrawCircleLines, ImageDrawPixel, ImageDrawRectangle, ImageDrawTextEx,
+    ImageClearBackground, ImageDraw, ImageDrawCircleLines, ImageDrawPixel, ImageDrawRectangle,
+    ImageDrawTextEx,
   },
 };
+
+#[inline]
+pub fn image_clear_background(dst: &mut Image, color: Color) {
+  unsafe { ImageClearBackground(dst, color) };
+}
 
 #[inline]
 pub fn image_draw_pixel(dst: &mut Image, pos_x: i32, pos_y: i32, color: Color) {

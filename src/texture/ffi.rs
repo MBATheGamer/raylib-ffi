@@ -78,6 +78,7 @@ unsafe extern "C" {
   pub fn GetImageColor(image: Image, x: i32, y: i32) -> Color;
 
   // Image drawing functions
+  pub fn ImageClearBackground(dst: *mut Image, color: Color);
   pub fn ImageDrawPixel(dst: *mut Image, pos_x: i32, pos_y: i32, color: Color);
   pub fn ImageDrawCircleLines(
     dst: *mut Image,
