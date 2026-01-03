@@ -17,6 +17,7 @@ unsafe extern "C" {
   pub fn ExportImage(image: Image, file_name: *const i8) -> bool;
 
   // Image generation functions
+  pub fn GenImageColor(width: i32, height: i32, color: Color) -> Image;
   pub fn GenImageGradientLinear(
     width: i32,
     height: i32,

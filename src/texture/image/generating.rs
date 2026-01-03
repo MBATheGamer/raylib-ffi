@@ -1,10 +1,15 @@
 use crate::{
   structs::{Color, Image},
   texture::ffi::{
-    GenImageCellular, GenImageChecked, GenImageGradientLinear, GenImageGradientRadial,
-    GenImageGradientSquare, GenImagePerlinNoise, GenImageWhiteNoise,
+    GenImageCellular, GenImageChecked, GenImageColor, GenImageGradientLinear,
+    GenImageGradientRadial, GenImageGradientSquare, GenImagePerlinNoise, GenImageWhiteNoise,
   },
 };
+
+#[inline]
+pub fn gen_image_color(width: i32, height: i32, color: Color) -> Image {
+  return unsafe { GenImageColor(width, height, color) };
+}
 
 #[inline]
 pub fn gen_image_gradient_linear(
