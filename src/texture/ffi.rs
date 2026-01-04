@@ -68,6 +68,7 @@ unsafe extern "C" {
   pub fn ImageResize(image: *mut Image, new_width: i32, new_height: i32);
   pub fn ImageFlipVertical(image: *mut Image);
   pub fn ImageFlipHorizontal(image: *mut Image);
+  pub fn ImageRotate(image: *mut Image, degrees: i32);
   pub fn ImageColorTint(image: *mut Image, color: Color);
   pub fn ImageColorInvert(image: *mut Image);
   pub fn ImageColorGrayscale(image: *mut Image);

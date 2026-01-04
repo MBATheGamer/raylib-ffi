@@ -5,7 +5,7 @@ use crate::{
     GetImageColor, ImageAlphaMask, ImageBlurGaussian, ImageColorBrightness, ImageColorContrast,
     ImageColorGrayscale, ImageColorInvert, ImageColorTint, ImageCopy, ImageCrop,
     ImageFlipHorizontal, ImageFlipVertical, ImageFormat, ImageFromChannel, ImageKernelConvolution,
-    ImageResize, LoadImageColors, UnloadImageColors,
+    ImageResize, ImageRotate, LoadImageColors, UnloadImageColors,
   },
 };
 
@@ -57,6 +57,11 @@ pub fn image_flip_vertical(image: &mut Image) {
 #[inline]
 pub fn image_flip_horizontal(image: &mut Image) {
   unsafe { ImageFlipHorizontal(image) }
+}
+
+#[inline]
+pub fn image_rotate(image: &mut Image, degrees: i32) {
+  unsafe { ImageRotate(image, degrees) };
 }
 
 #[inline]
