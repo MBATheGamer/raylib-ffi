@@ -1,3 +1,19 @@
+use raylib_ffi::{
+  consts::colors,
+  core::{
+    begin_drawing, begin_texture_mode, clear_background, close_window, end_drawing,
+    end_texture_mode, get_random_value, init_window, keyboard::is_key_down, set_target_fps,
+    window_should_close,
+  },
+  enums::{KeyboardKey, TextureFilter},
+  shape::{draw_rectangle, draw_rectangle_lines, draw_rectangle_v},
+  structs::{Rectangle, Vector2},
+  text::draw_text,
+  texture::{
+    draw_texture_pro, fade, load_render_texture, set_texture_filter, unload_render_texture,
+  },
+};
+
 const MAP_TILE_SIZE: u32 = 32;
 const PLAYER_SIZE: u32 = 16;
 const PLAYER_TILE_VISIBILITY: u32 = 2;
@@ -19,7 +35,7 @@ fn main() {
     "raylib [textures] example - fog of war",
   );
 
-  let map = Map {
+  let mut map = Map {
     tiles_x: 25,
     tiles_y: 15,
     tile_ids: vec![],
@@ -31,7 +47,7 @@ fn main() {
     map.tile_fog.push(0);
   }
 
-  let player_position = Vector2::new(180.0, 130.0);
+  let mut player_position = Vector2::new(180.0, 130.0);
 
   let fog_of_war = load_render_texture(map.tiles_x as i32, map.tiles_y as i32);
   set_texture_filter(fog_of_war.texture, TextureFilter::Bilinear);
